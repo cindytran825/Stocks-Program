@@ -1,3 +1,5 @@
+package Model;
+
 public interface Stocks {
 
   //method that calculates the gain/loss

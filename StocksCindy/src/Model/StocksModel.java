@@ -1,5 +1,6 @@
-import java.util.ArrayList;
-import java.util.List;
+package Model;
+
+import Model.Stocks;
 
 public class StocksModel implements Stocks {
   String date;

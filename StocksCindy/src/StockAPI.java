@@ -13,7 +13,7 @@ public class StockAPI {
     String apiKey = "QVCUWBQJ0HN2H0MW";
     String stockSymbol = "RDDT"; //ticker symbol for Google
     URL url = null;
-
+ //hello
     try {
       /*
       create the URL. This is the query to the web service. The query string

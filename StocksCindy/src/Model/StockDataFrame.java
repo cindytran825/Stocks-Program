@@ -27,29 +27,23 @@ public class StockDataFrame {
       File csvFile = new File(csv);
       Scanner csvRead = new Scanner(csvFile);
       String line = csvRead.nextLine();
-      String[] columns = line.split(",");
-      this.columnKeys.addAll(Arrays.asList(columns));
+      String[] columnNames = line.split(",");
 
-      // matches the size of the items with the keys
-      for (int i = 0; i < columns.length; i++) {
-        columnItems.add(new ArrayList<>());
+      // creates columns
+      for (String name : columnNames) {
+        map.put(name, new ArrayList<>());
       }
 
-      List<List<String>> tempColumnItems = new ArrayList<>(columnItems);
+      String[] columnElements;
       while (csvRead.hasNext()) {
         line = csvRead.nextLine();
-        columns = line.split(",");
+        columnElements = line.split(",");
+        //System.out.println(columnElements[0] + columnElements[1]);
 
         // assign each different column element to their respective columns
-        for (int i = 0; i < columnKeys.size(); i++) {
-          tempColumnItems.get(i).add(columns[i]);
+        for (int i = 0; i < columnNames.length; i++) {
+          map.get(columnNames[i]).add(columnElements[i]);
         }
-      }
-      columnItems.addAll(tempColumnItems);
-
-      // merge all this information into a hashmap
-      for (int i = 0; i < columns.length; i++) {
-        map.put(columnKeys.get(i), columnItems.get(i));
       }
 
     } catch (FileNotFoundException e) {
@@ -63,7 +57,7 @@ public class StockDataFrame {
 
   private List<String> deepCopy(List<String> original) {
     List<String> copy = new ArrayList<>(original.size());
-    for (String item : copy) {
+    for (String item : original) {
       copy.add(item);
     }
     return copy;

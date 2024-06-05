@@ -3,7 +3,10 @@ package Model;
 import Model.Stocks;
 
 public class StocksModel implements Stocks {
-  String date;
+  Stocks stocks;
+  String ticker;
+  String date1;
+  String date2;
 
   //exception that
   //checks if the given date is within the given dates(2024-2014)
@@ -14,6 +17,16 @@ public class StocksModel implements Stocks {
 //  private String getDate(String date) {
 //    return null;
 //  }
+
+  StocksModel() {
+
+  }
+
+  StocksModel(String ticker, String date1, String date2) {
+    this.ticker = ticker;
+    this.date1 = date1;
+    this.date2 = date2;
+  }
 
 
   @Override

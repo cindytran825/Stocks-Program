@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Class representation of valid dates.
  */

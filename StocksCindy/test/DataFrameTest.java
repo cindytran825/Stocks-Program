@@ -5,16 +5,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import Model.StockDataFrame;
+import Model.DataFrame;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class StockDataFrameTest {
+public class DataFrameTest {
 
   @Test
   public void initializeTest() {
     String path = "StocksCindy/test/testingCSV/testStockFormat.csv";
-    StockDataFrame stock = new StockDataFrame(path);
+    DataFrame stock = new DataFrame(path);
 
     Set<String> expectedKeys = new HashSet<String>();
     expectedKeys.add("timestamp");

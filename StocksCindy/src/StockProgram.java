@@ -1,16 +1,10 @@
-package View;
-
 import java.io.InputStreamReader;
 
-import Controller.StocksController;
-import Model.Stocks;
-import Model.StocksModel;
+import controller.StocksController;
+import model.Stocks;
+import model.StocksModel;
 
-/**
- * View of the program, it should connect to the controller.
- * which calls the methods in the model.
- */
-public class StockProgramView {
+public class StockProgram {
   public static void main(String[] args) {
     Stocks model = new StocksModel();
     Readable rd = new InputStreamReader(System.in);

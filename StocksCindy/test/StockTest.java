@@ -4,7 +4,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Stock;
+import model.Stock;
 
 import static org.junit.Assert.assertEquals;
 

@@ -3,9 +3,9 @@ import org.junit.Test;
 
 import java.io.StringReader;
 
-import Model.Stocks;
-import Controller.StocksController;
-import Model.StocksModel;
+import model.Stocks;
+import controller.StocksController;
+import model.StocksModel;
 
 import static org.junit.Assert.assertEquals;
 

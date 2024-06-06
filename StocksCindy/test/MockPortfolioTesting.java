@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import Model.Portfolio;
-
 public class MockPortfolioTesting  {
 
   private Map<String, HashMap<String, Integer>> stock = new HashMap<>();

@@ -1,15 +1,11 @@
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Model.Portfolio;
+import model.Portfolio;
 
 import static org.junit.Assert.assertEquals;
 
@@ -84,9 +80,6 @@ public class PortfolioTest {
 
     assertEquals("testFilePortfolio", file.getName());
     }
-
-
-
 
 
 }

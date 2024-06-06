@@ -1,15 +1,16 @@
-package Controller;
+package controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import Model.Portfolio;
-import Model.Stocks;
-import Model.StocksModel;
+import view.StockProgramView;
+
+import model.Portfolio;
+import model.Stocks;
+import model.StocksModel;
 
 /**
  * this class represents the controller of the application.
@@ -58,19 +59,22 @@ public class StocksController {
     Map<String, Integer> inventory = new HashMap<>();
     List<Map<String, Integer>> listInventories = new ArrayList<>();
     Scanner scan = new Scanner(readable);
+    StockProgramView s = new StockProgramView();
     boolean quit = false;
     String name = this.name;
     //if there is an existing portfolio
     boolean checkPortfolio = false;
 
-    this.welcomeMessage();
+    s.welcomeMessage();
 
     while (!quit) {
-      writeMessage("Input number: ");
+      s.inputNumber();
       String userNumber = scan.next();
       switch (userNumber) {
+
+        // create new portfolio
         case "1":
-          writeMessage("Name of new portfolio: ");
+          s.nameNew();
           name = scan.next();
           boolean yesAddStock = true;
 
@@ -80,12 +84,12 @@ public class StocksController {
           Portfolio p = new Portfolio();
 
           while (yesAddStock) {
-            writeMessage("Enter Ticker (type 'f' to complete portfolio): "); //wording
+            s.tickerType(); //wording
             ticker = scan.next();
             if (ticker.equals("f")) {
               break;
             }
-            writeMessage("How many shares do you want to add for this stock? ");
+            s.stockAdd();
             shares = scan.nextInt();
             //adds to the list in portfolio
             listInventories = p.addToPortfolio(ticker, shares);
@@ -103,20 +107,21 @@ public class StocksController {
           //ask if they want to see the value of portfolio
           break;
 
+          // add to existing portfolio
         case "2":
           Portfolio port1 = new Portfolio();
           port1.getNameFile();
-          writeMessage("Type just the NAME of the portfolio: ");
+          s.namePort();
           String inputPrt = scan.next();
 
           yesAddStock = true;
           while (yesAddStock) {
-            writeMessage("Enter Ticker (type 'f' to complete portfolio): "); //wording
+            s.tickerType(); //wording
             ticker = scan.next();
             if (ticker.equals("f")) {
               break;
             }
-            writeMessage("How many shares do you want to add for this stock? ");
+            s.stockAdd();
             shares = scan.nextInt();
             //adds to the list in portfolio
             listInventories = port1.addToPortfolio(ticker, shares);
@@ -129,6 +134,8 @@ public class StocksController {
           port1.editExistingPortfolio(inputPrt, listInventories);
           //update the file
           break;
+
+          // view existing portfolios
         case "3":
           try {
             Portfolio por = new Portfolio();
@@ -136,6 +143,8 @@ public class StocksController {
           } catch (Exception e) {
           }
           break;
+
+          // examine gain/ loss
         case "4":
           getTickDates();
           try {
@@ -147,6 +156,7 @@ public class StocksController {
           }
           break;
 
+          //  examine x-day moving average
         case "5":
           getTickDates();
           try {
@@ -155,6 +165,8 @@ public class StocksController {
 
           }
           break;
+
+          // determine which days are x-day corssover
         case "6":
           getTickDates();
           try {
@@ -166,14 +178,14 @@ public class StocksController {
         case "quit":
           quit = true;
           break;
-        //default;
+        //default; default can call the view and just go like, hey tis isn't a command
 
       }
 //      goodbye();
       break;
 
     }
-    goodbye();
+    s.goodbye();
 //    writeMessage("Input number: ");
 
 
@@ -186,76 +198,19 @@ public class StocksController {
    * @return
    */
   private StocksModel getTickDates() {
+    StockProgramView s = new StockProgramView();
     Scanner scan = new Scanner(readable);
-    writeMessage("Ticker: ");
+    s.getTickerDate();
     String ticker = scan.next();
-    writeMessage("Type the first date (YYYY-MM-DD): "); //wording
+    s.getDateUser(); //wording
     String date1 = scan.next();
     //substring and save this date to call
-    writeMessage("Type the last date (YYYY-MM-DD): ");
+    s.getDateUser();
     String date2 = scan.next();
-
     return new StocksModel();
   }
 
-  /**
-   * this writes the message.
-   *
-   * @param message a string.
-   * @throws IllegalStateException when the input isn't a string.
-   */
-  private void writeMessage(String message) throws IllegalStateException {
-    try {
-      appendable.append(message);
-    } catch (IOException e) {
-      throw new IllegalStateException(e.getMessage());
-    }
-  }
 
-  /**
-   * this prints the menu, first thing user sees.
-   *
-   * @throws IllegalStateException when it's at an illegal state.
-   */
-  private void printMenu() throws IllegalStateException {
-    // need to be able to upload their own stock data (csv file) or look up (this is sorta in between)
-    // create portfolio
-    // read portfolio
-    // check stock gain or loss over a specified time period
-    // x-day moving average for a specified date and specified value of x
-    // determine which days are x-day crossovers for a specified date and specified value of x
-
-    writeMessage("1. Create new portfolio" + System.lineSeparator());
-    writeMessage("2. Add to existing portfolio" + System.lineSeparator());
-    writeMessage("3. View existing portfolios" + System.lineSeparator());
-    writeMessage("4. Examine gain/loss" + System.lineSeparator());
-    writeMessage("5. Examine x-day move average" + System.lineSeparator());
-    writeMessage("6. Determine which days are x-day crossover" + System.lineSeparator());
-    writeMessage("'quit' to quit" + System.lineSeparator());
-    writeMessage("Enter in a number corresponding to the action you'd like to take!"
-            + System.lineSeparator());
-
-  }
-
-  /**
-   * this prints the welcome message.
-   *
-   * @throws IllegalStateException when it's at an illegal state.
-   */
-  private void welcomeMessage() throws IllegalStateException {
-    writeMessage("Welcome to the stocks program!" + System.lineSeparator());
-    printMenu();
-  }
-
-  /**
-   * this prints the goodbye message.
-   *
-   * @throws IllegalStateException when it's at an illegal state.
-   */
-  private void goodbye() throws IllegalStateException {
-    writeMessage("Thank you for using our program!" + System.lineSeparator());
-
-  }
 
 }
 

@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,6 +22,7 @@ public class DataFrame {
    * constructor that reads the information from the csv file and registers it to a map
    * with the keys being decided by the top row, and all the following elements are added into
    * their columns
+   *
    * @param csv
    */
   public DataFrame(String csv) {
@@ -54,28 +55,28 @@ public class DataFrame {
     }
   }
 
-  public int indexOf(String key, String value) {
-    return map.get(key).indexOf(value);
-  }
-
+  /**
+   * get a set with the name of each columns.
+   *
+   * @return a set of column names
+   */
   public Set<String> getColumnNames() {
     return map.keySet();
   }
 
   private List<String> deepCopy(List<String> original) {
     List<String> copy = new ArrayList<>(original.size());
-    for (String item : original) {
-      copy.add(item);
-    }
+    copy.addAll(original);
     return copy;
   }
 
+  /**
+   * This gets all elements in a column.
+   *
+   * @param key the column name
+   * @return a list of column elements.
+   */
   public List<String> getColumn(String key) {
     return deepCopy(map.get(key));
   }
-
-
-
-
-
 }

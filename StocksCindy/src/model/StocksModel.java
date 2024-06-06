@@ -1,9 +1,6 @@
-package Model;
+package model;
 
 import java.io.File;
-import java.util.List;
-
-import Model.Stocks;
 
 /**
  * the StocksModel is where all the implementation is at.
@@ -21,7 +18,7 @@ public class StocksModel extends Stock {
       return file.exists();
   }
 
-  protected void getStock(API api, String ticker) {
+  protected void getStock(StockApi api, String ticker) {
     if (checkIfFileExist(ticker)) {
       String path = "StocksCindy/CSVFiles/" + ticker + ".csv";
       stock = new Stock(ticker, path);

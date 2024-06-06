@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * View of the program, it should connect to the controller.
@@ -54,6 +55,12 @@ public class StockProgramView {
     writeMessage("Enter in a number corresponding to the action you'd like to take!"
             + System.lineSeparator());
 
+  }
+
+
+  public void getNameOfFile(List<String> name) throws IllegalStateException {
+//    String message = name.toString();
+    writeMessage(name.toString());
   }
 
   public void getTickerDate() throws IllegalStateException {

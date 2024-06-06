@@ -64,25 +64,19 @@ public class StocksController {
     String name = this.name;
     //if there is an existing portfolio
     boolean checkPortfolio = false;
-
     s.welcomeMessage();
-
     while (!quit) {
       s.inputNumber();
       String userNumber = scan.next();
       switch (userNumber) {
-
         // create new portfolio
         case "1":
           s.nameNew();
           name = scan.next();
           boolean yesAddStock = true;
-
           int shares = 0;
           String ticker = "";
-
           Portfolio p = new Portfolio();
-
           while (yesAddStock) {
             s.tickerType(); //wording
             ticker = scan.next();
@@ -93,27 +87,20 @@ public class StocksController {
             shares = scan.nextInt();
             //adds to the list in portfolio
             listInventories = p.addToPortfolio(ticker, shares);
-//            writeMessage("Do you want to add another stock? (type yes or no) ");
-//            String userAddStock = scan.next();
-//            if (userAddStock.equals("no")) {
-//              yesAddStock = false;
-//            }
           }
-
           Portfolio port = new Portfolio();
           port.createNewPortfolio(name, listInventories);
-
           checkPortfolio = true;
           //ask if they want to see the value of portfolio
           break;
-
           // add to existing portfolio
         case "2":
           Portfolio port1 = new Portfolio();
-          port1.getNameFile();
+          List<String> names = port1.getNameFile();
+          s.getNameOfFile(names);
+
           s.namePort();
           String inputPrt = scan.next();
-
           yesAddStock = true;
           while (yesAddStock) {
             s.tickerType(); //wording
@@ -125,11 +112,7 @@ public class StocksController {
             shares = scan.nextInt();
             //adds to the list in portfolio
             listInventories = port1.addToPortfolio(ticker, shares);
-//              writeMessage("Do you want to add another stock? (type 'yes' or 'no') ");
-//              String userAddStock = scan.next();
-//              if (userAddStock.equals("no")) {
-//                yesAddStock = false;
-//              }
+
           }
           port1.editExistingPortfolio(inputPrt, listInventories);
           //update the file
@@ -181,12 +164,12 @@ public class StocksController {
         //default; default can call the view and just go like, hey tis isn't a command
 
       }
-//      goodbye();
+
       break;
 
     }
     s.goodbye();
-//    writeMessage("Input number: ");
+
 
 
   }

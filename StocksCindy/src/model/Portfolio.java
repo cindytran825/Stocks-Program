@@ -72,7 +72,6 @@ public class Portfolio {
       writer.write(listInventories.toString());
       writer.close();
       writer.write(listInventories.toString());
-      System.out.println("You have successfully added a new portfolio!");
     } catch (IOException e) {
     }
   }
@@ -81,17 +80,15 @@ public class Portfolio {
    * this returns the names of the existing portfolios.
    * this is called in the controller for the 2nd and 3rd bullet of menu.
    */
-  public void getNameFile() {
+  public List<String> getNameFile() {
     String directory = "StocksCindy/UserPortfolio/";
     File direct = new File(directory);
     File[] files = direct.listFiles();
-    if (files != null) {
+    List<String> names = new ArrayList<>();
       for (File file : files) {
-        System.out.println(file.getName());
+        names.add(file.getName());
       }
-    } else {
-      System.out.println("There are no existing portfolios.");
-    }
+    return names;
   }
 
   /**

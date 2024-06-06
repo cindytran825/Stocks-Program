@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * this represents a portfolio.
+ * this is used when the user wants to create a new portfolio.
+ */
 public class Portfolio  {
 
   private Map<String, HashMap<String, Integer>> stock = new HashMap<>();
@@ -18,6 +22,14 @@ public class Portfolio  {
   }
 
 
+  /**
+   * this takes in the company name and the share from the user input.
+   * it puts it in a hashmap and returns it in an arraylist which is later.
+   * used in the createNewPortfolio() method to create a new CSV file.
+   * @param companyName ticker of the company.
+   * @param share the shares the user input.
+   * @return a list.
+   */
   public List<Map<String, Integer>> addToPortfolio(String companyName, Integer share) {
     Map<String, Integer> inventory = new HashMap<>();
     List<Map<String, Integer>> listInventories = this.listInventories;
@@ -31,6 +43,12 @@ public class Portfolio  {
     return listInventories;
   }
 
+  /**
+   * this creates the portfolio.
+   * it puts it in the "UserPortfolio" directory.
+   * @param name is the name of the portfolio that the user inputs.
+   * @param listInventories this is the list of the current inventories in the portfolio.
+   */
   public void createNewPortfolio(String name, List<Map<String, Integer>> listInventories) {
     String directory = "StocksCindy/UserPortfolio/";
     try {
@@ -46,8 +64,6 @@ public class Portfolio  {
 //      }
 
       System.out.println("You have successfully added a new portfolio!");
-
-
     }
     catch (IOException e) {
 

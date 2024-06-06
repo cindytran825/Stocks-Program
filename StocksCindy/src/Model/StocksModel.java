@@ -4,6 +4,10 @@ import java.util.List;
 
 import Model.Stocks;
 
+/**
+ * the StocksModel is where all the implementation is at.
+ * methods are called in the controller.
+ */
 public class StocksModel implements Stocks {
   Stocks stocks;
   String ticker;

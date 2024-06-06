@@ -78,17 +78,20 @@ public class StocksController {
           Portfolio p = new Portfolio();
 
           while (yesAddStock) {
-            writeMessage("Ticker: "); //wording
+            writeMessage("Enter Ticker (type 'f' to complete portfolio): "); //wording
             ticker = scan.next();
+            if (ticker.equals("f")) {
+              break;
+            }
             writeMessage("How many shares do you want to add for this stock? ");
             shares = scan.nextInt();
             //adds to the list in portfolio
             listInventories = p.addToPortfolio(ticker, shares);
-            writeMessage("Do you want to add another stock? (type yes or no) ");
-            String userAddStock = scan.next();
-            if (userAddStock.equals("no")) {
-              yesAddStock = false;
-            }
+//            writeMessage("Do you want to add another stock? (type yes or no) ");
+//            String userAddStock = scan.next();
+//            if (userAddStock.equals("no")) {
+//              yesAddStock = false;
+//            }
           }
 
           Portfolio port = new Portfolio();
@@ -106,17 +109,20 @@ public class StocksController {
 
             yesAddStock = true;
             while (yesAddStock) {
-              writeMessage("Ticker: "); //wording
+              writeMessage("Enter Ticker (type 'f' to complete portfolio): "); //wording
               ticker = scan.next();
+              if (ticker.equals("f")) {
+                break;
+              }
               writeMessage("How many shares do you want to add for this stock? ");
               shares = scan.nextInt();
               //adds to the list in portfolio
               listInventories = port1.addToPortfolio(ticker, shares);
-              writeMessage("Do you want to add another stock? (type 'yes' or 'no') ");
-              String userAddStock = scan.next();
-              if (userAddStock.equals("no")) {
-                yesAddStock = false;
-              }
+//              writeMessage("Do you want to add another stock? (type 'yes' or 'no') ");
+//              String userAddStock = scan.next();
+//              if (userAddStock.equals("no")) {
+//                yesAddStock = false;
+//              }
             }
           port1.editExistingPortfolio(inputPrt, listInventories);
             //update the file
@@ -187,7 +193,7 @@ public class StocksController {
     writeMessage("Type the last date (YYYY-MM-DD): ");
     String date2 = scan.next();
 
-    return new StocksModel(ticker);
+    return new StocksModel();
   }
 
   /**

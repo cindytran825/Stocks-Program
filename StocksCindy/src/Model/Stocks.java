@@ -28,8 +28,10 @@ public interface Stocks {
    * @param startDate starting date to calculate moving average
    * @param lastX     the last x days from starting date (moving average period)
    * @return the moving average of a specified
+   * @throws IllegalArgumentException when there are not enough days with data points to
+   *                                  satisfy the given last x days
    */
-  double getMovingAverage(String startDate, int lastX);
+  double getMovingAverage(String startDate, int lastX) throws IllegalArgumentException;
 
   /**
    * returns a list of crossover days (when the closing price of that day is greater that the
@@ -87,6 +89,7 @@ public interface Stocks {
 
   /**
    * returns a list of all volume data points available.
+   *
    * @return a list of all volume data points.
    */
   List<Double> getVolume();

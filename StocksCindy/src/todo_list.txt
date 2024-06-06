@@ -1,7 +1,7 @@
 ACTIVE todolist:
-1. create data frame and stock data frame in MODEL
-2. plan out how inputs will work and whats the input branches will look like
-3. write out the Portfolio class.
+1. --DONE-- create data frame and stock data frame in MODEL
+2. --TOUCH UP-- plan out how inputs will work and whats the input branches will look like
+3. --DONE-- write out the Portfolio class.
 3. testing
 4. writing README files
 

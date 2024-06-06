@@ -10,27 +10,20 @@ import Model.Stocks;
  * methods are called in the controller.
  */
 public class StocksModel extends Stock {
-  Stock stock;
-   String ticker;
-   String path;
 
-  public StocksModel() {
-    this.ticker = null;
-    this.path = null;
-  }
+  private Stock stock;
 
-  public StocksModel(String ticker) {
-    this.ticker = ticker;
-    this.path = "StocksCindy/CSVFiles/" + ticker + ".csv";
-  }
+  public StocksModel() {}
 
-  private boolean checkIfFileExist() {
+  private boolean checkIfFileExist(String ticker) {
+      String path = "StocksCindy/CSVFiles/" + ticker + ".csv";
       File file = new File(path);
       return file.exists();
   }
 
-  protected void getStock(API api) {
-    if (checkIfFileExist()) {
+  protected void getStock(API api, String ticker) {
+    if (checkIfFileExist(ticker)) {
+      String path = "StocksCindy/CSVFiles/" + ticker + ".csv";
       stock = new Stock(ticker, path);
     } else {
       api.addStock(ticker);

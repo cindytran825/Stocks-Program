@@ -88,7 +88,7 @@ public class Stock implements Stocks {
     double totalValue = 0;
     int startDateIndex = getClosestDateIndex(startDate, true);
 
-    if (startDateIndex - lastX < 0) {
+    if (startDateIndex - lastX + 1 < 0) {
       List<String> dates = this.getTimestamp();
       throw new IllegalArgumentException(
               "There are not enough data points to fulfill request.\n"

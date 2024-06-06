@@ -17,13 +17,13 @@ import java.util.Scanner;
  * this represents a portfolio.
  * this is used when the user wants to create a new portfolio.
  */
-public class Portfolio {
+public class Portfolio  {
 
   private Map<String, HashMap<String, Integer>> stock = new HashMap<>();
   List<Map<String, Integer>> listInventories;
   private Scanner scanner;
 
-  public Portfolio() {
+  Portfolio() {
     this.listInventories = new ArrayList<>();
   }
 
@@ -32,9 +32,8 @@ public class Portfolio {
    * this takes in the company name and the share from the user input.
    * it puts it in a hashmap and returns it in an arraylist which is later.
    * used in the createNewPortfolio() method to create a new CSV file.
-   *
    * @param companyName ticker of the company.
-   * @param share       the shares the user input.
+   * @param share the shares the user input.
    * @return a list.
    */
   public List<Map<String, Integer>> addToPortfolio(String companyName, Integer share) {
@@ -51,20 +50,9 @@ public class Portfolio {
   }
 
   /**
-   * this gets the list of the portfolio.
-   * (used for testing).
-   *
-   * @return a list of the data user inputs in portfolio.
-   */
-  public List<Map<String, Integer>> getListInventories() {
-    return this.listInventories;
-  }
-
-  /**
    * this creates the portfolio.
    * it puts it in the "UserPortfolio" directory.
-   *
-   * @param name            is the name of the portfolio that the user inputs.
+   * @param name is the name of the portfolio that the user inputs.
    * @param listInventories this is the list of the current inventories in the portfolio.
    */
   public void createNewPortfolio(String name, List<Map<String, Integer>> listInventories) {
@@ -76,14 +64,13 @@ public class Portfolio {
       writer.close();
       writer.write(listInventories.toString());
       System.out.println("You have successfully added a new portfolio!");
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
     }
   }
 
-
   /**
-   * this returns the names of the existing portfolios.
-   * this is called in the controller for the 2nd and 3rd bullet of menu.
+   * this returns the existing portfolios
    */
   public void getNameFile() {
     String directory = "StocksCindy/UserPortfolio/";
@@ -93,23 +80,15 @@ public class Portfolio {
       for (File file : files) {
         System.out.println(file.getName());
       }
-    } else {
+    }
+    else {
       System.out.println("There are no existing portfolios.");
     }
   }
 
-  /**
-   * when the user wants to add anything to an existing portfolio, this is called.
-   * It takes in the array in the existing file and creates a new file.
-   * with the data from the original data and the new data that the user is inputting.
-   *
-   * @param inputPrt        the name of the file that the user inputs.
-   *                        this is called in the controller.
-   * @param listInventories the arraylist of the new data to be added to the new file.
-   */
   public void editExistingPortfolio(String inputPrt, List<Map<String, Integer>> listInventories) {
     String temp = "StocksCindy/UserPortfolio/temp.csv";
-    String actualFile = "StocksCindy/UserPortfolio/" + inputPrt + ".csv";
+    String actualFile = "StocksCindy/UserPortfolio/" + inputPrt;
     File oldFile = new File(actualFile);
     File newFile = new File(temp);
     try {
@@ -117,27 +96,25 @@ public class Portfolio {
       BufferedWriter bw = new BufferedWriter(fw);
       PrintWriter pw = new PrintWriter(bw);
       scanner = new Scanner(new File(actualFile));
+//      scanner.useDelimiter(",");
 
       String line;
       while (scanner.hasNext()) {
         line = scanner.nextLine();
         fw.write(listInventories.toString());
+        // so if you want to add anything here to the file, you read everything here
+        // and write everything it read
         fw.write(line); //this adds everything so far
       }
 
-      scanner.close();
-      pw.flush();
-      pw.close();
-      oldFile.delete();
-      File dump = new File(actualFile);
-      newFile.renameTo(dump);
-
-      //if the name of the file cannot be found, it throws message.
+      //then we add user input here
     } catch (Exception e) {
       System.out.println("File cannot be found.");
-      newFile.delete();
     }
   }
+
+
+
 
 
 }

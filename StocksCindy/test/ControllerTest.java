@@ -48,7 +48,6 @@ public class ControllerTest {
     String getOutput = output[0];
     assertEquals(expectedWelcome, getOutput);
 
-
   }
 
   @Test

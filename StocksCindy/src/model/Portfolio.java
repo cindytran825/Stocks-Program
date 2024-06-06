@@ -2,6 +2,8 @@ package model;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,120 +18,139 @@ import java.util.Scanner;
  */
 public class Portfolio {
 
-  private Map<String, HashMap<String, Integer>> stock = new HashMap<>();
-  private List<Map<String, Integer>> listInventories;
-  private Scanner scanner;
-
-  public Portfolio() {
-    this.listInventories = new ArrayList<>();
-  }
-
-//  private List<String> deepCopy(List<String> original) {
-//    List<String> copy = new ArrayList<>(original.size());
-//    copy.addAll(original);
-//    return copy;
-//  }
-
-  public List<Map<String, Integer>> getListInventories() {
-    return this.listInventories;
-  }
+  private final String portfolioName;
+  private final Map<String, Integer> listInventories;
+  private final String reference;
 
 
-  /**
-   * this takes in the company name and the share from the user input.
-   * it puts it in a hashmap and returns it in an arraylist which is later.
-   * used in the createNewPortfolio() method to create a new CSV file.
-   *
-   * @param companyName ticker of the company.
-   * @param share       the shares the user input.
-   * @return a list.
-   */
-  public List<Map<String, Integer>> addToPortfolio(String companyName, Integer share) {
-    Map<String, Integer> inventory = new HashMap<>();
-    List<Map<String, Integer>> listInventories = this.listInventories;
-
-    inventory.put(companyName, share);
-//      inventory.remove("=");
-    listInventories.add(inventory);
-
-    System.out.println(inventory);
-    System.out.println(listInventories);
-    return listInventories;
-  }
-
-  /**
-   * this creates the portfolio.
-   * it puts it in the "UserPortfolio" directory.
-   *
-   * @param name            is the name of the portfolio that the user inputs.
-   * @param listInventories this is the list of the current inventories in the portfolio.
-   */
-  public void createNewPortfolio(String name, List<Map<String, Integer>> listInventories) {
-    String directory = "StocksCindy/UserPortfolio/";
-    try {
-      File fw = new File(directory + name + ".csv");
-      FileWriter writer = new FileWriter(fw);
-      writer.write(listInventories.toString());
-      writer.close();
-      writer.write(listInventories.toString());
-    } catch (IOException e) {
+  public Portfolio(String portfolioName, String storageLocation, boolean loadPrevious) {
+    this.portfolioName = portfolioName;
+    this.listInventories = new HashMap<>();
+    this.reference = storageLocation + "/" + portfolioName + ".csv";
+    // adding csv file
+    // "StocksCindy/UserPortfolio/
+    File portFile = new File(reference);
+    if (loadPrevious) {
+      try {
+        Scanner scan = new Scanner(portFile);
+        while (scan.hasNext()) {
+          String line = scan.nextLine();
+          String[] parts = line.split(",");
+          listInventories.put(parts[0], Integer.parseInt(parts[1]));
+        }
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      }
+    } else {
+      try {
+        FileWriter fw = new FileWriter(portFile);
+        fw.write("");
+        fw.close();
+      } catch (IOException e1) {
+      }
     }
   }
 
-  /**
-   * this returns the names of the existing portfolios.
-   * this is called in the controller for the 2nd and 3rd bullet of menu.
-   */
-  public List<String> getNameFile() {
-    String directory = "StocksCindy/UserPortfolio/";
-    File direct = new File(directory);
-    File[] files = direct.listFiles();
-    List<String> names = new ArrayList<>();
-      for (File file : files) {
-        names.add(file.getName());
-      }
-    return names;
+  public String formatString() {
+    StringBuilder sb = new StringBuilder();
+    for (String key : listInventories.keySet()) {
+      sb.append(String.format("%s : %d\n", key, listInventories.get(key)));
+    }
+    System.out.println(sb);
+    return sb.toString();
   }
 
-  /**
-   * when the user wants to add anything to an existing portfolio, this is called.
-   * It takes in the array in the existing file and creates a new file.
-   * with the data from the original data and the new data that the user is inputting.
-   *
-   * @param inputPrt        the name of the file that the user inputs.
-   *                        this is called in the controller.
-   * @param listInventories the arraylist of the new data to be added to the new file.
-   */
-  public void editExistingPortfolio(String inputPrt, List<Map<String, Integer>> listInventories) {
-    String temp = "StocksCindy/UserPortfolio/temp.csv";
-    String actualFile = "StocksCindy/UserPortfolio/" + inputPrt + ".csv";
-    File oldFile = new File(actualFile);
-    File newFile = new File(temp);
-    try {
-      FileWriter fw = new FileWriter(temp, true);
-      BufferedWriter bw = new BufferedWriter(fw);
-      PrintWriter pw = new PrintWriter(bw);
-      scanner = new Scanner(new File(actualFile));
 
-      String line;
-      while (scanner.hasNext()) {
-        line = scanner.nextLine();
-        fw.write(listInventories.toString());
-        fw.write(line); //this adds everything so far
+  private Map<String, Integer> deepCopy(Map<String, Integer> original) {
+    Map<String, Integer> copy = new HashMap<>(original.size());
+    for (String key : original.keySet()) {
+      copy.put(key, original.get(key));
+    }
+    return copy;
+  }
+
+  public Map<String, Integer> getListInventories() {
+    return deepCopy(this.listInventories);
+  }
+
+  public Map<String, Integer> editPortfolio(
+          String companyName,
+          int share
+  ) throws IllegalArgumentException {
+    if (share < 0) {
+      throw new IllegalArgumentException();
+    }
+    // will eventually implement checker for budget and volume to ensure shares don't exceed
+    // once buying gets implemented
+    listInventories.put(companyName, share);
+//
+//    String temp = "StocksCindy/UserPortfolio/temp.csv";
+//    String actualFile = "StocksCindy/UserPortfolio/" + inputPrt + ".csv";
+//    File oldFile = new File(actualFile);
+//    File newFile = new File(temp);
+//    try {
+//      FileWriter fw = new FileWriter(temp, true);
+//      BufferedWriter bw = new BufferedWriter(fw);
+//      PrintWriter pw = new PrintWriter(bw);
+//      Scanner scanner = new Scanner(new File(actualFile));
+//
+//      String line;
+//      while (scanner.hasNext()) {
+//        line = scanner.nextLine();
+//        fw.write(listInventories.toString());
+//        fw.write(line); //this adds everything so far
+//      }
+//
+//      scanner.close();
+//      pw.flush();
+//      pw.close();
+//      oldFile.delete();
+//      File dump = new File(actualFile);
+//      newFile.renameTo(dump);
+//
+//      //if the name of the file cannot be found, it throws message.
+//    } catch (Exception e) {
+//      System.out.println("File cannot be found.");
+//      newFile.delete();
+//    }
+//
+
+
+    File portFile = new File(reference);
+      try {
+        Scanner scan = new Scanner(portFile);
+        FileWriter fw = new FileWriter(portFile);
+        while (scan.hasNext()) {
+          String line = scan.nextLine();
+          fw.write(line + "\n");
+        }
+
+        fw.write(companyName + "," + share + "\n");
+        fw.close();
+      } catch (IOException e) {
+        // doesn't matter
       }
 
-      scanner.close();
-      pw.flush();
-      pw.close();
-      oldFile.delete();
-      File dump = new File(actualFile);
-      newFile.renameTo(dump);
+    return deepCopy(listInventories);
+  }
 
-      //if the name of the file cannot be found, it throws message.
-    } catch (Exception e) {
-      System.out.println("File cannot be found.");
-      newFile.delete();
+  public double getValue(String date, String pathToStock) {
+    double totalValue = 0.0;
+    Stock stock;
+    List<Double> closePrices;
+    double closePrice;
+    int dateIndex;
+    for (String ticker : listInventories.keySet()) {
+      stock = new Stock(ticker, pathToStock);
+      closePrices = stock.getClose();
+      dateIndex = stock.getClosestDateIndex(date, false);
+      closePrice = closePrices.get(dateIndex);
+      totalValue += closePrice * listInventories.get(ticker);
     }
+    return totalValue;
+  }
 
+  public String getPortfolioName() {
+    return portfolioName;
   }
 }

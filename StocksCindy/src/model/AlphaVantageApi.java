@@ -43,8 +43,10 @@ public class AlphaVantageApi implements StockApi {
       File fw = new File(directory + ticker + ".csv");
       FileWriter writer = new FileWriter(fw);
       writer.write(output.toString());
+      writer.close();
     } catch (IOException var9) {
     }
+
 
     System.out.println("Return value: ");
     System.out.println(output.toString());

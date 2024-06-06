@@ -6,38 +6,40 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import model.Model;
 import view.StockProgramView;
 
 import model.Portfolio;
 import model.Stocks;
 import model.StocksModel;
+import view.View;
 
 /**
  * this class represents the controller of the application.
  * it is connected the view where the user is able to type inputs.
  * and instructions.
- * It uses Appendable and Readable to read inputs.
+ * It uses Scanner and Readable to read inputs.
  * and transmit outputs.
  */
-public class StocksController {
-  private Stocks stock;
-  private Appendable appendable;
+public class StocksController implements Controller {
+  private View view;
   private Readable readable;
+  private Model model;
 
   private Scanner scan;
   private String name;
 
   /**
-   * this constructor takes in Stocks, Appendable and Readable.
-   *
-   * @param stock      is the interface used to represent data associated with stocks.
-   * @param appendable used to transmit output.
-   * @param readable   used to read inputs.
+   * public constructor that takes in the model, view, and readable.
+   * is called in the program display.
+   * @param model model interface.
+   * @param view view interface.
+   * @param readable reads the user inputs.
    */
-  public StocksController(Stocks stock, Appendable appendable, Readable readable) {
+  public StocksController(Model model, View view, Readable readable) {
     //null exception?
-    this.stock = stock;
-    this.appendable = appendable;
+    this.view = view;
+    this.model = model;
     this.readable = readable;
   }
 
@@ -59,141 +61,118 @@ public class StocksController {
     Map<String, Integer> inventory = new HashMap<>();
     List<Map<String, Integer>> listInventories = new ArrayList<>();
     Scanner scan = new Scanner(readable);
-    StockProgramView s = new StockProgramView();
     boolean quit = false;
     String name = this.name;
     //if there is an existing portfolio
     boolean checkPortfolio = false;
-    s.welcomeMessage();
+    view.welcomeMessage();
     while (!quit) {
-      s.inputNumber();
+      view.inputNumber();
       String userNumber = scan.next();
       switch (userNumber) {
         // create new portfolio
-        case "1":
-          s.nameNew();
+        case "port-create":
+          view.nameNew();
           name = scan.next();
-          boolean yesAddStock = true;
-          int shares = 0;
-          String ticker = "";
-          Portfolio p = new Portfolio();
-          while (yesAddStock) {
-            s.tickerType(); //wording
+          model.createPortfolio(name);
+
+          int shares;
+          String ticker;
+          while (true) {
+            view.tickerType();
             ticker = scan.next();
             if (ticker.equals("f")) {
               break;
             }
-            s.stockAdd();
+            view.stockAdd();
             shares = scan.nextInt();
             //adds to the list in portfolio
-            listInventories = p.addToPortfolio(ticker, shares);
+            model.managePortfolio(name, ticker, shares);
           }
-          Portfolio port = new Portfolio();
-          port.createNewPortfolio(name, listInventories);
-          checkPortfolio = true;
-          //ask if they want to see the value of portfolio
           break;
-          // add to existing portfolio
-        case "2":
-          Portfolio port1 = new Portfolio();
-          List<String> names = port1.getNameFile();
-          s.getNameOfFile(names);
-
-          s.namePort();
-          String inputPrt = scan.next();
-          yesAddStock = true;
-          while (yesAddStock) {
-            s.tickerType(); //wording
+          // make changes to existing portfolio
+        case "port-manage":
+          view.getNameOfFile(model.getPortfolioNames());
+          view.namePort();
+          name = scan.next(); // needs catcher for invalid names
+          Portfolio port = new Portfolio(name, "StocksCindy/UserPortfolio", true);
+          while (true) {
+            view.tickerType();
             ticker = scan.next();
             if (ticker.equals("f")) {
               break;
             }
-            s.stockAdd();
+            view.stockAdd();
             shares = scan.nextInt();
             //adds to the list in portfolio
-            listInventories = port1.addToPortfolio(ticker, shares);
-
+            model.managePortfolio(name, ticker, shares);
+            view.success();
           }
-          port1.editExistingPortfolio(inputPrt, listInventories);
-          //update the file
           break;
 
           // view existing portfolios
-        case "3":
-          try {
-            Portfolio por = new Portfolio();
-            por.getNameFile();
-          } catch (Exception e) {
-          }
+        case "port-view":
+          view.getNameOfFile(model.getPortfolioNames());
+          view.namePort();
+          name = scan.next(); // needs catcher for invalid names
+          view.printPortfolio(model.getPortfolio(name));
+          break;
+
+        case "port-eval":
+          view.getNameOfFile(model.getPortfolioNames());
+          view.namePort();
+          name = scan.next(); // needs catcher for invalid names
+          view.getDateUser1();
+          String date = scan.next();
+          view.printPortValue(model.evaluatePortfolio(name, date));
           break;
 
           // examine gain/ loss
-        case "4":
-          getTickDates();
-          try {
-            scan.next();
-            //call method that calculates the dates between
-            //call the method that calculates gain/loss
-          } catch (Exception e) {
+        case "stock-eval":
 
-          }
+          //call method that returns the files
+          view.getTicker();
+          ticker = scan.next();
+          view.getDateUser2();
+          String date1 = scan.next();
+          view.getDateUser3();
+          String date2 = scan.next();
+          view.printNetGain(model.evaluateStock(ticker, date1, date2), date1, date2);
           break;
 
           //  examine x-day moving average
-        case "5":
-          getTickDates();
-          try {
-            scan.next(); //average methods
-          } catch (Exception e) {
-
-          }
+        case "stock-avg":
+          view.getTicker();
+          ticker = scan.next();
+          view.getDateUser2();;
+          date = scan.next();
+          view.getXDays();
+          int lastXDays = scan.nextInt();
+          view.movingAvg(model.movingAverage(ticker, date, lastXDays));
           break;
 
-          // determine which days are x-day corssover
-        case "6":
-          getTickDates();
-          try {
-            scan.next(); //call method determines which days are x-day crossover
-          } catch (Exception e) {
-
-          }
+          // determine which days are x-day crossover
+        case "stock-cross":
+          view.getTicker();
+          ticker = scan.next();
+          view.getDateUser2();
+          date = scan.next();
+          view.getXDays();
+          lastXDays = scan.nextInt();
+          view.printCrossover(model.getCrossoverDays(ticker, date, lastXDays));
           break;
         case "quit":
           quit = true;
           break;
-        //default; default can call the view and just go like, hey tis isn't a command
-
+        case "menu":
+          view.printMenu();
+          break;
+        default:
+          view.invalidCommand();
       }
-
       break;
-
     }
-    s.goodbye();
-
-
-
+    view.goodbye();
   }
-
-  /**
-   * this reads the dates that the user inputs when.
-   * they press 3, 4, or 5 from the menu.
-   *
-   * @return
-   */
-  private StocksModel getTickDates() {
-    StockProgramView s = new StockProgramView();
-    Scanner scan = new Scanner(readable);
-    s.getTickerDate();
-    String ticker = scan.next();
-    s.getDateUser(); //wording
-    String date1 = scan.next();
-    //substring and save this date to call
-    s.getDateUser();
-    String date2 = scan.next();
-    return new StocksModel();
-  }
-
-
-
 }
 

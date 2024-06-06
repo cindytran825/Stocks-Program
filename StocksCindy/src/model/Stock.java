@@ -16,11 +16,11 @@ public class Stock implements Stocks {
    * stock data of the specified ticker.
    *
    * @param ticker stock ticker
-   * @param path   path to file
+   * @param directory   directory where the file would be stored
    */
-  public Stock(String ticker, String path) {
+  public Stock(String ticker, String directory) {
     this.ticker = ticker;
-    this.data = new DataFrame(path);
+    this.data = new DataFrame(directory + "/" + ticker + ".csv");
     // still have to figure out how to get it to automatically get new tickers and stuff
 
     // if statement before assigning Data, have it check if the csv file exists or not, then
@@ -45,7 +45,14 @@ public class Stock implements Stocks {
     return newMyDate;
   }
 
-  private int getClosestDateIndex(String date, boolean closestAfter) {
+  /**
+   * this gets the closest available date with data points
+   * @param date a date input
+   * @param closestAfter true if look at the closest date after the input and false for the closest
+   *                     before the input date
+   * @return
+   */
+  public int getClosestDateIndex(String date, boolean closestAfter) {
     List<String> dateList = this.getTimestamp();
 
     MyDate origin = convertToDate(date);

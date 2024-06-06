@@ -7,7 +7,7 @@ import java.util.List;
  * View of the program, it should connect to the controller.
  * which calls the methods in the model.
  */
-public class StockProgramView {
+public class StockProgramView implements View {
   private Appendable appendable;
 
   public StockProgramView() {
@@ -38,41 +38,44 @@ public class StockProgramView {
    * @throws IllegalStateException when it's at an illegal state.
    */
   public void printMenu() throws IllegalStateException {
-    // need to be able to upload their own stock data (csv file) or look up (this is sorta in between)
-    // create portfolio
-    // read portfolio
-    // check stock gain or loss over a specified time period
-    // x-day moving average for a specified date and specified value of x
-    // determine which days are x-day crossovers for a specified date and specified value of x
 
-    writeMessage("1. Create new portfolio" + System.lineSeparator());
-    writeMessage("2. Add to existing portfolio" + System.lineSeparator());
-    writeMessage("3. View existing portfolios" + System.lineSeparator());
-    writeMessage("4. Examine gain/loss" + System.lineSeparator());
-    writeMessage("5. Examine x-day move average" + System.lineSeparator());
-    writeMessage("6. Determine which days are x-day crossover" + System.lineSeparator());
-    writeMessage("'quit' to quit" + System.lineSeparator());
-    writeMessage("Enter in a number corresponding to the action you'd like to take!"
+    writeMessage("Create new portfolio [port-create]" + System.lineSeparator());
+    writeMessage("Manage portfolio [port-manage]" + System.lineSeparator());
+    writeMessage("View existing portfolios [port-view]" + System.lineSeparator());
+    writeMessage("Evaluate existing portfolios [port-eval]" + System.lineSeparator());
+    writeMessage("Examine gain/loss [stock-eval]" + System.lineSeparator());
+    writeMessage("Examine x-day move average [stock-avg]" + System.lineSeparator());
+    writeMessage("Determine which days are x-day crossover [stock-cross]" + System.lineSeparator());
+    writeMessage("Quit [quit]" + System.lineSeparator());
+    writeMessage("Menu [menu]" + System.lineSeparator());
+    writeMessage("Enter instruction to the action you'd like to take!"
             + System.lineSeparator());
 
   }
 
 
-  public void getNameOfFile(List<String> name) throws IllegalStateException {
-//    String message = name.toString();
-    writeMessage(name.toString());
+  public void getTicker() throws IllegalStateException {
+    writeMessage("Enter the ticker: ");
   }
 
-  public void getTickerDate() throws IllegalStateException {
-    writeMessage("Ticker: ");
+  public void getNameOfFile(String name) throws IllegalStateException {
+    writeMessage("Existing files are: \n" + name);
   }
 
-  public void getDateUser() throws IllegalStateException {
-    writeMessage("Type the first date (YYYY-MM-DD): ");
+  public void getDateUser1() throws IllegalStateException {
+    writeMessage("Type the date to use for evaluation (YYYY-MM-DD): ");
+  }
+
+  public void getDateUser2() throws IllegalStateException {
+    writeMessage("Type the starting date (YYYY-MM-DD): ");
+  }
+
+  public void getDateUser3() throws IllegalStateException {
+    writeMessage("Type the ending date (YYYY-MM-DD): ");
   }
 
   public void inputNumber() throws IllegalStateException {
-    writeMessage("Input number: ");
+    writeMessage("Enter Command: ");
   }
 
   public void nameNew() throws IllegalStateException {
@@ -90,6 +93,37 @@ public class StockProgramView {
   public void namePort() throws IllegalStateException {
     writeMessage("Type just the NAME of the portfolio: ");
   }
+
+  public void printPortfolio(String portfolio) throws IllegalStateException {
+    writeMessage(portfolio);
+  }
+
+  public void success() throws IllegalStateException {
+    writeMessage("Successfully added a new portfolio.");
+  }
+
+  public void printPortValue(String value) throws IllegalStateException {
+    writeMessage("The value of this portfolio is: $" + value);
+  }
+
+  public void printNetGain(String value, String date1, String date2) throws IllegalStateException {
+      writeMessage("Between " + date1 + " to " + date2 + " "
+              + "the stock had a net gain of: $" + value);
+    }
+
+    public void getXDays() throws IllegalStateException {
+    writeMessage("Enter in the last x-days since the current date: ");
+    }
+
+  public void movingAvg(String value) throws IllegalStateException {
+    writeMessage("The moving average is: " + value);
+  }
+
+  public void printCrossover(String value) throws IllegalStateException {
+    writeMessage("The following days are crossover days in the specified time period: \n"
+            + value);
+  }
+
 
 
   /**
@@ -109,6 +143,10 @@ public class StockProgramView {
   public void welcomeMessage() throws IllegalStateException {
     writeMessage("Welcome to the stocks program!" + System.lineSeparator());
     printMenu();
+  }
+
+  public void invalidCommand() throws IllegalStateException {
+    writeMessage("This is an invalid command!" + System.lineSeparator());
   }
 
 

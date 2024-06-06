@@ -1,15 +1,21 @@
 import java.io.InputStreamReader;
 
 import controller.StocksController;
-import model.Stocks;
+import model.Model;
 import model.StocksModel;
+import view.StockProgramView;
+import view.View;
 
 public class StockProgram {
   public static void main(String[] args) {
-    Stocks model = new StocksModel();
     Readable rd = new InputStreamReader(System.in);
     Appendable ap = System.out;
-    StocksController controller = new StocksController(model, ap, rd);
+
+    // view should be generated here
+    Model model = new StocksModel();
+    View view = new StockProgramView();
+
+    StocksController controller = new StocksController(model, view, rd);
     controller.goControl();
   }
 }

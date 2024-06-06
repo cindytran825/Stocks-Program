@@ -22,7 +22,7 @@ public class ControllerTest {
 
   @Before
   public void setUp() {
-    model = new Stock();
+    model = new StocksModel();
     ap = new StringBuilder();
   }
 

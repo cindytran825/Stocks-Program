@@ -1,9 +1,10 @@
 package Model;
 
+
 /**
  * Class representation of valid dates.
  */
-public class Date {
+public class MyDate implements Comparable<MyDate> {
   private int day;
   private int month;
   private int year;
@@ -16,7 +17,7 @@ public class Date {
    * @param year  the year.
    * @throws IllegalArgumentException if the date is invalid and not a real date.
    */
-  public Date(int day, int month, int year) throws IllegalArgumentException {
+  public MyDate(int day, int month, int year) throws IllegalArgumentException {
     if (!checkIfValidDate(day, month, year)) {
       throw new IllegalArgumentException("Invalid date.");
     }
@@ -109,9 +110,7 @@ public class Date {
             defensiveMonth--;
             defensiveDay = getMonthLength(defensiveMonth, defensiveYear);
           }
-        }
-        // if the days are positive
-        else if (defensiveDay + increment > monthLength) {
+        } else if (defensiveDay + increment > monthLength) { // if the days are positive
           defensiveDay = 1;
           if (defensiveMonth < 12) {
             defensiveMonth++;
@@ -128,8 +127,64 @@ public class Date {
     this.year = defensiveYear;
   }
 
+  /**
+   * gets the day value.
+   *
+   * @return day
+   */
+  public int getDay() {
+    return day;
+  }
+
+  /**
+   * gets the month value.
+   *
+   * @return month
+   */
+  public int getMonth() {
+    return month;
+  }
+
+  /**
+   * gets the year value.
+   *
+   * @return year
+   */
+  public int getYear() {
+    return year;
+  }
+
   @Override
   public String toString() {
     return String.format("%04d-%02d-%02d", year, month, day);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return (other instanceof MyDate otherDate)
+            && this.day == otherDate.day
+            && this.month == otherDate.month
+            && this.year == otherDate.year;
+
+  }
+
+  @Override
+  public int compareTo(MyDate other) {
+    MyDate start = new MyDate(1, 1, 0);
+
+    MyDate thisCopy = new MyDate(day, month, year);
+    MyDate otherCopy = new MyDate(other.day, other.month, other.year);
+
+    int daysSinceStart1 = 0;
+    int daysSinceStart2 = 0;
+    while (!thisCopy.equals(start)) {
+      thisCopy.advance(-1);
+      daysSinceStart1++;
+    }
+    while (!otherCopy.equals(start)) {
+      otherCopy.advance(-1);
+      daysSinceStart2++;
+    }
+    return daysSinceStart1 - daysSinceStart2;
   }
 }

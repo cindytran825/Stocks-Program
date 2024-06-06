@@ -22,7 +22,7 @@ public class Portfolio  {
   public Map<String, Integer> addToPortfolio(String companyName, Integer share) {
 
     inventory.put(companyName, share);
-    return inventory;
+    return inventory; // need defensive copy
 
   }
 
@@ -40,7 +40,6 @@ public class Portfolio  {
       for(Map.Entry<String, Integer> entry : inventory.entrySet()) {
         writer.write(entry.getKey() + "," + entry.getValue() + "\n");
       }
-
 //      writer.write(this.inventory.toString()); //the company name and the shares/values call end of try
       System.out.println("You have successfully added a new portfolio!");
 //      System.out.println(inventory.toString());

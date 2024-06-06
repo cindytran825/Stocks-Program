@@ -30,15 +30,31 @@ public class StockTest {
   }
 
   @Test
-  public void testEvaluateStock() {} // TODO
+  public void testEvaluateStock() {
+    // 1217.5600 & 156.3300 : loss
+    // 2020-04-13 (closest date) to 2024-04-15
+    assertEquals(-1061.2300, goog.calculateNetGain("2020-04-10", "2024-04-15"), 0.01);
+
+    // 536.4400 & 156.3300 : loss (buy date out of range)
+    // 2014-04-15 (closest date) to 2024-04-15
+    assertEquals(-380.1100, goog.calculateNetGain("2014-04-10", "2024-04-15"), 0.01);
+
+    // 157.6600 & 174.4200 : gain (sell date out of range)
+    // 2024-04-10 to 2024-06-03 (closest date)
+    assertEquals(16.76, goog.calculateNetGain("2024-04-10", "2024-06-15"), 0.01);
+
+    // 536.4400 & 174.4200 : loss (buy and sell date out of range)
+    // 2014-04-15 (closest date) to 2024-06-03 (closest date)
+    assertEquals(-362.02, goog.calculateNetGain("2014-04-10", "2024-06-15"), 0.01);
+  }
 
   @Test
   public void testAverage() {
     double avg2 = testStock.getMovingAverage("2024-05-28", 3);
-    assertEquals(173.9800, avg2, 0.5);
+    assertEquals(173.9800, avg2, 0.01);
 
     double avg1 = goog.getMovingAverage("2024-04-23", 29);
-    assertEquals(171.2063, avg1, 0.5);
+    assertEquals(171.6634, avg1, 0.01);
   }
 
   @Test

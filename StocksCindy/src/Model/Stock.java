@@ -3,8 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Date;
-
 public class Stock {
 
   private final String ticker;
@@ -21,24 +19,20 @@ public class Stock {
 
   // private Stock(String CSVLink) {}
 
-  private Date convertToDate(String date) {
+  private MyDate convertToDate(String date) {
     String[] dateSplit = date.split("-");
-    Date newDate = new Date(
+    MyDate newMyDate = new MyDate(
             Integer.parseInt(dateSplit[2]),
             Integer.parseInt(dateSplit[1]),
             Integer.parseInt(dateSplit[0])
     );
-    return newDate;
+    return newMyDate;
   }
 
   private int getClosestDateIndex(String date, boolean closestAfter) {
     List<String> dateList = data.getColumn("timestamp");
-//    System.out.println(dateList.size());
-//    for (int i = 0; i < 5; i++) {
-//      System.out.println(dateList.get(i));
-//    }
 
-    Date origin = convertToDate(date);
+    MyDate origin = convertToDate(date);
     int advanceIncrement = closestAfter ? 1 : -1;
 
     int counter = 0;
@@ -53,32 +47,6 @@ public class Stock {
       }
     }
     return -1;
-  }
-
-  //should mention that it only takes in year month day format in documentation
-  private List<String> getAvailableDateRange(String date, int x, boolean closestAfter) {
-    List<String> dateList = data.getColumn("timestamp");
-
-
-    List<String> available = new ArrayList<>();
-    Date origin = convertToDate(date);
-    int advanceIncrement = closestAfter ? 1 : -1;
-
-    int counter = 0;
-    while (counter <= 30 && available.size() != x) { //instead of counter limit, better implementation would be to enter time limits and check after each advance.
-      //System.out.println(dateList.indexOf(origin.toString()));
-      if (dateList.contains(origin.toString())) {
-        counter = 0;
-        available.add(origin.toString());
-      } else {
-        counter++;
-      }
-      origin.advance(advanceIncrement);
-    }
-
-//    for (String i : available)
-//      System.out.println(available);
-    return available;
   }
 
   public double calculateNetGain(String start, String end) throws IllegalArgumentException {
@@ -107,7 +75,6 @@ public class Stock {
     for (int i = startDateIndex; i > startDateIndex - x; i--) {
       totalValue += Double.parseDouble(tempDataClose.get(i));
     }
-
 
     return totalValue / x;
   }

@@ -14,11 +14,11 @@ public class AlphaVantageAPI implements API {
     String apiKey = "QVCUWBQJ0HN2H0MW";
     URL url = null;
 
-    try {
-      url = new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=" + stockSymbol + "&apikey=" + apiKey + "&datatype=csv");
-    } catch (MalformedURLException var10) {
-      throw new RuntimeException("the alphavantage API has either changed or no longer works");
-    }
+//    try {
+//      url = new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=" + stockSymbol + "&apikey=" + apiKey + "&datatype=csv");
+//    } catch (MalformedURLException var10) {
+//      throw new RuntimeException("the alphavantage API has either changed or no longer works");
+//    }
 
     InputStream in = null;
     StringBuilder output = new StringBuilder();

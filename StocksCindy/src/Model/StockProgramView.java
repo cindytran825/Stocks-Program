@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  */
 public class StockProgramView {
   public static void main(String[] args) {
-    Stocks model = new StocksModel();
+    Stocks model = new Stock();
     Readable rd = new InputStreamReader(System.in);
     Appendable ap = System.out;
     StocksController controller = new StocksController(model, ap, rd);

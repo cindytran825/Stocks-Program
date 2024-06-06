@@ -101,7 +101,7 @@ public class StocksController {
         case "2":
           Portfolio port1 = new Portfolio();
           port1.getNameFile();
-          writeMessage("Choose from existing portfolio:");
+          writeMessage("Type just the NAME of the portfolio: ");
           String inputPrt = scan.next();
 
             yesAddStock = true;
@@ -118,6 +118,7 @@ public class StocksController {
                 yesAddStock = false;
               }
             }
+          port1.editExistingPortfolio(inputPrt, listInventories);
             //update the file
           break;
         case "3":

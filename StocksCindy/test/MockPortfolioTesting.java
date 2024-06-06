@@ -1,9 +1,5 @@
-package Model;
-
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,19 +9,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
- * this represents a portfolio.
- * this is used when the user wants to create a new portfolio.
- */
-public class Portfolio {
+import Model.Portfolio;
+
+public class MockPortfolioTesting  {
 
   private Map<String, HashMap<String, Integer>> stock = new HashMap<>();
   List<Map<String, Integer>> listInventories;
   private Scanner scanner;
 
-  public Portfolio() {
-    this.listInventories = new ArrayList<>();
-  }
+   public MockPortfolioTesting() {
+     this.listInventories = new ArrayList<>();
+   }
 
 
   /**
@@ -68,7 +62,7 @@ public class Portfolio {
    * @param listInventories this is the list of the current inventories in the portfolio.
    */
   public void createNewPortfolio(String name, List<Map<String, Integer>> listInventories) {
-    String directory = "StocksCindy/UserPortfolio/";
+    String directory = "StocksCindy/test/testFilePortfolio/";
     try {
       File fw = new File(directory + name + ".csv");
       FileWriter writer = new FileWriter(fw);
@@ -77,6 +71,7 @@ public class Portfolio {
       writer.write(listInventories.toString());
       System.out.println("You have successfully added a new portfolio!");
     } catch (IOException e) {
+
     }
   }
 
@@ -138,6 +133,5 @@ public class Portfolio {
       newFile.delete();
     }
   }
-
 
 }

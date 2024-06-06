@@ -3,6 +3,8 @@ import org.junit.Test;
 
 import java.io.StringReader;
 
+import Model.Stock;
+import Model.Stocks;
 import Model.StocksController;
 import Model.StocksModel;
 
@@ -15,12 +17,12 @@ public class ControllerTest {
   Readable rd;
   Appendable ap;
   StocksController controller;
-  StocksModel model;
+  Stocks model;
 
 
   @Before
   public void setUp() {
-    model = new StocksModel();
+    model = new Stock();
     ap = new StringBuilder();
   }
 

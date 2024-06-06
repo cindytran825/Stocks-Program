@@ -30,6 +30,11 @@ public class Stock implements Stocks {
     // it will say, if it can't find the stock file, get one from the API
   }
 
+  public Stock() {
+    this.ticker = null;
+    this.data = null;
+  }
+
   private MyDate convertToDate(String date) {
     String[] dateSplit = date.split("-");
     MyDate newMyDate = new MyDate(

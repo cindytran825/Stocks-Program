@@ -48,7 +48,7 @@ public class Stock implements Stocks {
 
     int counter = 0;
     int index;
-    while (counter <= 30) { //instead of counter limit, better implementation would be to enter time limits and check after each advance.
+    while (counter <= 30) { // counter limit: if there's been no data up to a month, it's invalid.
       index = dateList.indexOf(origin.toString());
       if (index != -1) {
         return index;
@@ -78,18 +78,22 @@ public class Stock implements Stocks {
   }
 
   @Override
-  public double getMovingAverage(String startDate, int daysSince) throws IllegalArgumentException {
-
+  public double getMovingAverage(String startDate, int lastX) throws IllegalArgumentException {
+    // TODO ACTUALLY THROW ERROR
     List<String> tempDataClose = data.getColumn("close");
 
     double totalValue = 0;
     int startDateIndex = getClosestDateIndex(startDate, true);
 
-    for (int i = startDateIndex; i > startDateIndex - daysSince; i--) {
+    if (startDateIndex - lastX < 0) {
+      throw new IllegalArgumentException("There are not enough data points to fulfill request");
+    }
+
+    for (int i = startDateIndex; i > startDateIndex - lastX; i--) {
       totalValue += Double.parseDouble(tempDataClose.get(i));
     }
 
-    return totalValue / daysSince;
+    return totalValue / lastX;
   }
 
   @Override

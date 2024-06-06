@@ -62,13 +62,27 @@ public class Portfolio  {
 //          writer.write(entry.getKey() + "," + entry.getValue());
 //        }
 //      }
-
       System.out.println("You have successfully added a new portfolio!");
     }
     catch (IOException e) {
-
     }
   }
+
+  public void getNameFile() {
+    String directory = "StocksCindy/UserPortfolio/";
+    File direct = new File(directory);
+    File[] files = direct.listFiles();
+    if (files != null) {
+      for (File file : files) {
+        System.out.println(file.getName());
+      }
+    }
+    else {
+      System.out.println("There are no existing portfolios.");
+    }
+  }
+
+
 
 
 }

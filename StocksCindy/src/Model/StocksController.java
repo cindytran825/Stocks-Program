@@ -18,12 +18,11 @@ import java.util.Scanner;
  */
 public class StocksController {
   private Stocks stock;
-  //  private String date;
   private Appendable appendable;
   private Readable readable;
 
-  private String output;
   private Scanner scan;
+  private String name;
 
   /**
    * this constructor takes in Stocks, Appendable and Readable.
@@ -40,8 +39,9 @@ public class StocksController {
   }
 
   private StocksController() {
-    this.output = output;
+    this.name = name;
     this.scan = scan;
+
   }
 
   /**
@@ -57,6 +57,7 @@ public class StocksController {
     List<Map<String, Integer>> listInventories = new ArrayList<>();
     Scanner scan = new Scanner(readable);
     boolean quit = false;
+    String name = this.name;
     //if there is an existing portfolio
     boolean checkPortfolio = false;
 
@@ -68,7 +69,7 @@ public class StocksController {
       switch (userNumber) {
         case "1":
           writeMessage("Name of new portfolio: ");
-          String name = scan.next();
+          name = scan.next();
           boolean yesAddStock = true;
 
           int shares = 0;
@@ -79,56 +80,48 @@ public class StocksController {
           while (yesAddStock) {
             writeMessage("Ticker: "); //wording
             ticker = scan.next();
-
             writeMessage("How many shares do you want to add for this stock?");
             shares = scan.nextInt();
-//            this.output = output.concat(ticker + " " + shares + "\n");
-
             //adds to the list in portfolio
             listInventories = p.addToPortfolio(ticker, shares);
-
             writeMessage("Do you want to add another stock? (type yes or no)");
             String userAddStock = scan.next();
             if (userAddStock.equals("no")) {
               yesAddStock = false;
             }
           }
-          System.out.println("output: " + this.output);
-//          try {
+
           Portfolio port = new Portfolio();
           port.createNewPortfolio(name, listInventories);
-
-//          } catch (IOException e) {
-//            writeMessage("Error:" + e.getMessage());
-//          }
 
           checkPortfolio = true;
           //ask if they want to see the value of portfolio
           break;
 
         case "2":
-          if (checkPortfolio) {
-            writeMessage(""); //list of the portfolios
-          } else {
-            writeMessage("There are no existing portfolios"); //call the quit scene
-          }
-          yesAddStock = true;
-          while (yesAddStock) {
-            writeMessage("Ticker: "); //wording
-            ticker = scan.next();
+            Portfolio port1 = new Portfolio();
+          port1.getNameFile();
+          writeMessage("Choose from existing portfolio:");
+          String inputPrt = scan.next();
 
-            writeMessage("How many shares do you want to add for this stock?");
-
-            shares = scan.nextInt();
-
-            this.output = output.concat(ticker + " " + shares + "\n");
-            writeMessage("Do you want to add another stock? (type yes or no)");
-            String userAddStock = scan.next();
-            if (userAddStock.equals("no")) {
-              yesAddStock = false;
+            yesAddStock = true;
+            while (yesAddStock) {
+              writeMessage("Ticker: "); //wording
+              ticker = scan.next();
+              writeMessage("How many shares do you want to add for this stock?");
+              shares = scan.nextInt();
+              //adds to the list in portfolio
+              listInventories = port1.addToPortfolio(ticker, shares);
+              writeMessage("Do you want to add another stock? (type yes or no)");
+              String userAddStock = scan.next();
+              if (userAddStock.equals("no")) {
+                yesAddStock = false;
+              }
+//            }
             }
+
             //update the file
-          }
+
           break;
         case "3":
           //menu of portfolio and name
@@ -177,9 +170,13 @@ public class StocksController {
         //default;
 
       }
+//      goodbye();
       break;
+
     }
     goodbye();
+//    writeMessage("Input number: ");
+
 
   }
 
@@ -257,6 +254,7 @@ public class StocksController {
    */
   private void goodbye() throws IllegalStateException {
     writeMessage("Thank you for using our program!" + System.lineSeparator());
+
   }
 
 }

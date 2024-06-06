@@ -99,16 +99,16 @@ public class StockProgramView implements View {
   }
 
   public void success() throws IllegalStateException {
-    writeMessage("Successfully added a new portfolio.");
+    writeMessage("Successfully added a new portfolio." + System.lineSeparator());
   }
 
   public void printPortValue(String value) throws IllegalStateException {
-    writeMessage("The value of this portfolio is: $" + value);
+    writeMessage("The value of this portfolio is: $" + value + System.lineSeparator());
   }
 
   public void printNetGain(String value, String date1, String date2) throws IllegalStateException {
       writeMessage("Between " + date1 + " to " + date2 + " "
-              + "the stock had a net gain of: $" + value);
+              + "the stock had a net gain of: $" + value + System.lineSeparator());
     }
 
     public void getXDays() throws IllegalStateException {
@@ -116,12 +116,12 @@ public class StockProgramView implements View {
     }
 
   public void movingAvg(String value) throws IllegalStateException {
-    writeMessage("The moving average is: " + value);
+    writeMessage("The moving average is: " + value + System.lineSeparator());
   }
 
   public void printCrossover(String value) throws IllegalStateException {
     writeMessage("The following days are crossover days in the specified time period: \n"
-            + value);
+            + value + System.lineSeparator());
   }
 
 

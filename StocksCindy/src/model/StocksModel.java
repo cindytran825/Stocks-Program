@@ -138,7 +138,7 @@ public class StocksModel implements Model {
 
   public String getPortfolio(String name) {
     Portfolio existingPortfolio = new Portfolio(name, portfolioFolderPath, true);
-    return existingPortfolio.formatString();
+    return existingPortfolio.toString();
   }
 
   /**

@@ -51,12 +51,12 @@ public class Portfolio {
     }
   }
 
-  public String formatString() {
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     for (String key : listInventories.keySet()) {
       sb.append(String.format("%s : %d\n", key, listInventories.get(key)));
     }
-    System.out.println(sb);
     return sb.toString();
   }
 
@@ -83,38 +83,6 @@ public class Portfolio {
     // will eventually implement checker for budget and volume to ensure shares don't exceed
     // once buying gets implemented
     listInventories.put(companyName, share);
-//
-//    String temp = "StocksCindy/UserPortfolio/temp.csv";
-//    String actualFile = "StocksCindy/UserPortfolio/" + inputPrt + ".csv";
-//    File oldFile = new File(actualFile);
-//    File newFile = new File(temp);
-//    try {
-//      FileWriter fw = new FileWriter(temp, true);
-//      BufferedWriter bw = new BufferedWriter(fw);
-//      PrintWriter pw = new PrintWriter(bw);
-//      Scanner scanner = new Scanner(new File(actualFile));
-//
-//      String line;
-//      while (scanner.hasNext()) {
-//        line = scanner.nextLine();
-//        fw.write(listInventories.toString());
-//        fw.write(line); //this adds everything so far
-//      }
-//
-//      scanner.close();
-//      pw.flush();
-//      pw.close();
-//      oldFile.delete();
-//      File dump = new File(actualFile);
-//      newFile.renameTo(dump);
-//
-//      //if the name of the file cannot be found, it throws message.
-//    } catch (Exception e) {
-//      System.out.println("File cannot be found.");
-//      newFile.delete();
-//    }
-//
-
 
     File portFile = new File(reference);
       try {
@@ -124,7 +92,6 @@ public class Portfolio {
           String line = scan.nextLine();
           fw.write(line + "\n");
         }
-
         fw.write(companyName + "," + share + "\n");
         fw.close();
       } catch (IOException e) {

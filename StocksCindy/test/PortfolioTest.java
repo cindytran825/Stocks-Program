@@ -2,9 +2,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import model.Portfolio;
 
@@ -32,7 +34,7 @@ public class PortfolioTest {
   }
 
   @Test
-  public void testAddPortfolio() {
+  public void testAddPortfolio() throws FileNotFoundException {
     assertEquals(new HashMap<>(), emptyBob.getListInventories());
 
     emptyBob.editPortfolio("Test Ticker", 0);
@@ -45,6 +47,15 @@ public class PortfolioTest {
     expected2.put("Test Ticker 2", 543);
     expected2.put("Test Ticker", 0);
     assertEquals(expected2, emptyBob.getListInventories());
+
+    File emptybob = new File("StocksCindy/test/testingCSV/Empty Bob.csv");
+    Scanner scan = new Scanner(emptybob);
+    assertEquals("Test Ticker 2,543", scan.nextLine());
+
+    File bob = new File("StocksCindy/test/testingCSV/Bob.csv");
+    Scanner scan2 = new Scanner(bob);
+    assertEquals("GOOG,5000", scan2.nextLine());
+    assertEquals("testStockFormat,123", scan2.nextLine());
   }
 
   @Test
@@ -81,13 +92,9 @@ public class PortfolioTest {
   }
 
 @Test
-  public void testtoString() {
-    Map<String, Integer> hi = new HashMap<>();
-    hi.put("GOOG", 5000);
-    hi.put("APPL", 123);
-    String output = hi.toString();
-    assertEquals("" +
-            "GOOG : 5000\nAPPL : 123\n", output);
+  public void testToString() {
+    assertEquals(
+            "GOOG : 5000\ntestStockFormat : 123\n", bob.toString());
 }
 
 //  /**

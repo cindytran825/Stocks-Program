@@ -1,29 +1,93 @@
 package Model;
 
+import java.util.List;
+
+/**
+ * This class represents all data associated with a stock.
+ */
 public interface Stocks {
 
-  //method that calculates the gain/loss
-  //specific period
-  public int gainLoss(String startDate, String endDate);
+  /**
+   * calculates the total net gain (or the difference) between a specified time period.
+   * When given start dates or end dates that do NOT have stock data (weekends or holidays),
+   * it will assume the closest dates in between the given time period.
+   *
+   * @param startDate the starting date for comparison
+   * @param endDate   the ending date for comparison
+   * @return the difference between the ending price and the starting price
+   * @throws IllegalArgumentException when there are no data points available for the associated
+   *                                  time period
+   */
+  double calculateNetGain(String startDate, String endDate) throws IllegalArgumentException;
 
-  //getters that get the end and start dates
-  public String getEnd();
+  /**
+   * returns the moving average of a stock given a specified starting date and the last x days.
+   * "X days" refer to days with data points available, and it begins counting from the
+   * starting date (1 day is just starting date).
+   *
+   * @param startDate starting date to calculate moving average
+   * @param lastX     the last x days from starting date (moving average period)
+   * @return the moving average of a specified
+   */
+  double getMovingAverage(String startDate, int lastX);
 
-  public String getStart();
+  /**
+   * returns a list of crossover days (when the closing price of that day is greater that the
+   * x-day moving average) given a specified starting date and the last x days. "X days"
+   * refer to days with data points available, and it begins counting from the starting
+   * date (1 day is just starting date).
+   *
+   * @param startDate starting date to calculate crossover days
+   * @param lastX     the last x days from starting date (crossover period)
+   * @return a list of all the crossover days
+   */
+  List<String> getCrossOver(String startDate, int lastX);
 
+  /**
+   * returns the ticker.
+   *
+   * @return ticker
+   */
+  String getTicker();
 
-  //method that lets the person buy a stock ??
-  //adds stock to the portfolio
-  public Stocks addStock(String startDate, String endDate);
+  /**
+   * returns all available dates with data points.
+   *
+   * @return a list of dates in the data.
+   */
+  List<String> getTimestamp();
 
+  /**
+   * returns all open prices available.
+   *
+   * @return a list of all open prices
+   */
+  List<Double> getOpen();
 
+  /**
+   * returns all high prices available.
+   *
+   * @return a list of all high prices
+   */
+  List<Double> getHigh();
 
+  /**
+   * returns all low prices available.
+   *
+   * @return a list of all low prices
+   */
+  List<Double> getLow();
 
-  //method that takes in the dates and returns the moving average
-  //of the last x days
-  public Stocks movingAverage(int date1, int date2);
+  /**
+   * returns all closing prices available.
+   *
+   * @return a list of all closing prices
+   */
+  List<Double> getClose();
 
-
-
-
+  /**
+   * returns a list of all volume data points available.
+   * @return a list of all volume data points.
+   */
+  List<Double> getVolume();
 }

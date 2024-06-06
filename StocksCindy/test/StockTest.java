@@ -8,6 +8,7 @@ import Model.Stock;
 
 import static org.junit.Assert.assertEquals;
 
+
 public class StockTest {
 
   Stock goog;

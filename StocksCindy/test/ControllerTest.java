@@ -3,9 +3,8 @@ import org.junit.Test;
 
 import java.io.StringReader;
 
-import Model.Stock;
 import Model.Stocks;
-import Model.StocksController;
+import Controller.StocksController;
 import Model.StocksModel;
 
 import static org.junit.Assert.assertEquals;

@@ -23,7 +23,7 @@ public class Portfolio  {
   List<Map<String, Integer>> listInventories;
   private Scanner scanner;
 
-  Portfolio() {
+  public Portfolio() {
     this.listInventories = new ArrayList<>();
   }
 
@@ -47,6 +47,10 @@ public class Portfolio  {
     System.out.println(inventory);
     System.out.println(listInventories);
     return listInventories;
+  }
+
+  public List<Map<String, Integer>> getListInventories() {
+    return this.listInventories;
   }
 
   /**

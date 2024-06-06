@@ -1,13 +1,15 @@
-package Model;
+package Controller;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import Model.Portfolio;
+import Model.Stocks;
+import Model.StocksModel;
 
 /**
  * this class represents the controller of the application.
@@ -107,25 +109,25 @@ public class StocksController {
           writeMessage("Type just the NAME of the portfolio: ");
           String inputPrt = scan.next();
 
-            yesAddStock = true;
-            while (yesAddStock) {
-              writeMessage("Enter Ticker (type 'f' to complete portfolio): "); //wording
-              ticker = scan.next();
-              if (ticker.equals("f")) {
-                break;
-              }
-              writeMessage("How many shares do you want to add for this stock? ");
-              shares = scan.nextInt();
-              //adds to the list in portfolio
-              listInventories = port1.addToPortfolio(ticker, shares);
+          yesAddStock = true;
+          while (yesAddStock) {
+            writeMessage("Enter Ticker (type 'f' to complete portfolio): "); //wording
+            ticker = scan.next();
+            if (ticker.equals("f")) {
+              break;
+            }
+            writeMessage("How many shares do you want to add for this stock? ");
+            shares = scan.nextInt();
+            //adds to the list in portfolio
+            listInventories = port1.addToPortfolio(ticker, shares);
 //              writeMessage("Do you want to add another stock? (type 'yes' or 'no') ");
 //              String userAddStock = scan.next();
 //              if (userAddStock.equals("no")) {
 //                yesAddStock = false;
 //              }
-            }
+          }
           port1.editExistingPortfolio(inputPrt, listInventories);
-            //update the file
+          //update the file
           break;
         case "3":
           try {

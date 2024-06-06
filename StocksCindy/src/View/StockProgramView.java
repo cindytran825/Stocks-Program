@@ -1,6 +1,10 @@
-package Model;
+package View;
 
 import java.io.InputStreamReader;
+
+import Controller.StocksController;
+import Model.Stocks;
+import Model.StocksModel;
 
 /**
  * View of the program, it should connect to the controller.

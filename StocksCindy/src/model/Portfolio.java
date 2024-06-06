@@ -30,7 +30,9 @@ public class Portfolio {
 //    return copy;
 //  }
 
-  
+  public List<Map<String, Integer>> getListInventories() {
+    return this.listInventories;
+  }
 
 
   /**

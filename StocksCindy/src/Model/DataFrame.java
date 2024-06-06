@@ -9,9 +9,21 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * This data class represents a data frame (similar to python's pandas dataframe). It stores
+ * information from given csv files and separate the csv into their corresponding columns with
+ * the column title being decided by the top line. Every line must have the same amount of items
+ * for it to be stored in the data frame.
+ */
 public class DataFrame {
   private final Map<String, List<String>> map;
 
+  /**
+   * constructor that reads the information from the csv file and registers it to a map
+   * with the keys being decided by the top row, and all the following elements are added into
+   * their columns
+   * @param csv
+   */
   public DataFrame(String csv) {
     this.map = new HashMap<>();
 

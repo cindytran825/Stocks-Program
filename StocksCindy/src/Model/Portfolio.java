@@ -1,12 +1,17 @@
 package Model;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * this represents a portfolio.
@@ -16,6 +21,7 @@ public class Portfolio  {
 
   private Map<String, HashMap<String, Integer>> stock = new HashMap<>();
   List<Map<String, Integer>> listInventories;
+  private Scanner scanner;
 
   Portfolio() {
     this.listInventories = new ArrayList<>();
@@ -57,17 +63,15 @@ public class Portfolio  {
       writer.write(listInventories.toString());
       writer.close();
       writer.write(listInventories.toString());
-//      for(Map<String, Integer> map : listInventories) {
-//        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-//          writer.write(entry.getKey() + "," + entry.getValue());
-//        }
-//      }
       System.out.println("You have successfully added a new portfolio!");
     }
     catch (IOException e) {
     }
   }
 
+  /**
+   * this returns the existing portfolios
+   */
   public void getNameFile() {
     String directory = "StocksCindy/UserPortfolio/";
     File direct = new File(directory);
@@ -81,6 +85,34 @@ public class Portfolio  {
       System.out.println("There are no existing portfolios.");
     }
   }
+
+  public void editExistingPortfolio(String inputPrt, List<Map<String, Integer>> listInventories) {
+    String temp = "StocksCindy/UserPortfolio/temp.csv";
+    String actualFile = "StocksCindy/UserPortfolio/" + inputPrt;
+    File oldFile = new File(actualFile);
+    File newFile = new File(temp);
+    try {
+      FileWriter fw = new FileWriter(temp, true);
+      BufferedWriter bw = new BufferedWriter(fw);
+      PrintWriter pw = new PrintWriter(bw);
+      scanner = new Scanner(new File(actualFile));
+//      scanner.useDelimiter(",");
+
+      String line;
+      while (scanner.hasNext()) {
+        line = scanner.nextLine();
+        fw.write(listInventories.toString());
+        // so if you want to add anything here to the file, you read everything here
+        // and write everything it read
+        fw.write(line); //this adds everything so far
+      }
+
+      //then we add user input here
+    } catch (Exception e) {
+      System.out.println("File cannot be found.");
+    }
+  }
+
 
 
 

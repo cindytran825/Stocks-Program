@@ -16,7 +16,7 @@ public class StockAPI {
     //Please get your own free API key here: https://www.alphavantage.co/
     //Please look at documentation here: https://www.alphavantage.co/documentation/
     String apiKey = "QVCUWBQJ0HN2H0MW";
-    String stockSymbol = "RDDT"; //ticker symbol for Google
+    String stockSymbol = "WDAY"; //ticker symbol for Google
     URL url = null;
 
     //heiosdrg

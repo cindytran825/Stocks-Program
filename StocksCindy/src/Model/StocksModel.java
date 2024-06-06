@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.File;
 import java.util.List;
 
 import Model.Stocks;
@@ -8,79 +9,26 @@ import Model.Stocks;
  * the StocksModel is where all the implementation is at.
  * methods are called in the controller.
  */
-public class StocksModel implements Stocks {
-  Stocks stocks;
-  String ticker;
-  String date1;
-  String date2;
+public class StocksModel {
+  Stock stock;
+  final String ticker;
+  final String path;
 
-  //exception that
-  //checks if the given date is within the given dates(2024-2014)
-
-
-  //this get the two dates and dates in between and puts them in list.
-  //return an array
-//  private String getDate(String date) {
-//    return null;
-//  }
-
-  public StocksModel() {
-
-  }
-
-  StocksModel(String ticker, String date1, String date2) {
+  public StocksModel(String ticker) {
     this.ticker = ticker;
-    this.date1 = date1;
-    this.date2 = date2;
+    this.path = "StocksCindy/CSVFiles/" + ticker + ".csv";
   }
 
-  @Override
-  public double calculateNetGain(String startDate, String endDate) throws IllegalArgumentException {
-    return 0;
+  private boolean checkIfFileExist() {
+      File file = new File(path);
+      return file.exists();
   }
 
-  @Override
-  public double getMovingAverage(String startDate, int lastX) {
-    return 0;
-  }
-
-  @Override
-  public List<String> getCrossOver(String startDate, int lastX) {
-    return List.of();
-  }
-
-  @Override
-  public String getTicker() {
-    return "";
-  }
-
-  @Override
-  public List<String> getTimestamp() {
-    return List.of();
-  }
-
-  @Override
-  public List<Double> getOpen() {
-    return List.of();
-  }
-
-  @Override
-  public List<Double> getHigh() {
-    return List.of();
-  }
-
-  @Override
-  public List<Double> getLow() {
-    return List.of();
-  }
-
-  @Override
-  public List<Double> getClose() {
-    return List.of();
-  }
-
-  @Override
-  public List<Double> getVolume() {
-    return List.of();
+  protected void getStock(API api) {
+    if (checkIfFileExist()) {
+      stock = new Stock(ticker, path);
+    } else {
+      api.addStock(ticker);
+    }
   }
 }

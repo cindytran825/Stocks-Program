@@ -80,11 +80,11 @@ public class StocksController {
           while (yesAddStock) {
             writeMessage("Ticker: "); //wording
             ticker = scan.next();
-            writeMessage("How many shares do you want to add for this stock?");
+            writeMessage("How many shares do you want to add for this stock? ");
             shares = scan.nextInt();
             //adds to the list in portfolio
             listInventories = p.addToPortfolio(ticker, shares);
-            writeMessage("Do you want to add another stock? (type yes or no)");
+            writeMessage("Do you want to add another stock? (type yes or no) ");
             String userAddStock = scan.next();
             if (userAddStock.equals("no")) {
               yesAddStock = false;
@@ -99,7 +99,7 @@ public class StocksController {
           break;
 
         case "2":
-            Portfolio port1 = new Portfolio();
+          Portfolio port1 = new Portfolio();
           port1.getNameFile();
           writeMessage("Choose from existing portfolio:");
           String inputPrt = scan.next();
@@ -108,35 +108,25 @@ public class StocksController {
             while (yesAddStock) {
               writeMessage("Ticker: "); //wording
               ticker = scan.next();
-              writeMessage("How many shares do you want to add for this stock?");
+              writeMessage("How many shares do you want to add for this stock? ");
               shares = scan.nextInt();
               //adds to the list in portfolio
               listInventories = port1.addToPortfolio(ticker, shares);
-              writeMessage("Do you want to add another stock? (type yes or no)");
+              writeMessage("Do you want to add another stock? (type 'yes' or 'no') ");
               String userAddStock = scan.next();
               if (userAddStock.equals("no")) {
                 yesAddStock = false;
               }
-//            }
             }
-
             //update the file
-
           break;
         case "3":
-          //menu of portfolio and name
-          if (checkPortfolio) {
-            writeMessage(""); //list of portfolios
-          } else {
-            writeMessage("There are no existing portfolios");
-          }
-          writeMessage("choose from existing file (#)"); //wording
           try {
-            scan.next(); //.get the file
+            Portfolio por = new Portfolio();
+            por.getNameFile();
           } catch (Exception e) {
           }
           break;
-
         case "4":
           getTickDates();
           try {
@@ -186,9 +176,9 @@ public class StocksController {
    *
    * @return
    */
-  private Stocks getTickDates() {
+  private StocksModel getTickDates() {
     Scanner scan = new Scanner(readable);
-    writeMessage("Ticker:");
+    writeMessage("Ticker: ");
     String ticker = scan.next();
     writeMessage("Type the first date (YYYY-MM-DD): "); //wording
     String date1 = scan.next();
@@ -196,7 +186,7 @@ public class StocksController {
     writeMessage("Type the last date (YYYY-MM-DD): ");
     String date2 = scan.next();
 
-    return new StocksModel(ticker, date1, date2);
+    return new StocksModel(ticker);
   }
 
   /**
@@ -228,12 +218,13 @@ public class StocksController {
 
     writeMessage("1. Create new portfolio" + System.lineSeparator());
     writeMessage("2. Add to existing portfolio" + System.lineSeparator());
-    writeMessage("3. View existing portfolio" + System.lineSeparator());
+    writeMessage("3. View existing portfolios" + System.lineSeparator());
     writeMessage("4. Examine gain/loss" + System.lineSeparator());
     writeMessage("5. Examine x-day move average" + System.lineSeparator());
     writeMessage("6. Determine which days are x-day crossover" + System.lineSeparator());
     writeMessage("'quit' to quit" + System.lineSeparator());
-    writeMessage("What're you here for?" + System.lineSeparator());
+    writeMessage("Enter in a number corresponding to the action you'd like to take!"
+            + System.lineSeparator());
 
   }
 

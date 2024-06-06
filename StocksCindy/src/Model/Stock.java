@@ -62,8 +62,6 @@ public class Stock implements Stocks {
 
   @Override
   public double calculateNetGain(String start, String end) throws IllegalArgumentException {
-    // needs to test what happens when dates that are out of range are entered
-    // individually test start and end alternating out of range, then out of range entirely.
     int startIndex = getClosestDateIndex(start, true);
     int endIndex = getClosestDateIndex(end, false);
 
@@ -79,20 +77,22 @@ public class Stock implements Stocks {
 
   @Override
   public double getMovingAverage(String startDate, int lastX) throws IllegalArgumentException {
-    // TODO ACTUALLY THROW ERROR
+
     List<String> tempDataClose = data.getColumn("close");
 
     double totalValue = 0;
     int startDateIndex = getClosestDateIndex(startDate, true);
 
     if (startDateIndex - lastX < 0) {
-      throw new IllegalArgumentException("There are not enough data points to fulfill request");
+      List<String> dates = this.getTimestamp();
+      throw new IllegalArgumentException(
+              "There are not enough data points to fulfill request.\n"
+      + "We only have data from " + dates.get(0) + " to " + dates.get(dates.size() - 1));
     }
 
     for (int i = startDateIndex; i > startDateIndex - lastX; i--) {
       totalValue += Double.parseDouble(tempDataClose.get(i));
     }
-
     return totalValue / lastX;
   }
 

@@ -35,12 +35,12 @@ public class ControllerTest {
             "Welcome to the stocks program!\n" +
                     "1. Create new portfolio\n" +
                     "2. Add to existing portfolio\n" +
-                    "3. View existing portfolio\n" +
+                    "3. View existing portfolios\n" +
                     "4. Examine gain/loss\n" +
                     "5. Examine x-day move average\n" +
                     "6. Determine which days are x-day crossover\n" +
                     "'quit' to quit\n" +
-                    "What're you here for?" + "\n";
+                    "Enter in a number corresponding to the action you'd like to take!" + "\n";
 
     String[] output = ap.toString().split("Input number: ");
     String getOutput = output[0];
@@ -59,12 +59,12 @@ public class ControllerTest {
             "Welcome to the stocks program!\n" +
                     "1. Create new portfolio\n" +
                     "2. Add to existing portfolio\n" +
-                    "3. View existing portfolio\n" +
+                    "3. View existing portfolios\n" +
                     "4. Examine gain/loss\n" +
                     "5. Examine x-day move average\n" +
                     "6. Determine which days are x-day crossover\n" +
                     "'quit' to quit\n" +
-                    "What're you here for?";
+                    "Enter in a number corresponding to the action you'd like to take!";
 
     StringBuilder testString = new StringBuilder();
     String[] output1 = ap.toString().split("\n");

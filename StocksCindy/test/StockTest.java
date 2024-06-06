@@ -25,7 +25,7 @@ public class StockTest {
   }
 
   @Test
-  public void initializationTest() {
+  public void initializationTestAndGetters() {
     Stock testStock = new Stock("testStockFormat",
             "StocksCindy/test/testingCSV/testSTockFormat.csv");
     assertEquals("testStockFormat", testStock.getTicker());

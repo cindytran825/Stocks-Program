@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.List;
+
 import Model.Stocks;
 
 public class StocksModel implements Stocks {
@@ -18,7 +20,7 @@ public class StocksModel implements Stocks {
 //    return null;
 //  }
 
-  StocksModel() {
+  public StocksModel() {
 
   }
 
@@ -28,32 +30,53 @@ public class StocksModel implements Stocks {
     this.date2 = date2;
   }
 
-
   @Override
-  public int gainLoss(String startDate, String endDate) {
+  public double calculateNetGain(String startDate, String endDate) throws IllegalArgumentException {
     return 0;
   }
-  //
+
   @Override
-  public String getEnd() {
+  public double getMovingAverage(String startDate, int lastX) {
+    return 0;
+  }
+
+  @Override
+  public List<String> getCrossOver(String startDate, int lastX) {
+    return List.of();
+  }
+
+  @Override
+  public String getTicker() {
     return "";
   }
 
   @Override
-  public String getStart() {
-    return "";
+  public List<String> getTimestamp() {
+    return List.of();
   }
 
   @Override
-  public Stocks addStock(String startDate, String endDate) {
-    return null;
+  public List<Double> getOpen() {
+    return List.of();
   }
 
   @Override
-  public Stocks movingAverage(int date1, int date2) {
-    return null;
+  public List<Double> getHigh() {
+    return List.of();
   }
 
+  @Override
+  public List<Double> getLow() {
+    return List.of();
+  }
 
+  @Override
+  public List<Double> getClose() {
+    return List.of();
+  }
 
+  @Override
+  public List<Double> getVolume() {
+    return List.of();
+  }
 }

@@ -3,6 +3,10 @@ package Model;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -16,7 +20,7 @@ public class StocksController {
   private Scanner scan;
 
 
-  StocksController(Stocks stock, Appendable appendable, Readable readable) {
+  public StocksController(Stocks stock, Appendable appendable, Readable readable) {
     //null exception?
     this.stock = stock;
     this.appendable = appendable;
@@ -30,6 +34,8 @@ public class StocksController {
 
 
   public void goControl() throws IllegalStateException {
+    Map<String, Integer> inventory = new HashMap<>();
+    List<Map<String, Integer>> listInventories = new ArrayList<>();
     Scanner scan = new Scanner(readable);
     boolean quit = false;
     //if there is an existing portfolio
@@ -38,10 +44,7 @@ public class StocksController {
     this.welcomeMessage();
 
     while (!quit) {
-      writeMessage("What're you here for?" + System.lineSeparator());
       writeMessage("Input number: ");
-//      String output = this.output;
-//      String output = "";
       String userNumber = scan.next();
       switch (userNumber) {
         case "1":
@@ -52,6 +55,7 @@ public class StocksController {
           int shares = 0;
           String ticker = "";
 
+          Portfolio p = new Portfolio();
 
           while (yesAddStock) {
             writeMessage("Ticker: "); //wording
@@ -62,8 +66,7 @@ public class StocksController {
 //            this.output = output.concat(ticker + " " + shares + "\n");
 
             //adds to the list in portfolio
-            Portfolio p = new Portfolio();
-            p.addToPortfolio(ticker, shares);
+            listInventories = p.addToPortfolio(ticker, shares);
 
             writeMessage("Do you want to add another stock? (type yes or no)");
             String userAddStock = scan.next();
@@ -74,8 +77,7 @@ public class StocksController {
           System.out.println("output: " + this.output);
 //          try {
           Portfolio port = new Portfolio();
-          port.createNewPortfolio(name);
-
+          port.createNewPortfolio(name, listInventories);
 
 //          } catch (IOException e) {
 //            writeMessage("Error:" + e.getMessage());
@@ -156,10 +158,9 @@ public class StocksController {
         //default;
 
       }
-
-      goodbye();
       break;
     }
+    goodbye();
 
   }
 
@@ -202,6 +203,8 @@ public class StocksController {
     writeMessage("5. Examine x-day move average" + System.lineSeparator());
     writeMessage("6. Determine which days are x-day crossover" + System.lineSeparator());
     writeMessage("'quit' to quit" + System.lineSeparator());
+    writeMessage("What're you here for?" + System.lineSeparator());
+
   }
 
   //

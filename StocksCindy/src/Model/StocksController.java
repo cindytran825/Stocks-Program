@@ -3,9 +3,19 @@ package Model;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-
+/**
+ * this class represents the controller of the application.
+ * it is connected the view where the user is able to type inputs.
+ * and instructions.
+ * It uses Appendable and Readable to read inputs.
+ * and transmit outputs.
+ */
 public class StocksController {
   private Stocks stock;
   //  private String date;
@@ -15,8 +25,14 @@ public class StocksController {
   private String output;
   private Scanner scan;
 
-
-  StocksController(Stocks stock, Appendable appendable, Readable readable) {
+  /**
+   * this constructor takes in Stocks, Appendable and Readable.
+   *
+   * @param stock      is the interface used to represent data associated with stocks.
+   * @param appendable used to transmit output.
+   * @param readable   used to read inputs.
+   */
+  public StocksController(Stocks stock, Appendable appendable, Readable readable) {
     //null exception?
     this.stock = stock;
     this.appendable = appendable;
@@ -28,8 +44,17 @@ public class StocksController {
     this.scan = scan;
   }
 
-
+  /**
+   * this is called in the view and is used to read.
+   * the inputs that the user puts.
+   * it also calls methods when there is a command from.
+   * the user to display later in the view.
+   *
+   * @throws IllegalStateException is called when method isn't at an appropriate state.
+   */
   public void goControl() throws IllegalStateException {
+    Map<String, Integer> inventory = new HashMap<>();
+    List<Map<String, Integer>> listInventories = new ArrayList<>();
     Scanner scan = new Scanner(readable);
     boolean quit = false;
     //if there is an existing portfolio
@@ -38,10 +63,7 @@ public class StocksController {
     this.welcomeMessage();
 
     while (!quit) {
-      writeMessage("What're you here for?" + System.lineSeparator());
       writeMessage("Input number: ");
-//      String output = this.output;
-//      String output = "";
       String userNumber = scan.next();
       switch (userNumber) {
         case "1":
@@ -52,6 +74,7 @@ public class StocksController {
           int shares = 0;
           String ticker = "";
 
+          Portfolio p = new Portfolio();
 
           while (yesAddStock) {
             writeMessage("Ticker: "); //wording
@@ -62,8 +85,7 @@ public class StocksController {
 //            this.output = output.concat(ticker + " " + shares + "\n");
 
             //adds to the list in portfolio
-            Portfolio p = new Portfolio();
-            p.addToPortfolio(ticker, shares);
+            listInventories = p.addToPortfolio(ticker, shares);
 
             writeMessage("Do you want to add another stock? (type yes or no)");
             String userAddStock = scan.next();
@@ -74,8 +96,7 @@ public class StocksController {
           System.out.println("output: " + this.output);
 //          try {
           Portfolio port = new Portfolio();
-          port.createNewPortfolio(name);
-
+          port.createNewPortfolio(name, listInventories);
 
 //          } catch (IOException e) {
 //            writeMessage("Error:" + e.getMessage());
@@ -156,15 +177,19 @@ public class StocksController {
         //default;
 
       }
-
-      goodbye();
       break;
     }
+    goodbye();
 
   }
 
-
-  private Stocks getTickDates(){
+  /**
+   * this reads the dates that the user inputs when.
+   * they press 3, 4, or 5 from the menu.
+   *
+   * @return
+   */
+  private Stocks getTickDates() {
     Scanner scan = new Scanner(readable);
     writeMessage("Ticker:");
     String ticker = scan.next();
@@ -177,7 +202,12 @@ public class StocksController {
     return new StocksModel(ticker, date1, date2);
   }
 
-
+  /**
+   * this writes the message.
+   *
+   * @param message a string.
+   * @throws IllegalStateException when the input isn't a string.
+   */
   private void writeMessage(String message) throws IllegalStateException {
     try {
       appendable.append(message);
@@ -186,7 +216,11 @@ public class StocksController {
     }
   }
 
-  //this should print the menu
+  /**
+   * this prints the menu, first thing user sees.
+   *
+   * @throws IllegalStateException when it's at an illegal state.
+   */
   private void printMenu() throws IllegalStateException {
     // need to be able to upload their own stock data (csv file) or look up (this is sorta in between)
     // create portfolio
@@ -202,18 +236,27 @@ public class StocksController {
     writeMessage("5. Examine x-day move average" + System.lineSeparator());
     writeMessage("6. Determine which days are x-day crossover" + System.lineSeparator());
     writeMessage("'quit' to quit" + System.lineSeparator());
+    writeMessage("What're you here for?" + System.lineSeparator());
+
   }
 
-  //
+  /**
+   * this prints the welcome message.
+   *
+   * @throws IllegalStateException when it's at an illegal state.
+   */
   private void welcomeMessage() throws IllegalStateException {
     writeMessage("Welcome to the stocks program!" + System.lineSeparator());
     printMenu();
   }
 
-  //would this return the menu again?? or just end
+  /**
+   * this prints the goodbye message.
+   *
+   * @throws IllegalStateException when it's at an illegal state.
+   */
   private void goodbye() throws IllegalStateException {
     writeMessage("Thank you for using our program!" + System.lineSeparator());
-//    printMenu();
   }
 
 }

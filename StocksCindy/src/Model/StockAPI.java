@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * API used to get the data for the stocks.
+ */
 public class StockAPI {
   public static void main(String []args) {
     //the API key needed to use this web service.git merge origin YOUR_BRANCH_NAME

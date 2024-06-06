@@ -1,2 +1,4 @@
-package Model;public class AlphaVantageAPI {
+package Model;
+
+public class AlphaVantageAPI implements API {
 }

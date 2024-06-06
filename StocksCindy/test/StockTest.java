@@ -8,7 +8,9 @@ import Model.Stock;
 
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * Test class for Stock.
+ */
 public class StockTest {
 
   Stock goog;
@@ -27,11 +29,28 @@ public class StockTest {
     Stock testStock = new Stock("testStockFormat",
             "StocksCindy/test/testingCSV/testSTockFormat.csv");
     assertEquals("testStockFormat", testStock.getTicker());
-    // check content
+
+    List<String> expectedTimestamp = List.of("2024-06-03", "2024-05-31", "2024-05-30");
+    assertEquals(expectedTimestamp, testStock.getTimestamp());
+
+    List<Double> expectedOpen = List.of(173.8800, 173.4000, 176.6900);
+    assertEquals(expectedOpen, testStock.getOpen());
+
+    List<Double> expectedHigh = List.of(175.8600, 174.4200, 176.6900);
+    assertEquals(expectedHigh, testStock.getHigh());
+
+    List<Double> expectedLow = List.of(172.4500, 170.9700, 173.2300);
+    assertEquals(expectedLow, testStock.getLow());
+
+    List<Double> expectedClose = List.of(174.4200, 173.9600, 173.5600);
+    assertEquals(expectedClose, testStock.getClose());
+
+    List<Double> expectedVolume = List.of(18376370.0, 28085151.0, 18844036.0);
+    assertEquals(expectedVolume, testStock.getVolume());
   }
 
   @Test
-  public void testEvaluateStock() {
+  public void TestCalculateNetGain() {
     // 1217.5600 & 156.3300 : loss
     // 2020-04-13 (closest date) to 2024-04-15
     assertEquals(-1061.2300, goog.calculateNetGain("2020-04-10", "2024-04-15"), 0.01);
@@ -49,6 +68,11 @@ public class StockTest {
     assertEquals(-362.02, goog.calculateNetGain("2014-04-10", "2024-06-15"), 0.01);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testCalculateNetGainOutOfRange() {
+    assertEquals(-362.02, goog.calculateNetGain("2027-04-10", "2030-06-15"), 0.01);
+  }
+
   @Test
   public void testAverage() {
     double avg2 = testStock.getMovingAverage("2024-05-28", 3);
@@ -56,6 +80,12 @@ public class StockTest {
 
     double avg1 = goog.getMovingAverage("2024-04-23", 29);
     assertEquals(171.6634, avg1, 0.01);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAverageFail() {
+    double avg2 = testStock.getMovingAverage("2024-05-28", 10);
+    assertEquals(173.9800, avg2, 0.01);
   }
 
   @Test

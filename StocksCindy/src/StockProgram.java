@@ -6,8 +6,14 @@ import model.StocksModel;
 import view.StockProgramView;
 import view.View;
 
-
+/**
+ * the stock program that displays the program in the console. 
+ */
 public class StockProgram {
+  /**
+   * the stock program that c
+   * @param args
+   */
   public static void main(String[] args) {
     Readable rd = new InputStreamReader(System.in);
     Appendable ap = System.out;

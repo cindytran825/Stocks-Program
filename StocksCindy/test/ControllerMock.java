@@ -27,35 +27,56 @@ public class ControllerMock implements Controller {
   public void goControl() {
     mockView.welcomeMessage();
     switch (userInput) {
-      case "1":
+      case "port-create":
         mockView.nameNew();
+        mockView.success();
         mockView.tickerType();
         mockView.stockAdd();
+        mockView.terminating();
         break;
-      case "2":
+      case "port-manage":
         mockView.namePort();
         mockView.tickerType();
         mockView.stockAdd();
+        mockView.terminating();
+        mockView.emptyLine();
         break;
-      case "3":
+      case "port-view":
         mockView.namePort();
+        mockView.emptyLine();
         break;
-      case "4":
+      case "port-eval":
+        mockView.namePort();
         mockView.getTicker();
-//        mockView.getDateUser2();
+        mockView.getDateUser1();
+        mockView.emptyLine();
         break;
-      case "5":
+      case "stock-eval":
         mockView.getTicker();
-//        mockView.getDateUser();
+        mockView.getDateUser2();
+        mockView.getDateUser3();
         break;
-      case "6":
-//        mockView.getTickerDate();
-//        mockView.getDateUser();
+      case "stock-avg":
+        mockView.getTicker();
+        mockView.getDateUser2();
+        ;
+        mockView.getXDays();
+        mockView.getDateUser2();
+        mockView.getXDays();
+        break;
+      case "stock-cross":
+        mockView.getTicker();
+        break;
+      case "menu":
+        mockView.printMenu();
+        mockView.emptyLine();
         break;
       case "quit":
         mockView.goodbye();
         break;
+      default:
+        mockView.invalidCommand();
     }
+    mockView.goodbye();
   }
-
 }

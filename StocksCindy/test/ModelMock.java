@@ -1,10 +1,23 @@
 import java.util.List;
+import java.util.Objects;
 
 import model.Model;
+import model.Portfolio;
 import model.Stock;
 import model.StockApi;
 
 public class ModelMock implements Model {
+  final StringBuilder log;
+
+
+  ModelMock(StringBuilder log) {
+    this.log = Objects.requireNonNull(log);
+  }
+
+  ModelMock(){
+
+    this.log = null;
+  }
 
   @Override
   public Stock generateStock(StockApi api, String ticker) {
@@ -13,12 +26,12 @@ public class ModelMock implements Model {
 
   @Override
   public void createPortfolio(String name) {
-
+    log.append("Creating portfolio " + name + "\n");
   }
 
   @Override
   public void managePortfolio(String name, String ticker, int shares) {
-
+    log.append(ticker + " " + shares);
   }
 
   @Override
@@ -43,11 +56,11 @@ public class ModelMock implements Model {
 
   @Override
   public String getPortfolioNames() {
-    return "";
+    log.append("wow");
+    return log.toString();
   }
 
   @Override
-  public String getPortfolio(String name) {
-    return "";
+  public String getPortfolio(String name) {return "";
   }
 }

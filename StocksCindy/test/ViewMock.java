@@ -109,6 +109,16 @@ public class ViewMock implements View {
 
   }
 
+  @Override
+  public void terminating() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void emptyLine() throws IllegalStateException {
+
+  }
+
 
   @Override
   public void welcomeMessage() {

@@ -54,17 +54,31 @@ public class DataFrameWithImpl implements DataFrame {
     }
   }
 
+  /**
+   * gets the name of the columns.
+   * @return a set string.
+   */
   @Override
   public Set<String> getColumnNames() {
     return map.keySet();
   }
 
+  /**
+   * makes a copy of the list.
+   * @param original original strings in list.
+   * @return a new arraylist.
+   */
   private List<String> deepCopy(List<String> original) {
     List<String> copy = new ArrayList<>(original.size());
     copy.addAll(original);
     return copy;
   }
 
+  /**
+   * get the column in csv file.
+   * @param key the column name
+   * @return
+   */
   @Override
   public List<String> getColumn(String key) {
     return deepCopy(map.get(key));

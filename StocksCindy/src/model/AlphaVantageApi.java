@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * This is a stock API that uses the Alpha Vantage API.
  */
-public class AlphaVantageApi implements StockApi{
+public class AlphaVantageApi implements StockApi {
 
   @Override
   public void addStock(String ticker) {

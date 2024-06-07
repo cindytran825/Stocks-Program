@@ -59,6 +59,11 @@ public class MyDateWithImpl implements MyDate {
     return (year % 4 == 0) && ((year % 100 != 0) || (year % 100 == 0 && year % 400 == 0));
   }
 
+  /**
+   * advances the date if the date is on a weekend.
+   * or isn't a part of the data in the api.
+   * @param days number of days the date is to be advanced by.
+   */
   @Override
   public void advance(int days) {
     int monthLength;
@@ -102,26 +107,47 @@ public class MyDateWithImpl implements MyDate {
     this.year = defensiveYear;
   }
 
+  /**
+   * gets the day.
+   * @return
+   */
   @Override
   public int getDay() {
     return day;
   }
 
+  /**
+   * gets the month.
+   * @return
+   */
   @Override
   public int getMonth() {
     return month;
   }
 
+  /**
+   * gets the year.
+   * @return
+   */
   @Override
   public int getYear() {
     return year;
   }
 
+  /**
+   * formats the date.
+   * @return the date.
+   */
   @Override
   public String toString() {
     return String.format("%04d-%02d-%02d", year, month, day);
   }
 
+  /**
+   * checks if the two dates are the same.
+   * @param other the other date compared.
+   * @return a boolean.
+   */
   @Override
   public boolean equals(Object other) {
     return (other instanceof MyDateWithImpl otherDate)
@@ -131,6 +157,11 @@ public class MyDateWithImpl implements MyDate {
 
   }
 
+  /**
+   * gets the difference of the dates.
+   * @param other the object to be compared.
+   * @return an integer.
+   */
   @Override
   public int compareTo(MyDate other) {
     MyDate start = new MyDateWithImpl(1, 1, 0);

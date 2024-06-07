@@ -12,14 +12,20 @@ import java.util.Scanner;
 /**
  * This represents a stock portfolio. A user can create, edit, and view the portfolio
  */
-public class PortfolioModel implements Portfolio {
+public class PortfolioWithImpl implements Portfolio {
 
   private final String portfolioName;
   private final Map<String, Integer> listInventories;
   private final String reference;
 
-
-  public PortfolioModel(String portfolioName, String storageLocation, boolean loadPrevious) {
+  /**
+   *
+   * it also creates a new porfolio as a csv file when the user creates one.
+   * @param portfolioName name of portfolio.
+   * @param storageLocation location of the file.
+   * @param loadPrevious whether or not the file exists.
+   */
+  public PortfolioWithImpl(String portfolioName, String storageLocation, boolean loadPrevious) {
     this.portfolioName = portfolioName;
     this.listInventories = new HashMap<>();
     this.reference = storageLocation + "/" + portfolioName + ".csv";
@@ -47,6 +53,11 @@ public class PortfolioModel implements Portfolio {
     }
   }
 
+  /**
+   * turns the list of inventories to a string.
+   * also reformatting it in the file.
+   * @return a string of the inventories.
+   */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -65,10 +76,27 @@ public class PortfolioModel implements Portfolio {
     return copy;
   }
 
+  /**
+   * gets the list of tickers+shares that.
+   * user inputs to the portfolio.
+   * @return a map of the port of inventory.
+   */
+  @Override
   public Map<String, Integer> getListInventories() {
     return deepCopy(this.listInventories);
   }
 
+
+  /**
+   * this is used the edit the portfolio.
+   * after it is created and the user wants to add.
+   * anything in it, it is called.
+   * @param companyName the ticker the user inputs.
+   * @param share the share for that ticker.
+   * @return a map of the ticker and share.
+   * @throws IllegalArgumentException when the share is negative.
+   */
+  @Override
   public Map<String, Integer> editPortfolio(
           String companyName,
           int share
@@ -94,6 +122,13 @@ public class PortfolioModel implements Portfolio {
     return deepCopy(listInventories);
   }
 
+  /**
+   * is called when the user wants to get the value of a portfolio.
+   * @param date the date they input.
+   * @param pathToStock string of located file.
+   * @return a double(value).
+   */
+  @Override
   public double getValue(String date, String pathToStock) {
     double totalValue = 0.0;
     Stock stock;
@@ -110,6 +145,10 @@ public class PortfolioModel implements Portfolio {
     return totalValue;
   }
 
+  /**
+   * gets the name of the portfolio.
+   * @return a string of that name.
+   */
   public String getPortfolioName() {
     return portfolioName;
   }

@@ -4,6 +4,8 @@ import java.util.Objects;
 import model.Model;
 import model.Portfolio;
 import model.Stock;
+import model.StockApi;
+
 
 public class ModelMock implements Model {
   final StringBuilder log;
@@ -18,9 +20,8 @@ public class ModelMock implements Model {
     this.log = null;
   }
 
-  @Override
   public Stock generateStock(String ticker) {
-    return null;
+    return new Stock();
   }
 
   @Override
@@ -30,26 +31,30 @@ public class ModelMock implements Model {
 
   @Override
   public void managePortfolio(String name, String ticker, int shares) {
-    log.append(ticker + " " + shares + "\n");
+    log.append(ticker + " " + shares);
   }
 
   @Override
   public String evaluatePortfolio(String name, String date) {
+    log.append("Evaluating portfolio " + date);
     return "";
   }
 
   @Override
   public String evaluateStock(String ticker, String startDate, String endDate) {
+    log.append("Evaluating stock " + ticker + " " + startDate + " " + endDate);
     return "";
   }
 
   @Override
   public String movingAverage(String ticker, String startDate, int lastX) {
+    log.append("Moving average " + ticker + " " + startDate + " " + lastX);
     return "";
   }
 
   @Override
   public String getCrossoverDays(String ticker, String startDate, int lastX) {
+    log.append("Stock crossover " + ticker + " " + startDate + " " + lastX);
     return "";
   }
 
@@ -62,4 +67,9 @@ public class ModelMock implements Model {
   @Override
   public String getPortfolio(String name) {return "";
   }
+
+  public String getStockNames() {
+    return "";
+  }
+
 }

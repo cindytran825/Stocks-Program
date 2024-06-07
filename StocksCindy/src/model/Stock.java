@@ -30,11 +30,19 @@ public class Stock implements Stocks {
     // it will say, if it can't find the stock file, get one from the API
   }
 
+  /**
+   * empty contructor.
+   */
   public Stock() {
     this.ticker = null;
     this.data = null;
   }
 
+  /**
+   * this converts the date into string.
+   * @param date string user input.
+   * @return a date.
+   */
   private MyDate convertToDate(String date) {
     String[] dateSplit = date.split("-");
     MyDate newMyDate = new MyDateWithImpl(
@@ -72,6 +80,17 @@ public class Stock implements Stocks {
     return -1;
   }
 
+  /**
+   * calculates the total net gain (or the difference) between a specified time period.
+   * When given start dates or end dates that do NOT have stock data (weekends or holidays),
+   * it will assume the closest dates in between the given time period.
+   *
+   * @param start the starting date for comparison
+   * @param end   the ending date for comparison
+   * @return the difference between the ending price and the starting price
+   * @throws IllegalArgumentException when there are no data points available for the associated
+   *                                  time period
+   */
   @Override
   public double calculateNetGain(String start, String end) throws IllegalArgumentException {
     int startIndex = getClosestDateIndex(start, true);
@@ -87,6 +106,17 @@ public class Stock implements Stocks {
     return endValue - startValue;
   }
 
+  /**
+   * returns the moving average of a stock given a specified starting date and the last x days.
+   * "X days" refer to days with data points available, and it begins counting from the
+   * starting date (1 day is just starting date).
+   *
+   * @param startDate starting date to calculate moving average
+   * @param lastX     the last x days from starting date (moving average period)
+   * @return the moving average of a specified
+   * @throws IllegalArgumentException when there are not enough days with data points to
+   *                                  satisfy the given last x days
+   */
   @Override
   public double getMovingAverage(String startDate, int lastX) throws IllegalArgumentException {
 
@@ -108,6 +138,16 @@ public class Stock implements Stocks {
     return totalValue / lastX;
   }
 
+  /**
+   * returns a list of crossover days (when the closing price of that day is greater that the
+   * x-day moving average) given a specified starting date and the last x days. "X days"
+   * refer to days with data points available, and it begins counting from the starting
+   * date (1 day is just starting date).
+   *
+   * @param startDate starting date to calculate crossover days
+   * @param lastX     the last x days from starting date (crossover period)
+   * @return a list of all the crossover days
+   */
   @Override
   public List<String> getCrossOver(String startDate, int lastX) {
     List<String> crossDays = new ArrayList<>();
@@ -129,11 +169,19 @@ public class Stock implements Stocks {
     return crossDays;
   }
 
+  /**
+   * gets the list of ticker.
+   * @return
+   */
   @Override
   public String getTicker() {
     return this.ticker;
   }
 
+  /**
+   * gets the list of timestamp.
+   * @return
+   */
   @Override
   public List<String> getTimestamp() {
     return data.getColumn("timestamp");
@@ -147,30 +195,50 @@ public class Stock implements Stocks {
     return doubles;
   }
 
+  /**
+   * gets the list of open price.
+   * @return
+   */
   @Override
   public List<Double> getOpen() {
     List<String> temp = data.getColumn("open");
     return toDouble(temp);
   }
 
+  /**
+   * the list of high price.
+   * @return
+   */
   @Override
   public List<Double> getHigh() {
     List<String> temp = data.getColumn("high");
     return toDouble(temp);
   }
 
+  /**
+   * list of low price.
+   * @return
+   */
   @Override
   public List<Double> getLow() {
     List<String> temp = data.getColumn("low");
     return toDouble(temp);
   }
 
+  /**
+   * list of closing price
+   * @return
+   */
   @Override
   public List<Double> getClose() {
     List<String> temp = data.getColumn("close");
     return toDouble(temp);
   }
 
+  /**
+   * list of volume.
+   * @return
+   */
   @Override
   public List<Double> getVolume() {
     List<String> temp = data.getColumn("volume");

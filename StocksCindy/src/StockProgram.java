@@ -6,6 +6,7 @@ import model.StocksModel;
 import view.StockProgramView;
 import view.View;
 
+
 public class StockProgram {
   public static void main(String[] args) {
     Readable rd = new InputStreamReader(System.in);

@@ -1,18 +1,8 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import model.Model;
-import model.PortfolioModel;
-import view.StockProgramView;
-
-import model.Portfolio;
-import model.Stocks;
-import model.StocksModel;
 import view.View;
 
 /**
@@ -33,8 +23,9 @@ public class StocksController implements Controller {
   /**
    * public constructor that takes in the model, view, and readable.
    * is called in the program display.
-   * @param model model interface.
-   * @param view view interface.
+   *
+   * @param model    model interface.
+   * @param view     view interface.
    * @param readable reads the user inputs.
    */
   public StocksController(Model model, View view, Readable readable) {
@@ -75,7 +66,7 @@ public class StocksController implements Controller {
           name = scan.next();
           model.createPortfolio(name);
           view.success();
-          int shares;
+          String shares;
           String ticker;
           while (true) {
             view.tickerType();
@@ -84,18 +75,27 @@ public class StocksController implements Controller {
               break;
             }
             view.stockAdd();
-            shares = scan.nextInt();
-            //adds to the list in portfolio
-            model.managePortfolio(name, ticker, shares);
+            shares = scan.next();
+            if (!model.checkIfNumber(shares)) {
+              view.invalidNumber();
+              break;
+            } else {
+              model.managePortfolio(name, ticker, Integer.parseInt(shares));
+            }
           }
           view.terminating();
           view.emptyLine();
           break;
-          // make changes to existing portfolio
+
+        // make changes to existing portfolio
         case "port-manage":
           view.getNameOfFile(model.getPortfolioNames());
           view.namePort();
           name = scan.next(); // needs catcher for invalid names
+          if (checkFile(name, "StocksCindy/UserPortfolio")) {
+            break;
+          }
+
           while (true) {
             view.tickerType();
             ticker = scan.next();
@@ -103,70 +103,151 @@ public class StocksController implements Controller {
               break;
             }
             view.stockAdd();
-            shares = scan.nextInt();
+            shares = scan.next();
             //adds to the list in portfolio
-            model.managePortfolio(name, ticker, shares);
+            if (!model.checkIfNumber(shares)) {
+              view.invalidNumber();
+              break;
+            } else {
+              model.managePortfolio(name, ticker, Integer.parseInt(shares));
+            }
           }
           view.terminating();
           view.emptyLine();
           break;
 
-          // view existing portfolios
+        // view existing portfolios
         case "port-view":
           view.getNameOfFile(model.getPortfolioNames());
           view.namePort();
           name = scan.next(); // needs catcher for invalid names
-          view.printPortfolio(model.getPortfolio(name));
-          view.emptyLine();
+          if (checkFile(name, "StocksCindy/UserPortfolio")) {
+            break;
+          }
+          view.print(model.getPortfolio(name));
           break;
+
 
         case "port-eval":
           view.getNameOfFile(model.getPortfolioNames());
           view.namePort();
           name = scan.next(); // needs catcher for invalid names
+          if (checkFile(name, "StocksCindy/UserPortfolio")) {
+            break;
+          }
+
           view.getDateUser1();
           String date = scan.next();
+          if (checkDate(date)) {
+            break;
+          }
+
           view.printPortValue(model.evaluatePortfolio(name, date));
           view.emptyLine();
           break;
 
-          // examine gain/ loss
-        case "stock-eval":
 
+        // examine gain/ loss
+        case "stock-eval":
           //call method that returns the files
           view.getTicker();
           ticker = scan.next();
+          if (checkFile(ticker, "StocksCindy/CSVFiles")) {
+            break;
+          }
+
           view.getDateUser2();
           String date1 = scan.next();
+          if (checkDate(date1)) {
+            break;
+          }
+
           view.getDateUser3();
           String date2 = scan.next();
+          if (checkDate(date2)) {
+            break;
+          }
+
           view.printNetGain(model.evaluateStock(ticker, date1, date2), date1, date2);
           view.emptyLine();
           break;
 
-          //  examine x-day moving average
+        //  examine x-day moving average
         case "stock-avg":
           view.getTicker();
           ticker = scan.next();
-          view.getDateUser2();;
+          if (checkFile(ticker, "StocksCindy/CSVFiles")) {
+            break;
+          }
+
+          view.getDateUser2();
           date = scan.next();
-          view.getXDays();
-          int lastXDays = scan.nextInt();
-          view.movingAvg(model.movingAverage(ticker, date, lastXDays));
+          if (checkDate(date)) {
+            break;
+          }
+
+          view.getDays();
+          String lastDays = scan.next();
+          if (checkDays(lastDays)) {
+            break;
+          }
+
+          view.movingAvg(model.movingAverage(ticker, date, Integer.parseInt(lastDays)));
           view.emptyLine();
           break;
 
-          // determine which days are x-day crossover
+        // determine which days are x-day crossover
         case "stock-cross":
           view.getTicker();
           ticker = scan.next();
+          if (checkFile(ticker, "StocksCindy/CSVFiles")) {
+            break;
+          }
+
           view.getDateUser2();
           date = scan.next();
-          view.getXDays();
-          lastXDays = scan.nextInt();
-          view.printCrossover(model.getCrossoverDays(ticker, date, lastXDays));
+          if (checkDate(date)) {
+            break;
+          }
+
+          view.getDays();
+          lastDays = scan.next();
+          if (checkDays(lastDays)) {
+            break;
+          }
+
+          view.printCrossover(model.getCrossoverDays(ticker, date, Integer.parseInt(lastDays)));
           view.emptyLine();
           break;
+
+        // view the list of stocks on file
+        case "stock-list":
+          view.printStockNames(model.getStockNames());
+          view.emptyLine();
+
+          // to download / update stock information
+        case "stock-download":
+          view.getTicker();
+          ticker = scan.next();
+          model.generateStock(ticker);
+          view.printSuccessAddStock(ticker);
+          view.emptyLine();
+
+          // upload stock csv file to add
+        case "stock-upload":
+          view.getPath();
+          String path = scan.next();
+          if (!model.checkIfFileExist(path)) {
+            view.invalidFile();
+            view.terminating();
+            view.emptyLine();
+            break;
+          }
+
+          view.getNameFile();
+          ticker = scan.next();
+          model.uploadStock(ticker, path);
+
         case "quit":
           quit = true;
           break;
@@ -179,6 +260,36 @@ public class StocksController implements Controller {
       }
     }
     view.goodbye();
+  }
+
+  private boolean checkDays(String lastDays) {
+    if (!model.checkIfNumber(lastDays)) {
+      view.invalidNumber();
+      view.terminating();
+      view.emptyLine();
+      return true;
+    }
+    return false;
+  }
+
+  private boolean checkDate(String date1) {
+    if (!model.checkIfDate(date1)) {
+      view.invalidDate();
+      view.terminating();
+      view.emptyLine();
+      return true;
+    }
+    return false;
+  }
+
+  private boolean checkFile(String ticker, String path) {
+    if (!model.checkIfFileExist(path + "/" + ticker + ".csv")) {
+      view.invalidFile();
+      view.terminating();
+      view.emptyLine();
+      return true;
+    }
+    return false;
   }
 }
 

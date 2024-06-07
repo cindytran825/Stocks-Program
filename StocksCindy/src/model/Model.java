@@ -1,29 +1,121 @@
 package model;
 
-import java.util.List;
-
 /**
  * represents the model. It does the implementations.
  * and it is called in the controller when it picks up the user inputs.
  */
 public interface Model {
 
-   Stock generateStock(String ticker);
 
-   void createPortfolio(String name);
+  /**
+   * this checks if the file exists.
+   *
+   * @param path name of the csv file (excl
+   * @return true if file exists, otherwise if not.
+   */
+  boolean checkIfFileExist(String path);
 
-   void managePortfolio(String name, String ticker, int shares);
+  // TODO DOCUMENTATION
+  boolean checkIfDate(String date); // TODO NEED TO ADD TO MOCKS AND TESTS
 
-   String evaluatePortfolio(String name, String date);
+  // TODO DOCUMENTATION
+  boolean checkIfNumber(String n); // TODO NEED TO ADD TO MOCKS AND TESTS
 
-   String evaluateStock(String ticker, String startDate, String endDate);
+  /**
+   * allows the user to upload the file.
+   *
+   * @param ticker gets the ticker user input.
+   * @param path   a path of the file.
+   * @return a string.
+   */
+  String uploadStock(String ticker, String path); // TODO NEED TO ADD TO MOCKS AND TESTS
 
-   String movingAverage(String ticker, String startDate, int lastX);
+  /**
+   * generates the stock
+   *
+   * @param ticker the company user inputs.
+   */
+  void generateStock(String ticker);
 
-   String getCrossoverDays(String ticker, String startDate, int lastX);
+  /**
+   * this creates a new portfolio and is called in the controller.
+   *
+   * @param name is the name of the portfolio the user inputs.
+   */
+  void createPortfolio(String name);
 
+  /**
+   * called when the user wants to anything to an existing portfolio.
+   *
+   * @param name   of the portfolio.
+   * @param ticker of the company.
+   * @param shares the user inputs.
+   */
+  void managePortfolio(String name, String ticker, int shares);
+
+  /**
+   * called when the user asks for the value in their portfolio.
+   * it takes the date that they input and the portfolio location. (name)
+   *
+   * @param name the name that the user input for their portfolio.
+   * @param date the date that the user inputs.
+   * @return a double representing the value.
+   */
+  String evaluatePortfolio(String name, String date);
+
+  /**
+   * it returns how much gain and how much loss.
+   * negative if there is loss and positive double for gain.
+   *
+   * @param ticker    the ticker that the user input.
+   * @param startDate the startDate.
+   * @param endDate   the end date.
+   * @return a double representing the gain/loss.
+   */
+  String evaluateStock(String ticker, String startDate, String endDate);
+
+  /**
+   * this gets the x-day moving average of a stock.
+   * and calls the getMovingAverage method in the Stock class.
+   *
+   * @param ticker    is the ticker of the company user inputs.
+   * @param startDate the starting date user inputs.
+   * @param lastX     integer user inputs.
+   * @return a string that calls method.
+   */
+  String movingAverage(String ticker, String startDate, int lastX);
+
+  /**
+   * This gets the x-day crossovers for a specified stock over a specified date range.
+   *
+   * @param ticker    the ticker user inputs.
+   * @param startDate start date the user inputs.
+   * @param lastX     the intger user inputs.
+   * @return the days as a string.
+   */
+  String getCrossoverDays(String ticker, String startDate, int lastX);
+
+  /**
+   * gets the name of the portfolios in the files.
+   * that were created.
+   *
+   * @return a string of the names of the portfolios.
+   */
   String getPortfolioNames();
 
+  /**
+   * gets the portfolio used in the controller.
+   *
+   * @param name the user inputs for the portfolio.
+   * @return a string.
+   */
   String getPortfolio(String name);
+
+  /**
+   * the names of the stocks.
+   *
+   * @return a string of the name of stocks.
+   */
+  String getStockNames(); // TODO NEED TO ADD TO MOCKS AND TESTS
 
 }

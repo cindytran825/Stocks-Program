@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import model.DataFrame;
+import model.DataFrameWithImpl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,7 +14,7 @@ public class DataFrameTest {
   @Test
   public void initializeTest() {
     String path = "StocksCindy/test/testingCSV/testStockFormat.csv";
-    DataFrame stock = new DataFrame(path);
+    DataFrameWithImpl stock = new DataFrameWithImpl(path);
 
     Set<String> expectedKeys = new HashSet<String>();
     expectedKeys.add("timestamp");

@@ -4,11 +4,11 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import model.Portfolio;
+import model.PortfolioModel;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,9 +23,9 @@ public class PortfolioTest {
 
   @Before
   public void setUP() {
-    emptyBob = new Portfolio("Empty Bob", "StocksCindy/test/testingCSV", false);
-    bob = new Portfolio("Bob", "StocksCindy/test/testingCSV", false);
-    bart = new Portfolio("bart", "StocksCindy/test/testingCSV", true);
+    emptyBob = new PortfolioModel("Empty Bob", "StocksCindy/test/testingCSV", false);
+    bob = new PortfolioModel("Bob", "StocksCindy/test/testingCSV", false);
+    bart = new PortfolioModel("bart", "StocksCindy/test/testingCSV", true);
     bob.editPortfolio("GOOG", 5000);
     bob.editPortfolio("testStockFormat", 123);
 
@@ -91,11 +91,11 @@ public class PortfolioTest {
     );
   }
 
-@Test
+  @Test
   public void testToString() {
     assertEquals(
             "GOOG : 5000\ntestStockFormat : 123\n", bob.toString());
-}
+  }
 
 //  /**
 //   * this tests then user adds one company to a portfolio.

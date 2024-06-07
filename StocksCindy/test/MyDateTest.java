@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.MyDate;
+import model.MyDateWithImpl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,79 +17,79 @@ public class MyDateTest {
 
   @Before
   public void setUp() {
-    day1 = new MyDate(1, 1, 0);
-    day2 = new MyDate(6, 5, 2024);
+    day1 = new MyDateWithImpl(1, 1, 0);
+    day2 = new MyDateWithImpl(6, 5, 2024);
   }
 
   @Test
   public void testValidMyDate() {
     // Jan 12 2001
-    MyDate jan122001 = new MyDate(12, 1, 2001);
+    MyDate jan122001 = new MyDateWithImpl(12, 1, 2001);
     assertEquals("2001-01-12", jan122001.toString());
 
     // Feb 29 2004
-    MyDate feb292004 = new MyDate(29, 2, 2004);
+    MyDate feb292004 = new MyDateWithImpl(29, 2, 2004);
     assertEquals("2004-02-29", feb292004.toString());
 
     // Feb 29 2000
-    MyDate feb292000 = new MyDate(29, 2, 2000);
+    MyDate feb292000 = new MyDateWithImpl(29, 2, 2000);
     assertEquals("2000-02-29", feb292000.toString());
 
     // Dec 31 1659
-    MyDate dec311659 = new MyDate(31, 12, 1659);
+    MyDate dec311659 = new MyDateWithImpl(31, 12, 1659);
     assertEquals("1659-12-31", dec311659.toString());
 
     // Jun 30 1342
-    MyDate jun301342 = new MyDate(30, 6, 1342);
+    MyDate jun301342 = new MyDateWithImpl(30, 6, 1342);
     assertEquals("1342-06-30", jun301342.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidNegativeDayMyDate() {
     // Jan -1 2000
-    MyDate illegalJan = new MyDate(-1, 1, 2000);
+    MyDate illegalJan = new MyDateWithImpl(-1, 1, 2000);
     assertEquals("2000-01--01", illegalJan.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidTooLargeDayMyDate() {
     // Jan 1000 2000
-    MyDate illegalJan = new MyDate(1000, 1, 2000);
+    MyDate illegalJan = new MyDateWithImpl(1000, 1, 2000);
     assertEquals("2000-01-11", illegalJan.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidNegativeMonthMyDate() {
     // -May 1 2000
-    MyDate illegalJan = new MyDate(1, -5, 2000);
+    MyDate illegalJan = new MyDateWithImpl(1, -5, 2000);
     assertEquals("2000--5--01", illegalJan.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidTooLargeMonthMyDate() {
     // OctoSeptember 5 2000
-    MyDate illegalJan = new MyDate(5, 19, 2000);
+    MyDate illegalJan = new MyDateWithImpl(5, 19, 2000);
     assertEquals("2000-19-05", illegalJan.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidNegativeYearMyDate() {
     // Jan 19 -2000
-    MyDate illegalJan = new MyDate(19, 1, -2000);
+    MyDate illegalJan = new MyDateWithImpl(19, 1, -2000);
     assertEquals("2000-01-19", illegalJan.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidLeapYearMyDate1() {
     // feb 29 1999
-    MyDate illegalJan = new MyDate(29, 2, 1999);
+    MyDate illegalJan = new MyDateWithImpl(29, 2, 1999);
     assertEquals("1999-02-29", illegalJan.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidLeapYearMyDate2() {
     // feb 29 2300
-    MyDate illegalJan = new MyDate(29, 2, 2300);
+    MyDate illegalJan = new MyDateWithImpl(29, 2, 2300);
     assertEquals("2300-02--29", illegalJan.toString());
   }
 
@@ -136,7 +137,7 @@ public class MyDateTest {
 
   @Test
   public void testEquals() {
-    MyDate day = new MyDate(1, 1, 0);
+    MyDate day = new MyDateWithImpl(1, 1, 0);
     assertTrue(day1.equals(day));
     assertTrue(day.equals(day1));
     assertTrue(day.equals(day));
@@ -150,8 +151,8 @@ public class MyDateTest {
 
   @Test
   public void testCompare() {
-    MyDate day = new MyDate(17, 12, 2014);
-    MyDate other = new MyDate(1, 6, 2020);
+    MyDate day = new MyDateWithImpl(17, 12, 2014);
+    MyDate other = new MyDateWithImpl(1, 6, 2020);
     assertEquals(-1993, day.compareTo(other));
     assertEquals(1993, other.compareTo(day));
 

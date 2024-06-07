@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import model.Model;
+import model.PortfolioModel;
 import view.StockProgramView;
 
 import model.Portfolio;
@@ -58,11 +59,9 @@ public class StocksController implements Controller {
    * @throws IllegalStateException is called when method isn't at an appropriate state.
    */
   public void goControl() throws IllegalStateException {
-    Map<String, Integer> inventory = new HashMap<>();
-    List<Map<String, Integer>> listInventories = new ArrayList<>();
     Scanner scan = new Scanner(readable);
     boolean quit = false;
-    String name = this.name;
+    String name;
     //if there is an existing portfolio
     boolean checkPortfolio = false;
     view.welcomeMessage();
@@ -97,7 +96,6 @@ public class StocksController implements Controller {
           view.getNameOfFile(model.getPortfolioNames());
           view.namePort();
           name = scan.next(); // needs catcher for invalid names
-          Portfolio port = new Portfolio(name, "StocksCindy/UserPortfolio", true);
           while (true) {
             view.tickerType();
             ticker = scan.next();

@@ -9,7 +9,7 @@ import java.util.List;
 public class Stock implements Stocks {
 
   private final String ticker;
-  private final DataFrame data;
+  private final DataFrameWithImpl data;
 
   /**
    * This constructor assigns a ticker to the stock and creates a data frame of all the available
@@ -20,7 +20,7 @@ public class Stock implements Stocks {
    */
   public Stock(String ticker, String directory) {
     this.ticker = ticker;
-    this.data = new DataFrame(directory + "/" + ticker + ".csv");
+    this.data = new DataFrameWithImpl(directory + "/" + ticker + ".csv");
     // still have to figure out how to get it to automatically get new tickers and stuff
 
     // if statement before assigning Data, have it check if the csv file exists or not, then
@@ -37,7 +37,7 @@ public class Stock implements Stocks {
 
   private MyDate convertToDate(String date) {
     String[] dateSplit = date.split("-");
-    MyDate newMyDate = new MyDate(
+    MyDate newMyDate = new MyDateWithImpl(
             Integer.parseInt(dateSplit[2]),
             Integer.parseInt(dateSplit[1]),
             Integer.parseInt(dateSplit[0])

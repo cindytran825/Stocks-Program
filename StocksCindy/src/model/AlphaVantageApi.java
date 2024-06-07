@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * This is a stock API that uses the Alpha Vantage API.
  */
-public class AlphaVantageApi implements StockApi {
+public class AlphaVantageApi implements StockApi{
 
   @Override
   public void addStock(String ticker) {
@@ -37,7 +37,7 @@ public class AlphaVantageApi implements StockApi {
       throw new IllegalArgumentException("No price data found for " + ticker);
     }
 
-    String directory = "CSVFiles/";
+    String directory = "StocksCindy/CSVFiles/";
 
     try {
       File fw = new File(directory + ticker + ".csv");
@@ -46,9 +46,5 @@ public class AlphaVantageApi implements StockApi {
       writer.close();
     } catch (IOException var9) {
     }
-
-
-    System.out.println("Return value: ");
-    System.out.println(output.toString());
   }
 }

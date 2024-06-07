@@ -159,14 +159,14 @@ public class MyDate implements Comparable<MyDate> {
     return String.format("%04d-%02d-%02d", year, month, day);
   }
 
-//  @Override
-//  public boolean equals(Object other) {
-//    return (other instanceof MyDate otherDate)
-//            && this.day == otherDate.day
-//            && this.month == otherDate.month
-//            && this.year == otherDate.year;
-//
-//  }
+  @Override
+  public boolean equals(Object other) {
+    return (other instanceof MyDate otherDate)
+            && this.day == otherDate.day
+            && this.month == otherDate.month
+            && this.year == otherDate.year;
+
+  }
 
   @Override
   public int compareTo(MyDate other) {

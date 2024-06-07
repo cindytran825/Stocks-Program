@@ -4,7 +4,6 @@ import java.util.Objects;
 import model.Model;
 import model.Portfolio;
 import model.Stock;
-import model.StockApi;
 
 public class ModelMock implements Model {
   final StringBuilder log;
@@ -20,7 +19,7 @@ public class ModelMock implements Model {
   }
 
   @Override
-  public Stock generateStock(StockApi api, String ticker) {
+  public Stock generateStock(String ticker) {
     return null;
   }
 
@@ -31,7 +30,7 @@ public class ModelMock implements Model {
 
   @Override
   public void managePortfolio(String name, String ticker, int shares) {
-    log.append(ticker + " " + shares);
+    log.append(ticker + " " + shares + "\n");
   }
 
   @Override
@@ -56,7 +55,7 @@ public class ModelMock implements Model {
 
   @Override
   public String getPortfolioNames() {
-    log.append("wow");
+    log.append("wow\n");
     return log.toString();
   }
 

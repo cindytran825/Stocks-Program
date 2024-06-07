@@ -1,23 +1,16 @@
 package model;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
 /**
- * the StocksModel is where all the implementation is at.
- * methods are called in the controller.
+ * the StocksModel is where all the implementation is at. It holds all the methods that
+ * are called in the controller.
  */
 public class StocksModel implements Model {
   private final String stockFolderPath;
   private final String portfolioFolderPath;
+  private final StockApi api;
 
   /**
    *
@@ -25,30 +18,23 @@ public class StocksModel implements Model {
   public StocksModel() {
     this.stockFolderPath = "StocksCindy/CSVFiles";
     this.portfolioFolderPath = "StocksCindy/UserPortfolio";
+    this.api = new AlphaVantageApi(); // whichever api
   }
-
-//  @Override
-//  public void execute(s)
 
 
   /**
    * this checks if the file exists in the directory.
+   *
    * @param ticker is the ticker that the user input.
    * @return a boolean.
    */
   private boolean checkIfFileExist(String ticker) {
-      String path = stockFolderPath + "/" + ticker + ".csv";
-      File file = new File(path);
-      return file.exists();
+    String path = stockFolderPath + "/" + ticker + ".csv";
+    File file = new File(path);
+    return file.exists();
   }
 
-  /**
-   *
-   * @param api
-   * @param ticker
-   * @return
-   */
-  public Stock generateStock(StockApi api, String ticker) {
+  public Stock generateStock(String ticker) {
     if (!checkIfFileExist(ticker)) {
       api.addStock(ticker);
     }
@@ -60,6 +46,7 @@ public class StocksModel implements Model {
 
   /**
    * this creates a new portfolio and is called in the controller.
+   *
    * @param name is the name of the portfolio the user inputs.
    */
   public void createPortfolio(String name) {
@@ -67,7 +54,6 @@ public class StocksModel implements Model {
   }
 
   /**
-   *
    * @param name
    * @param ticker
    * @param shares
@@ -80,6 +66,7 @@ public class StocksModel implements Model {
   /**
    * called when the user asks for the value in their portfolio.
    * it takes the date that they input and the portfolio location. (name)
+   *
    * @param name the name that the user input for their portfolio.
    * @param date the date that the user inputs.
    * @return a double representing the value.
@@ -92,9 +79,10 @@ public class StocksModel implements Model {
   /**
    * it returns how much gain and how much loss.
    * negative if there is loss and positive double for gain.
-   * @param ticker the ticker that the user input.
+   *
+   * @param ticker    the ticker that the user input.
    * @param startDate the startDate.
-   * @param endDate the end date.
+   * @param endDate   the end date.
    * @return a double representing the gain/loss.
    */
   public String evaluateStock(String ticker, String startDate, String endDate) {
@@ -103,7 +91,6 @@ public class StocksModel implements Model {
   }
 
   /**
-   *
    * @param ticker
    * @param startDate
    * @param lastX
@@ -149,7 +136,6 @@ public class StocksModel implements Model {
    * examine gain or loss of stock
    * examine moving average of stock
    * determine which days are crossover days
-   *
    */
 
 }

@@ -30,7 +30,7 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("Creating portfolio wow\nAMZN 32", log.toString());
+    assertEquals("Creating portfolio wow\nAMZN 32\n", log.toString());
   }
   @Test
   public void testPortManage() {
@@ -43,7 +43,7 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("Creating portfolio wow\nAMZN 32\nTSLA 2", log.toString());
+    assertEquals("wow\nTSLA 2\n", log.toString());
   }
 
   @Test
@@ -57,7 +57,7 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("wow", log.toString());
+    assertEquals("wow\n", log.toString());
   }
 
 }

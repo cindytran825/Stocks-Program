@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface Model {
 
-   Stock generateStock(StockApi api, String ticker);
+   Stock generateStock(String ticker);
 
    void createPortfolio(String name);
 

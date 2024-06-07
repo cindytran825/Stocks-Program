@@ -1,7 +1,6 @@
 package view;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * View of the program, it should connect to the controller.
@@ -107,13 +106,13 @@ public class StockProgramView implements View {
   }
 
   public void printNetGain(String value, String date1, String date2) throws IllegalStateException {
-      writeMessage("Between " + date1 + " to " + date2 + " "
-              + "the stock had a net gain of: $" + value + System.lineSeparator());
-    }
+    writeMessage("Between " + date1 + " to " + date2 + " "
+            + "the stock had a net gain of: $" + value + System.lineSeparator());
+  }
 
-    public void getXDays() throws IllegalStateException {
+  public void getXDays() throws IllegalStateException {
     writeMessage("Enter in the last x-days since the current date: ");
-    }
+  }
 
   public void movingAvg(String value) throws IllegalStateException {
     writeMessage("The moving average is: " + value + System.lineSeparator());
@@ -124,7 +123,14 @@ public class StockProgramView implements View {
             + value + System.lineSeparator());
   }
 
+  public void terminating() throws IllegalStateException {
+    writeMessage("Terminating command..." + System.lineSeparator());
+  }
 
+  @Override
+  public void emptyLine() throws IllegalStateException {
+    writeMessage(System.lineSeparator());
+  }
 
   /**
    * this prints the goodbye message.
@@ -135,6 +141,7 @@ public class StockProgramView implements View {
     writeMessage("Thank you for using our program!" + System.lineSeparator());
 
   }
+
   /**
    * this prints the welcome message.
    *
@@ -148,8 +155,6 @@ public class StockProgramView implements View {
   public void invalidCommand() throws IllegalStateException {
     writeMessage("This is an invalid command!" + System.lineSeparator());
   }
-
-
 
 
 }

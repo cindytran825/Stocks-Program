@@ -86,15 +86,10 @@ public class Portfolio {
 
     File portFile = new File(reference);
       try {
-        Scanner scan = new Scanner(portFile);
         FileWriter fw = new FileWriter(portFile);
-        System.out.println(true);
-        while (scan.hasNext()) {
-          String line = scan.nextLine();
-          System.out.println(line);
-          fw.write(line + "\n");
+        for (String key : listInventories.keySet()) {
+          fw.write(key + "," + listInventories.get(key) + "\n");
         }
-        fw.write(companyName + "," + share + "\n");
         fw.close();
       } catch (IOException e) {
         // doesn't matter

@@ -75,7 +75,7 @@ public class StocksController implements Controller {
           view.nameNew();
           name = scan.next();
           model.createPortfolio(name);
-
+          view.success();
           int shares;
           String ticker;
           while (true) {
@@ -89,6 +89,8 @@ public class StocksController implements Controller {
             //adds to the list in portfolio
             model.managePortfolio(name, ticker, shares);
           }
+          view.terminating();
+          view.emptyLine();
           break;
           // make changes to existing portfolio
         case "port-manage":
@@ -106,8 +108,9 @@ public class StocksController implements Controller {
             shares = scan.nextInt();
             //adds to the list in portfolio
             model.managePortfolio(name, ticker, shares);
-            view.success();
           }
+          view.terminating();
+          view.emptyLine();
           break;
 
           // view existing portfolios
@@ -116,6 +119,7 @@ public class StocksController implements Controller {
           view.namePort();
           name = scan.next(); // needs catcher for invalid names
           view.printPortfolio(model.getPortfolio(name));
+          view.emptyLine();
           break;
 
         case "port-eval":
@@ -125,6 +129,7 @@ public class StocksController implements Controller {
           view.getDateUser1();
           String date = scan.next();
           view.printPortValue(model.evaluatePortfolio(name, date));
+          view.emptyLine();
           break;
 
           // examine gain/ loss
@@ -138,6 +143,7 @@ public class StocksController implements Controller {
           view.getDateUser3();
           String date2 = scan.next();
           view.printNetGain(model.evaluateStock(ticker, date1, date2), date1, date2);
+          view.emptyLine();
           break;
 
           //  examine x-day moving average
@@ -149,6 +155,7 @@ public class StocksController implements Controller {
           view.getXDays();
           int lastXDays = scan.nextInt();
           view.movingAvg(model.movingAverage(ticker, date, lastXDays));
+          view.emptyLine();
           break;
 
           // determine which days are x-day crossover
@@ -160,17 +167,18 @@ public class StocksController implements Controller {
           view.getXDays();
           lastXDays = scan.nextInt();
           view.printCrossover(model.getCrossoverDays(ticker, date, lastXDays));
+          view.emptyLine();
           break;
         case "quit":
           quit = true;
           break;
         case "menu":
           view.printMenu();
+          view.emptyLine();
           break;
         default:
           view.invalidCommand();
       }
-      break;
     }
     view.goodbye();
   }

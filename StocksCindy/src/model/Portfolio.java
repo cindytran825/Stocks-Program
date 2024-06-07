@@ -88,8 +88,10 @@ public class Portfolio {
       try {
         Scanner scan = new Scanner(portFile);
         FileWriter fw = new FileWriter(portFile);
+        System.out.println(true);
         while (scan.hasNext()) {
           String line = scan.nextLine();
+          System.out.println(line);
           fw.write(line + "\n");
         }
         fw.write(companyName + "," + share + "\n");

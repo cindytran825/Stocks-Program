@@ -28,6 +28,12 @@ public class ControllerTest {
 //    ap = new StringBuilder();
   }
 
+  @Test
+  public void testCreatePort() {
+    rd = new StringReader("port-create Bob");
+
+  }
+
 
 
 

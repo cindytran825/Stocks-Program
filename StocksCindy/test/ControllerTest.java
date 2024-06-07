@@ -36,7 +36,7 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
     //just to show that the controller does go to the mock model
-    assertEquals("Creating portfolio wow\nAMZN 32", log.toString());
+    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv", log.toString());
   }
 
   /**

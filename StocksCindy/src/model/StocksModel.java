@@ -49,9 +49,9 @@ public class StocksModel implements Model {
       String[] dateInfo = date.split("-");
       // just initializing, no need to store
       new MyDateWithImpl(
-              Integer.parseInt(dateInfo[0]),
+              Integer.parseInt(dateInfo[2]),
               Integer.parseInt(dateInfo[1]),
-              Integer.parseInt(dateInfo[2]));
+              Integer.parseInt(dateInfo[0]));
       return true;
     } catch (Exception e) {
       return false;
@@ -123,71 +123,30 @@ public class StocksModel implements Model {
     Portfolio newPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, false);
   }
 
-
-  /**
-   * called when the user wants to anything to an existing portfolio.
-   * @param name of the portfolio.
-   * @param ticker of the company.
-   * @param shares the user inputs.
-   */
   @Override
   public void managePortfolio(String name, String ticker, int shares) {
     Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, true);
     existingPortfolio.editPortfolio(ticker, shares);
   }
 
-  /**
-   * called when the user asks for the value in their portfolio.
-   * it takes the date that they input and the portfolio location(name).
-   *
-   * @param name the name that the user input for their portfolio.
-   * @param date the date that the user inputs.
-   * @return a double representing the value.
-   */
   @Override
   public String evaluatePortfolio(String name, String date) {
     Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, true);
     return String.valueOf(existingPortfolio.getValue(date, stockFolderPath));
   }
 
-  /**
-   * it returns how much gain and how much loss.
-   * negative if there is loss and positive double for gain.
-   *
-   * @param ticker    the ticker that the user input.
-   * @param startDate the startDate.
-   * @param endDate   the end date.
-   * @return a double representing the gain/loss.
-   */
   @Override
   public String evaluateStock(String ticker, String startDate, String endDate) {
     Stock stock = new Stock(ticker, stockFolderPath);
     return String.valueOf(stock.calculateNetGain(startDate, endDate));
   }
 
-  /**
-   * this gets the x-day moving average of a stock.
-   * and calls the getMovingAverage method in the Stock class.
-   *
-   * @param ticker    is the ticker of the company user inputs.
-   * @param startDate the starting date user inputs.
-   * @param lastX     integer user inputs.
-   * @return a string that calls method.
-   */
   @Override
   public String movingAverage(String ticker, String startDate, int lastX) {
     Stock stock = new Stock(ticker, stockFolderPath);
     return String.valueOf(stock.getMovingAverage(startDate, lastX));
   }
 
-  /**
-   * This gets the x-day crossovers for a specified stock over a specified date range.
-   *
-   * @param ticker    the ticker user inputs.
-   * @param startDate start date the user inputs.
-   * @param lastX     the integer user inputs.
-   * @return the days as a string.
-   */
   @Override
   public String getCrossoverDays(String ticker, String startDate, int lastX) {
     Stock stock = new Stock(ticker, stockFolderPath);
@@ -199,12 +158,6 @@ public class StocksModel implements Model {
     return sb.toString();
   }
 
-  /**
-   * gets the name of the portfolios in the files.
-   * that were created.
-   *
-   * @return a string of the names of the portfolios.
-   */
   @Override
   public String getPortfolioNames() {
     File direct = new File(portfolioFolderPath);
@@ -217,23 +170,12 @@ public class StocksModel implements Model {
     return sb.toString();
   }
 
-  /**
-   * gets the portfolio used in the controller.
-   *
-   * @param name the user inputs for the portfolio.
-   * @return a string.
-   */
   @Override
   public String getPortfolio(String name) {
     Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, true);
     return existingPortfolio.toString();
   }
 
-  /**
-   * the names of the stocks.
-   *
-   * @return a string of the name of stocks.
-   */
   @Override
   public String getStockNames() {
     File direct = new File(stockFolderPath);

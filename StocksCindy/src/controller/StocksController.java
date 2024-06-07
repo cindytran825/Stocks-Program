@@ -74,6 +74,10 @@ public class StocksController implements Controller {
             if (ticker.equals("f")) {
               break;
             }
+            if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
+              view.invalidStock();
+              break;
+            }
             view.stockAdd();
             shares = scan.next();
             if (!model.checkIfNumber(shares)) {
@@ -100,6 +104,10 @@ public class StocksController implements Controller {
             view.tickerType();
             ticker = scan.next();
             if (ticker.equals("f")) {
+              break;
+            }
+            if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
+              view.invalidStock();
               break;
             }
             view.stockAdd();
@@ -152,7 +160,10 @@ public class StocksController implements Controller {
           //call method that returns the files
           view.getTicker();
           ticker = scan.next();
-          if (checkFile(ticker, "StocksCindy/CSVFiles")) {
+          if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
+            view.invalidStock();
+            view.terminating();
+            view.emptyLine();
             break;
           }
 
@@ -176,7 +187,10 @@ public class StocksController implements Controller {
         case "stock-avg":
           view.getTicker();
           ticker = scan.next();
-          if (checkFile(ticker, "StocksCindy/CSVFiles")) {
+          if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
+            view.invalidStock();
+            view.terminating();
+            view.emptyLine();
             break;
           }
 
@@ -200,7 +214,10 @@ public class StocksController implements Controller {
         case "stock-cross":
           view.getTicker();
           ticker = scan.next();
-          if (checkFile(ticker, "StocksCindy/CSVFiles")) {
+          if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
+            view.invalidStock();
+            view.terminating();
+            view.emptyLine();
             break;
           }
 
@@ -224,6 +241,7 @@ public class StocksController implements Controller {
         case "stock-list":
           view.printStockNames(model.getStockNames());
           view.emptyLine();
+          break;
 
           // to download / update stock information
         case "stock-download":
@@ -232,6 +250,7 @@ public class StocksController implements Controller {
           model.generateStock(ticker);
           view.printSuccessAddStock(ticker);
           view.emptyLine();
+          break;
 
           // upload stock csv file to add
         case "stock-upload":
@@ -247,6 +266,9 @@ public class StocksController implements Controller {
           view.getNameFile();
           ticker = scan.next();
           model.uploadStock(ticker, path);
+          view.printSuccessAddStock(ticker);
+          view.emptyLine();
+          break;
 
         case "quit":
           quit = true;

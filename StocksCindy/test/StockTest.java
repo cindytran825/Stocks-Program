@@ -16,6 +16,9 @@ public class StockTest {
   Stock goog;
   Stock testStock;
 
+  /**
+   * setup for testing.
+   */
   @Before
   public void setUp() {
 
@@ -24,6 +27,9 @@ public class StockTest {
             "StocksCindy/test/testingCSV/testSTockFormat.csv");
   }
 
+  /**
+   * testing the getters.
+   */
   @Test
   public void initializationTestAndGetters() {
     Stock testStock = new Stock("testStockFormat",
@@ -49,6 +55,9 @@ public class StockTest {
     assertEquals(expectedVolume, testStock.getVolume());
   }
 
+  /**
+   * tests the net gain method.
+   */
   @Test
   public void TestCalculateNetGain() {
     // 1217.5600 & 156.3300 : loss
@@ -68,11 +77,17 @@ public class StockTest {
     assertEquals(-362.02, goog.calculateNetGain("2014-04-10", "2024-06-15"), 0.01);
   }
 
+  /**
+   * tests when it is out of range (net/gain).
+   */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateNetGainOutOfRange() {
     assertEquals(-362.02, goog.calculateNetGain("2027-04-10", "2030-06-15"), 0.01);
   }
 
+  /**
+   * test getaverage method.
+   */
   @Test
   public void testAverage() {
     double avg2 = testStock.getMovingAverage("2024-05-28", 3);
@@ -82,12 +97,18 @@ public class StockTest {
     assertEquals(171.6634, avg1, 0.01);
   }
 
+  /**
+   * check exception when it fails.
+   */
   @Test(expected = IllegalArgumentException.class)
   public void testAverageFail() {
     double avg2 = testStock.getMovingAverage("2024-05-28", 10);
     assertEquals(173.9800, avg2, 0.01);
   }
 
+  /**
+   * test the crossover method.
+   */
   @Test
   public void testCrossDays() {
     List<String> expectedCross1 = new ArrayList<>(

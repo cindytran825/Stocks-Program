@@ -9,6 +9,9 @@ import model.DataFrameWithImpl;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * test for dataframe class.
+ */
 public class DataFrameTest {
 
   @Test

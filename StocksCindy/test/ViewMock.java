@@ -2,20 +2,31 @@ import java.util.List;
 
 import view.View;
 
+/**
+ * mock of the view for testing.
+ */
 public class ViewMock implements View {
 
   private Appendable appendable;
 
+  /**
+   * constructor takes in nothing.
+   */
   public ViewMock() {
     this.appendable = System.out;
   }
 
+  /**
+   * contructor takes in appendable.
+   * @param appendable
+   */
   public ViewMock(Appendable appendable) {
     this.appendable = appendable;
   }
 
+
   @Override
-  public void printMenu() {
+  public void printMenu() throws IllegalStateException {
 
   }
 
@@ -25,37 +36,32 @@ public class ViewMock implements View {
   }
 
   @Override
-  public void getNameOfFile(String name) {
+  public void getNameOfFile(String name) throws IllegalStateException {
 
   }
 
   @Override
-  public void goodbye() {
+  public void namePort() throws IllegalStateException {
 
   }
 
   @Override
-  public void namePort() {
+  public void stockAdd() throws IllegalStateException {
 
   }
 
   @Override
-  public void stockAdd() {
+  public void tickerType() throws IllegalStateException {
 
   }
 
   @Override
-  public void tickerType() {
+  public void nameNew() throws IllegalStateException {
 
   }
 
   @Override
-  public void nameNew() {
-
-  }
-
-  @Override
-  public void inputNumber() {
+  public void inputNumber() throws IllegalStateException {
 
   }
 
@@ -75,7 +81,7 @@ public class ViewMock implements View {
   }
 
   @Override
-  public void printPortfolio(String portfolio) throws IllegalStateException {
+  public void print(String msg) throws IllegalStateException {
 
   }
 
@@ -95,7 +101,7 @@ public class ViewMock implements View {
   }
 
   @Override
-  public void getXDays() throws IllegalStateException {
+  public void getDays() throws IllegalStateException {
 
   }
 
@@ -119,14 +125,58 @@ public class ViewMock implements View {
 
   }
 
-
   @Override
-  public void welcomeMessage() {
+  public void printStockNames(String list) throws IllegalStateException {
 
   }
 
   @Override
-  public void invalidCommand() {
+  public void printSuccessAddStock(String ticker) throws IllegalStateException {
+
+  }
+
+  @Override
+  public void getPath() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void getNameFile() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void invalidDate() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void invalidNumber() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void invalidFile() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void goodbye() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void welcomeMessage() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void invalidCommand() throws IllegalStateException {
+
+  }
+
+  @Override
+  public void invalidStock() {
 
   }
 }

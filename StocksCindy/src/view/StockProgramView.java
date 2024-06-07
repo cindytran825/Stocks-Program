@@ -18,19 +18,13 @@ public class StockProgramView implements View {
 
   /**
    * contructor that takes in the appendable.
-   * @param appendable
+   * @param appendable any appendable that view can add strings to
    */
   public StockProgramView(Appendable appendable) {
     this.appendable = appendable;
   }
 
-  /**
-   * this writes the message.
-   *
-   * @param message a string.
-   * @throws IllegalStateException when the input isn't a string.
-   */
-  private void writeMessage(String message) throws IllegalStateException {
+  private void writeMessage(String message) {
     try {
       appendable.append(message);
     } catch (IOException e) {
@@ -38,12 +32,8 @@ public class StockProgramView implements View {
     }
   }
 
-  /**
-   * writes the menu.
-   * @throws IllegalStateException  .
-   */
   @Override
-  public void printMenu() throws IllegalStateException {
+  public void printMenu() {
 
     writeMessage("Create new portfolio [port-create]" + System.lineSeparator());
     writeMessage("Manage portfolio [port-manage]" + System.lineSeparator());
@@ -54,6 +44,7 @@ public class StockProgramView implements View {
     writeMessage("Determine which days are x-day crossover [stock-cross]" + System.lineSeparator());
     writeMessage("View what stock datas are on file [stock-list]" + System.lineSeparator());
     writeMessage("Download stock data from an API [stock-download]" + System.lineSeparator());
+    writeMessage("Upload your own stock data in a csv file [stock-upload]" + System.lineSeparator());
     writeMessage("Quit [quit]" + System.lineSeparator());
     writeMessage("Menu [menu]" + System.lineSeparator());
     writeMessage("Enter instruction to the action you'd like to take!"
@@ -61,269 +52,150 @@ public class StockProgramView implements View {
 
   }
 
-  /**
-   * instructs the user to enter the ticker.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void getTicker() throws IllegalStateException {
+  public void getTicker() {
     writeMessage("Enter the ticker: ");
   }
 
-  /**
-   * returns the names of the files.
-   * @param name
-   * @throws IllegalStateException .
-   */
   @Override
-  public void getNameOfFile(String name) throws IllegalStateException {
+  public void getNameOfFile(String name) {
     writeMessage("Existing files are: \n" + name);
   }
 
-  /**
-   * tells user to input date.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void getDateUser1() throws IllegalStateException {
+  public void getDateUser1() {
     writeMessage("Type the date to use for evaluation (YYYY-MM-DD): ");
   }
 
-  /**
-   * tells user to input date.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void getDateUser2() throws IllegalStateException {
+  public void getDateUser2() {
     writeMessage("Type the starting date (YYYY-MM-DD): ");
   }
 
-  /**
-   * tells user to input date.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void getDateUser3() throws IllegalStateException {
+  public void getDateUser3() {
     writeMessage("Type the ending date (YYYY-MM-DD): ");
   }
 
-  /**
-   * input number.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void inputNumber() throws IllegalStateException {
+  public void inputNumber() {
     writeMessage("Enter Command: ");
   }
 
-  /**
-   * instructs user input name of portfolio.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void nameNew() throws IllegalStateException {
+  public void nameNew() {
     writeMessage("Name of new portfolio: ");
   }
 
-  /**
-   * tells user to input the ticker.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void tickerType() throws IllegalStateException {
+  public void tickerType() {
     writeMessage("Enter Ticker (type 'f' to complete portfolio): ");
   }
 
-  /**
-   * asks how many shares.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void stockAdd() throws IllegalStateException {
+  public void stockAdd() {
     writeMessage("How many shares do you want to add for this stock? ");
   }
 
-  /**
-   * type the name of the portfolio.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void namePort() throws IllegalStateException {
+  public void namePort() {
     writeMessage("Type just the NAME of the portfolio: ");
   }
 
-  /**
-   * print the msg.
-   * @param msg a string. .
-   * @throws IllegalStateException .
-   */
   @Override
-  public void print(String msg) throws IllegalStateException {
+  public void print(String msg) {
     writeMessage(msg);
   }
 
-  /**
-   * when they are able to create portfolio.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void success() throws IllegalStateException {
+  public void success() {
     writeMessage("Successfully added a new portfolio." + System.lineSeparator());
   }
 
-  /**
-   * for the value of portfolio.
-   * @param value
-   * @throws IllegalStateException .
-   */
   @Override
-  public void printPortValue(String value) throws IllegalStateException {
+  public void printPortValue(String value) {
     writeMessage("The value of this portfolio is: $" + value + System.lineSeparator());
   }
 
-  /**
-   * display next gain.
-   * @param value string.
-   * @param date1 string.
-   * @param date2 string.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void printNetGain(String value, String date1, String date2) throws IllegalStateException {
+  public void printNetGain(String value, String date1, String date2) {
     writeMessage("Between " + date1 + " to " + date2 + " "
             + "the stock had a net gain of: $" + value + System.lineSeparator());
   }
 
-  /**
-   * get the day from user.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void getDays() throws IllegalStateException {
+  public void getDays() {
     writeMessage("Enter in the last x-days since the current date: ");
   }
 
-  /**
-   * get ht eaverage from user.
-   * @param value of portfolio.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void movingAvg(String value) throws IllegalStateException {
+  public void movingAvg(String value) {
     writeMessage("The moving average is: " + value + System.lineSeparator());
   }
 
-  /**
-   * display the crossover days.
-   * @param value the value.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void printCrossover(String value) throws IllegalStateException {
-    writeMessage("The following days are crossover days in the specified time period: \n"
-            + value + System.lineSeparator());
+  public void printCrossover(String value) {
+    writeMessage(value);
   }
 
-  /**
-   * terminating command.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void terminating() throws IllegalStateException {
+  public void terminating() {
     writeMessage("Terminating command..." + System.lineSeparator());
   }
 
-  /**
-   * empty.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void emptyLine() throws IllegalStateException {
+  public void emptyLine() {
     writeMessage(System.lineSeparator());
   }
 
-  /**
-   * display the stock.
-   * @param list of the stocks in portfolio.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void printStockNames(String list) throws IllegalStateException {
+  public void printStockNames(String list) {
     writeMessage("Here are available stock datas:\n" + list);
   }
 
-  /**
-   * display the stock when added.
-   * @param ticker ticker.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void printSuccessAddStock(String ticker) throws IllegalStateException {
+  public void printSuccessAddStock(String ticker) {
     writeMessage("Successfully added " + ticker + " stock.\n");
   }
 
-  /**
-   * display the reference.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void getPath() throws IllegalStateException {
+  public void getPath() {
     writeMessage("Enter in the reference path to the CSV file: ");
   }
 
-  /**
-   * display message.
-   * @throws IllegalStateException.
-   */
   @Override
-  public void getNameFile() throws IllegalStateException {
+  public void getNameFile() {
     writeMessage("Enter the ticker this file represents: ");
   }
 
-  /**
-   * display message.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void invalidDate() throws IllegalStateException {
+  public void invalidDate() {
     writeMessage("Invalid date entered.");
   }
 
-  /**
-   * display message.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void invalidNumber() throws IllegalStateException {
+  public void invalidNumber() {
     writeMessage("Invalid number entered.");
   }
 
-  /**
-   * display message.
-   * @throws IllegalStateException .
-   */
-
   @Override
-  public void invalidFile() throws IllegalStateException {
+  public void invalidFile() {
     writeMessage("Invalid file entered.");
   }
 
-  /**
-   * display thank you.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void goodbye() throws IllegalStateException {
+  public void invalidStock() {
+    writeMessage("Cannot find stock on file.");
+  }
+
+  @Override
+  public void goodbye() {
     writeMessage("Thank you for using our program!" + System.lineSeparator());
 
   }
 
-  /**
-   * display welcome message.
-   * @throws IllegalStateException .
-   */
   @Override
-  public void welcomeMessage() throws IllegalStateException {
+  public void welcomeMessage() {
     writeMessage("Welcome to the stocks program!" + System.lineSeparator());
     printMenu();
   }
@@ -336,6 +208,5 @@ public class StockProgramView implements View {
   public void invalidCommand() throws IllegalStateException {
     writeMessage("This is an invalid command!" + System.lineSeparator());
   }
-
 
 }

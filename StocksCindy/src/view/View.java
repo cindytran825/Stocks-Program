@@ -8,191 +8,164 @@ public interface View {
 
   /**
    * this prints the menu, first thing user sees.
-   *
-   * @throws IllegalStateException when it's at an illegal state.
    */
-  void printMenu() throws IllegalStateException;
+  void printMenu();
 
   /**
    * display to tell user to input the ticker.
-   * @throws IllegalStateException when there's exception.
    */
-  void getTicker() throws IllegalStateException;
+  void getTicker();
 
   /**
-   * display of of file message.
-   * @throws IllegalStateException when there's exception.
+   * display of file message.
    */
-  void getNameOfFile(String name) throws IllegalStateException;
+  void getNameOfFile(String name);
 
   /**
    * display name portfolio.
-   * @throws IllegalStateException when there's exception.
    */
-  void namePort() throws IllegalStateException;
+  void namePort();
 
   /**
    * display input stock.
-   * @throws IllegalStateException when there's exception.
    */
-  void stockAdd() throws IllegalStateException;
+  void stockAdd();
 
   /**
    * display input ticker.
-   * @throws IllegalStateException when there's exception.
    */
-  void tickerType() throws IllegalStateException;
+  void tickerType();
 
   /**
    * display input name.
-   * @throws IllegalStateException when there's exception.
    */
-  void nameNew() throws IllegalStateException;
+  void nameNew();
 
   /**
    * display user input.
-   * @throws IllegalStateException when there's exception.
    */
-  void inputNumber() throws IllegalStateException;
+  void inputNumber();
 
   /**
    * display message date.
-   * @throws IllegalStateException when there's exception.
    */
-  void getDateUser1() throws IllegalStateException;
+  void getDateUser1();
 
   /**
    * display message date.
-   * @throws IllegalStateException when there's exception.
    */
-  void getDateUser2() throws IllegalStateException;
+  void getDateUser2();
 
   /**
    * display message date.
-   * @throws IllegalStateException when there's exception.
    */
-  void getDateUser3() throws IllegalStateException;
+  void getDateUser3();
 
   /**
    * display print.
-   * @throws IllegalStateException when there's exception.
    */
-  void print(String msg) throws IllegalStateException;
+  void print(String msg);
 
   /**
    * display success.
-   * @throws IllegalStateException when there's exception.
    */
-  void success() throws IllegalStateException;
+  void success();
 
   /**
    * display value.
-   * @throws IllegalStateException when there's exception.
    */
-  void printPortValue(String value) throws IllegalStateException;
+  void printPortValue(String value);
 
   /**
-   * display net gain. 
-   * @throws IllegalStateException when there's exception.
+   * display net gain.
    */
-  void printNetGain(String value, String date1, String date2) throws IllegalStateException;
+  void printNetGain(String value, String date1, String date2);
 
   /**
-   * display days. 
-   * @throws IllegalStateException when there's exception.
+   * display days.
    */
-  void getDays() throws IllegalStateException;
+  void getDays();
 
   /**
-   * display moving average. 
-   * @throws IllegalStateException when there's exception.
+   * display moving average.
    */
-  void movingAvg(String value) throws IllegalStateException;
+  void movingAvg(String value);
 
   /**
-   * display crossover. 
-   * @throws IllegalStateException when there's exception.
+   * display crossover.
    */
-  void printCrossover(String value) throws IllegalStateException;
+  void printCrossover(String value);
 
   /**
-   * display terminating message. 
-   * @throws IllegalStateException when there's exception.
+   * display terminating message.
    */
-  void terminating() throws IllegalStateException;
+  void terminating();
 
   /**
-   * display empty. 
-   * @throws IllegalStateException when there's exception.
+   * display empty.
    */
-  void emptyLine() throws IllegalStateException;
+  void emptyLine();
 
   /**
-   * display the stock names. 
-   * @throws IllegalStateException when there's exception.
+   * display the stock names.
    */
   // TODO NEED TO ADD TO MOCKS AND TESTS
-  void printStockNames(String list) throws IllegalStateException;
+  void printStockNames(String list);
 
   /**
-   * display sucess. 
-   * @throws IllegalStateException when there's exception.
+   * display sucess.
    */
   // TODO NEED TO ADD TO MOCKS AND TESTS
-  void printSuccessAddStock(String ticker) throws IllegalStateException;
+  void printSuccessAddStock(String ticker);
 
   /**
-   * display the path. 
-   * @throws IllegalStateException when there's exception.
+   * display the path.
    */
   // TODO NEED TO ADD TO MOCKS AND TESTS
-  void getPath() throws IllegalStateException;
+  void getPath();
 
   /**
-   * display name file. 
-   * @throws IllegalStateException when there's exception.
+   * display name file.
    */
   // TODO NEED TO ADD TO MOCKS AND TESTS
-  void getNameFile() throws IllegalStateException;
+  void getNameFile();
 
   /**
-   * display invalid date. 
-   * @throws IllegalStateException when there's exception.
+   * display invalid date.
    */
   // TODO NEED TO ADD TO MOCKS AND TESTS
-  void invalidDate() throws IllegalStateException;
+  void invalidDate();
 
   /**
-   * display invalid number. 
-   * @throws IllegalStateException when there's exception.
+   * display invalid number.
    */
   // TODO NEED TO ADD TO MOCKS AND TESTS
-  void invalidNumber() throws IllegalStateException;
+  void invalidNumber();
 
   /**
-   * display invalid file. 
-   * @throws IllegalStateException when there's exception.
+   * display invalid file.
    */
   // TODO NEED TO ADD TO MOCKS AND TESTS
-  void invalidFile() throws IllegalStateException;
+  void invalidFile();
+
+  /**
+   * display invalid stock message.
+   */
+  // TODO NEED TO ADD TO MOCKS AND TESTS
+  void invalidStock();
 
   /**
    * this prints the goodbye message.
-   *
-   * @throws IllegalStateException when it's at an illegal state.
    */
-  void goodbye() throws IllegalStateException;
+  void goodbye();
 
   /**
    * this prints the welcome message.
-   *
-   * @throws IllegalStateException when it's at an illegal state.
    */
-  void welcomeMessage() throws IllegalStateException;
+  void welcomeMessage();
 
   /**
-   * display invalid command. 
-   * @throws IllegalStateException when there's exception.
+   * display invalid command message
    */
-  void invalidCommand() throws IllegalStateException;
+  void invalidCommand();
 }

@@ -7,6 +7,9 @@ import model.StocksModel;
 import view.StockProgramView;
 import view.View;
 
+/**
+ * Controller mock for testing.
+ */
 public class ControllerMock implements Controller {
   Model mockModel;
   View mockView;
@@ -16,6 +19,13 @@ public class ControllerMock implements Controller {
   private Scanner scan;
   private String name;
 
+  /**
+   * constructor for testing.
+   * takes in mockview and model.
+   * @param mockModel
+   * @param mockView
+   * @param userInput
+   */
   ControllerMock(Model mockModel, View mockView, String userInput) {
     this.mockModel = mockModel;
     this.mockView = mockView;
@@ -23,6 +33,10 @@ public class ControllerMock implements Controller {
   }
 
 
+  /**
+   * mock of the goControl method.
+   * Used for testing.
+   */
   @Override
   public void goControl() {
     mockView.welcomeMessage();
@@ -55,18 +69,28 @@ public class ControllerMock implements Controller {
         mockView.getTicker();
         mockView.getDateUser2();
         mockView.getDateUser3();
+        mockView.emptyLine();
         break;
       case "stock-avg":
         mockView.getTicker();
+        mockView.getTicker();
         mockView.getDateUser2();
-        ;
-        mockView.getXDays();
-        mockView.getDateUser2();
-        mockView.getXDays();
+        mockView.getDays();
         break;
       case "stock-cross":
         mockView.getTicker();
+        mockView.getDateUser2();
+        mockView.getDays();
+        mockView.emptyLine();
         break;
+      case "stock-list":
+        mockView.emptyLine();
+      case "stock-download":
+        mockView.getTicker();
+        mockView.emptyLine();
+      case "stock-upload":
+        mockView.getPath();
+        mockView.getNameFile();
       case "menu":
         mockView.printMenu();
         mockView.emptyLine();

@@ -21,6 +21,9 @@ public class PortfolioTest {
   Portfolio bob;
   Portfolio bart;
 
+  /**
+   * set up for testing.
+   */
   @Before
   public void setUP() {
     emptyBob = new PortfolioWithImpl("Empty Bob", "StocksCindy/test/testingCSV", false);
@@ -33,6 +36,10 @@ public class PortfolioTest {
     // needed test case for making sure files are writing and that bart is properly found
   }
 
+  /**
+   * test adding to portfolio.
+   * @throws FileNotFoundException .
+   */
   @Test
   public void testAddPortfolio() throws FileNotFoundException {
     assertEquals(new HashMap<>(), emptyBob.getListInventories());
@@ -58,6 +65,9 @@ public class PortfolioTest {
     assertEquals("testStockFormat,123", scan2.nextLine());
   }
 
+  /**
+   * test for getting inventory.
+   */
   @Test
   public void testGetInventory() {
     assertEquals(new HashMap<>(), emptyBob.getListInventories());
@@ -72,6 +82,9 @@ public class PortfolioTest {
     assertEquals(expected2, bart.getListInventories());
   }
 
+  /**
+   * test for getting value in portfolio.
+   */
   @Test
   public void testGetValue() {
     assertEquals(
@@ -91,6 +104,9 @@ public class PortfolioTest {
     );
   }
 
+  /**
+   * tests toString method.
+   */
   @Test
   public void testToString() {
     assertEquals(

@@ -36,6 +36,8 @@ public class ViewTest {
                     + "Examine gain/loss [stock-eval]\n"
                     + "Examine x-day move average [stock-avg]\n"
                     + "Determine which days are x-day crossover [stock-cross]\n"
+                    + "View what stock datas are on file [stock-list]\n"
+                    + "Download stock data from an API [stock-download]\n"
                     + "Quit [quit]\n"
                     + "Menu [menu]\n"
                     + "Enter instruction to the action you'd like to take!\n";
@@ -67,10 +69,10 @@ public class ViewTest {
                     + "Examine gain/loss [stock-eval]\n"
                     + "Examine x-day move average [stock-avg]\n"
                     + "Determine which days are x-day crossover [stock-cross]\n"
+                    + "View what stock datas are on file [stock-list]\n"
+                    + "Download stock data from an API [stock-download]\n"
                     + "Quit [quit]\n"
-                    + "Menu [menu]\n"
-                    + "Enter instruction to the action you'd like to take!\n"
-                    + "Thank you for using our program!";
+                    + "Menu [menu]";
 
     StringBuilder testString = new StringBuilder();
     String[] output1 = ap.toString().split("\n");
@@ -103,9 +105,9 @@ public class ViewTest {
                     + "Examine gain/loss [stock-eval]\n"
                     + "Examine x-day move average [stock-avg]\n"
                     + "Determine which days are x-day crossover [stock-cross]\n"
-                    + "Quit [quit]\n"
-                    + "Menu [menu]\n"
-                    + "Enter instruction to the action you'd like to take!";
+                    + "View what stock datas are on file [stock-list]\n"
+                    + "Download stock data from an API [stock-download]\n"
+                    + "Quit [quit]";
 
     StringBuilder testString = new StringBuilder();
     String[] output1 = ap.toString().split("\n");
@@ -239,7 +241,8 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            " Type the starting date (YYYY-MM-DD): Type the ending date (YYYY-MM-DD): ";
+            " Type the starting date (YYYY-MM-DD): Type the ending date (YYYY-MM-DD): " +
+                    "\n";
 
     String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
     String getOutput = output[1];
@@ -263,14 +266,16 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: "
-                    + "Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: ";
+            " Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: ";
+
 
     String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
     String getOutput = output[1];
-    String[] output2 = getOutput.split(" ticker: ");
+    String[] output2 = getOutput.split("ticker: Enter");
     String now = output2[1];
-    String[] wow = now.split("Thank you");
+    String[] more = now.split("ticker:");
+    String call = more[1];
+    String[] wow = call.split("Thank you");
     String result = wow[0];
     assertEquals(expectedMenu, result.toString());
   }
@@ -287,13 +292,85 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "\nEnter the ticker: ";
+            "Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: " +
+                    "\n";
 
     String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
     String getOutput = output[1];
-    String[] wow = getOutput.split("Thank you");
+    String[] wow = getOutput.split("ticker: ");
+    String result = wow[1];
+    String[] now = result.split("Thank you");
+    String get = now[0];
+    assertEquals(expectedMenu, get.toString());
+  }
+
+  /**
+   * tests for the stocklist case.
+   */
+  @Test
+  public void testForStockList() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "stock-list";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "\n\nEnter the ticker: " +
+                    "\n";
+    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("Enter in the reference path to the CSV file: ");
     String result = wow[0];
     assertEquals(expectedMenu, result.toString());
+  }
+
+  /**
+   * tests for the download case.
+   */
+  @Test
+  public void testForDownload() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "stock-download";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: " +
+                    "\n";
+
+    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("ticker: ");
+    String result = wow[1];
+    String[] now = result.split("Thank you");
+    String get = now[0];
+    assertEquals(expectedMenu, get.toString());
+  }
+
+  /**
+   * tests for the upload case.
+   */
+  @Test
+  public void testForUpload() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "stock-upload";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: " +
+                    "\n";
+
+    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("ticker: ");
+    String result = wow[1];
+    String[] now = result.split("Thank you");
+    String get = now[0];
+    assertEquals(expectedMenu, get.toString());
   }
 
 }

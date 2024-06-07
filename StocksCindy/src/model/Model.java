@@ -10,15 +10,27 @@ public interface Model {
   /**
    * this checks if the file exists.
    *
-   * @param path name of the csv file (excl
+   * @param path path to the csv file
    * @return true if file exists, otherwise if not.
    */
   boolean checkIfFileExist(String path);
 
-  // TODO DOCUMENTATION
+  /**
+   * checks if the date is valid.
+   *
+   * @param date a date input
+   * @return true if the date is of format YYYY-MM-DD and are numbers
+   */
   boolean checkIfDate(String date); // TODO NEED TO ADD TO MOCKS AND TESTS
 
   // TODO DOCUMENTATION
+
+  /**
+   * checks if the specified string is a number.
+   *
+   * @param n any string
+   * @return true if the provided string is a number
+   */
   boolean checkIfNumber(String n); // TODO NEED TO ADD TO MOCKS AND TESTS
 
   /**

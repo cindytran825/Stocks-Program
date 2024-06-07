@@ -26,6 +26,10 @@ Out user interface is interactive -
 
    [stock-cross] determines which days are x-day crossover from the dates given by user.
 
+   [stock-upload] allows the user to upload a file.
+
+   [stock-download] allows the user to download a file.
+
    [quit] quits.
 
    [menu] displays the menu.

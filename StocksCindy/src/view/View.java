@@ -109,49 +109,41 @@ public interface View {
   /**
    * display the stock names.
    */
-  // TODO NEED TO ADD TO MOCKS AND TESTS
   void printStockNames(String list);
 
   /**
    * display sucess.
    */
-  // TODO NEED TO ADD TO MOCKS AND TESTS
   void printSuccessAddStock(String ticker);
 
   /**
    * display the path.
    */
-  // TODO NEED TO ADD TO MOCKS AND TESTS
   void getPath();
 
   /**
    * display name file.
    */
-  // TODO NEED TO ADD TO MOCKS AND TESTS
   void getNameFile();
 
   /**
    * display invalid date.
    */
-  // TODO NEED TO ADD TO MOCKS AND TESTS
   void invalidDate();
 
   /**
    * display invalid number.
    */
-  // TODO NEED TO ADD TO MOCKS AND TESTS
   void invalidNumber();
 
   /**
    * display invalid file.
    */
-  // TODO NEED TO ADD TO MOCKS AND TESTS
   void invalidFile();
 
   /**
    * display invalid stock message.
    */
-  // TODO NEED TO ADD TO MOCKS AND TESTS
   void invalidStock();
 
   /**
@@ -165,7 +157,7 @@ public interface View {
   void welcomeMessage();
 
   /**
-   * display invalid command message
+   * display invalid command message.
    */
   void invalidCommand();
 }

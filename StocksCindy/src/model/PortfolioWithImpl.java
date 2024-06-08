@@ -19,11 +19,11 @@ public class PortfolioWithImpl implements Portfolio {
   private final String reference;
 
   /**
-   *
    * it also creates a new porfolio as a csv file when the user creates one.
-   * @param portfolioName name of portfolio.
+   *
+   * @param portfolioName   name of portfolio.
    * @param storageLocation location of the file.
-   * @param loadPrevious whether or not the file exists.
+   * @param loadPrevious    whether or not the file exists.
    */
   public PortfolioWithImpl(String portfolioName, String storageLocation, boolean loadPrevious) {
     this.portfolioName = portfolioName;
@@ -49,6 +49,7 @@ public class PortfolioWithImpl implements Portfolio {
         fw.write("");
         fw.close();
       } catch (IOException e1) {
+        //
       }
     }
   }
@@ -56,6 +57,7 @@ public class PortfolioWithImpl implements Portfolio {
   /**
    * turns the list of inventories to a string.
    * also reformatting it in the file.
+   *
    * @return a string of the inventories.
    */
   @Override
@@ -79,6 +81,7 @@ public class PortfolioWithImpl implements Portfolio {
   /**
    * gets the list of tickers+shares that.
    * user inputs to the portfolio.
+   *
    * @return a map of the port of inventory.
    */
   @Override
@@ -91,8 +94,9 @@ public class PortfolioWithImpl implements Portfolio {
    * this is used the edit the portfolio.
    * after it is created and the user wants to add.
    * anything in it, it is called.
+   *
    * @param companyName the ticker the user inputs.
-   * @param share the share for that ticker.
+   * @param share       the share for that ticker.
    * @return a map of the ticker and share.
    * @throws IllegalArgumentException when the share is negative.
    */
@@ -109,22 +113,23 @@ public class PortfolioWithImpl implements Portfolio {
     listInventories.put(companyName, share);
 
     File portFile = new File(reference);
-      try {
-        FileWriter fw = new FileWriter(portFile);
-        for (String key : listInventories.keySet()) {
-          fw.write(key + "," + listInventories.get(key) + "\n");
-        }
-        fw.close();
-      } catch (IOException e) {
-        // doesn't matter
+    try {
+      FileWriter fw = new FileWriter(portFile);
+      for (String key : listInventories.keySet()) {
+        fw.write(key + "," + listInventories.get(key) + "\n");
       }
+      fw.close();
+    } catch (IOException e) {
+      // doesn't matter
+    }
 
     return deepCopy(listInventories);
   }
 
   /**
    * is called when the user wants to get the value of a portfolio.
-   * @param date the date they input.
+   *
+   * @param date        the date they input.
    * @param pathToStock string of located file.
    * @return a double(value).
    */
@@ -147,6 +152,7 @@ public class PortfolioWithImpl implements Portfolio {
 
   /**
    * gets the name of the portfolio.
+   *
    * @return a string of that name.
    */
   public String getPortfolioName() {

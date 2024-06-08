@@ -45,6 +45,7 @@ public class AlphaVantageApi implements StockApi {
       writer.write(output.toString());
       writer.close();
     } catch (IOException var9) {
+      //
     }
   }
 }

@@ -41,10 +41,16 @@ public class StockProgramView implements View {
     writeMessage("Evaluate existing portfolios [port-eval]" + System.lineSeparator());
     writeMessage("Examine gain/loss [stock-eval]" + System.lineSeparator());
     writeMessage("Examine x-day move average [stock-avg]" + System.lineSeparator());
-    writeMessage("Determine which days are x-day crossover [stock-cross]" + System.lineSeparator());
-    writeMessage("View what stock datas are on file [stock-list]" + System.lineSeparator());
-    writeMessage("Download stock data from an API [stock-download]" + System.lineSeparator());
-    writeMessage("Upload your own stock data in a csv file [stock-upload]" + System.lineSeparator());
+    writeMessage("Determine which days are x-day crossover "
+            +
+            "[stock-cross]" + System.lineSeparator());
+    writeMessage("View what stock datas are on file [stock-list]"
+            + System.lineSeparator());
+    writeMessage("Download stock data from an API " +
+            "[stock-download]" + System.lineSeparator());
+    writeMessage("Upload your own stock data in a csv file"
+            +
+            " [stock-upload]" + System.lineSeparator());
     writeMessage("Quit [quit]" + System.lineSeparator());
     writeMessage("Menu [menu]" + System.lineSeparator());
     writeMessage("Enter instruction to the action you'd like to take!"

@@ -3,7 +3,7 @@ import java.util.Objects;
 import model.Model;
 
 /**
- * Mock class of model/
+ * Mock class of model.
  */
 public class ModelMock implements Model {
   final StringBuilder log;
@@ -88,7 +88,7 @@ public class ModelMock implements Model {
   }
 
   /**
-   * manageportfolio mock/
+   * manageportfolio mock.
    * @param name   of the portfolio.
    * @param ticker of the company.
    * @param shares the user inputs.

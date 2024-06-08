@@ -143,19 +143,6 @@ public class MyDateWithImpl implements MyDate {
     return String.format("%04d-%02d-%02d", year, month, day);
   }
 
-  /**
-   * checks if the two dates are the same.
-   * @param other the other date compared.
-   * @return a boolean.
-   */
-  @Override
-  public boolean equals(Object other) {
-    return (other instanceof MyDateWithImpl otherDate)
-            && this.day == otherDate.getDay()
-            && this.month == otherDate.getMonth()
-            && this.year == otherDate.getYear();
-
-  }
 
   /**
    * gets the difference of the dates.

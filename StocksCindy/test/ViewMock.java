@@ -1,4 +1,3 @@
-import java.util.List;
 
 import view.View;
 
@@ -8,6 +7,7 @@ import view.View;
 public class ViewMock implements View {
 
   private Appendable appendable;
+  StringBuilder log = new StringBuilder();
 
   /**
    * constructor takes in nothing.
@@ -18,7 +18,7 @@ public class ViewMock implements View {
 
   /**
    * contructor takes in appendable.
-   * @param appendable
+   * @param appendable .
    */
   public ViewMock(Appendable appendable) {
     this.appendable = appendable;
@@ -27,156 +27,156 @@ public class ViewMock implements View {
 
   @Override
   public void printMenu() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void getTicker() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void getNameOfFile(String name) throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void namePort() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void stockAdd() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void tickerType() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void nameNew() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void inputNumber() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void getDateUser1() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void getDateUser2() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void getDateUser3() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void print(String msg) throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void success() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void printPortValue(String value) throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void printNetGain(String value, String date1, String date2) throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void getDays() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void movingAvg(String value) throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void printCrossover(String value) throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void terminating() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void emptyLine() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void printStockNames(String list) throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void printSuccessAddStock(String ticker) throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void getPath() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void getNameFile() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void invalidDate() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void invalidNumber() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void invalidFile() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void goodbye() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void welcomeMessage() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void invalidCommand() throws IllegalStateException {
-
+    log.append("");
   }
 
   @Override
   public void invalidStock() {
-
+    log.append("");
   }
 }

@@ -10,7 +10,7 @@ public interface Model {
   /**
    * this checks if the file exists.
    *
-   * @param path path to the csv file
+   * @param path path to the csv file.
    * @return true if file exists, otherwise if not.
    */
   boolean checkIfFileExist(String path);
@@ -18,8 +18,8 @@ public interface Model {
   /**
    * checks if the date is valid.
    *
-   * @param date a date input
-   * @return true if the date is of format YYYY-MM-DD and are numbers
+   * @param date a date input.
+   * @return true if the date is of format YYYY-MM-DD and are numbers.
    */
   boolean checkIfDate(String date); // TODO NEED TO ADD TO MOCKS AND TESTS
 
@@ -43,7 +43,7 @@ public interface Model {
   String uploadStock(String ticker, String path); // TODO NEED TO ADD TO MOCKS AND TESTS
 
   /**
-   * generates the stock
+   * generates the stock.
    *
    * @param ticker the company user inputs.
    */
@@ -128,6 +128,6 @@ public interface Model {
    *
    * @return a string of the name of stocks.
    */
-  String getStockNames(); // TODO NEED TO ADD TO MOCKS AND TESTS
+  String getStockNames();
 
 }

@@ -28,8 +28,13 @@ Out user interface is interactive -
 
    [stock-upload] allows the user to upload a file.
 
-   [stock-download] allows the user to download a file.
+   [stock-download] allows the user to download a file. (It takes a while to call from the API so it'll show that the file was made, but it requires about 2-3 minutes to fully install all the information. This is an API issue as we reused the starter code almost exactly.
 
    [quit] quits.
 
    [menu] displays the menu.
+
+
+this program does do error input checking, so you shouldn't be able to crash it.
+Whenever you input in a date, it tries to retrieve the most recent data available. if it's a time
+period you're giving, it finds the closest time period that is WITHIN the provided time.

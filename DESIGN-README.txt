@@ -24,3 +24,5 @@ when a user needs to access it.
 The Dataframe class is used to access the files. It reads the information from the CSV files.
 The Alphvantage class was given to us and we used to save the stock files.
 
+We had the portfolio class read from csv files because it doesn't make that much sense to us for
+the user having to recreate a new portfolio every time they run the program.

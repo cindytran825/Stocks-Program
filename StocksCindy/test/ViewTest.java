@@ -1,9 +1,6 @@
 import org.junit.Test;
 
-import java.io.StringReader;
-
 import controller.Controller;
-import controller.StocksController;
 import model.Model;
 import view.StockProgramView;
 import view.View;
@@ -15,9 +12,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class ViewTest {
   @Test
-  /**
-   * this tests for the welcome message when the user first runs the program.
-   */
   public void testForWelcome() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
@@ -28,7 +22,8 @@ public class ViewTest {
     controller.goControl();
 
     String expectedWelcome =
-            "Welcome to the stocks program!\n" +
+            "Welcome to the stocks program!\n"
+                    +
                     "Create new portfolio [port-create]\n"
                     + "Manage portfolio [port-manage]\n"
                     + "View existing portfolios [port-view]\n"
@@ -38,6 +33,7 @@ public class ViewTest {
                     + "Determine which days are x-day crossover [stock-cross]\n"
                     + "View what stock datas are on file [stock-list]\n"
                     + "Download stock data from an API [stock-download]\n"
+                    + "Upload your own stock data in a csv file [stock-upload]\n"
                     + "Quit [quit]\n"
                     + "Menu [menu]\n"
                     + "Enter instruction to the action you'd like to take!\n";
@@ -61,7 +57,8 @@ public class ViewTest {
     controller.goControl();
 
     String expectedWelcome =
-            "Welcome to the stocks program!\n" +
+            "Welcome to the stocks program!\n"
+                    +
                     "Create new portfolio [port-create]\n"
                     + "Manage portfolio [port-manage]\n"
                     + "View existing portfolios [port-view]\n"
@@ -71,8 +68,8 @@ public class ViewTest {
                     + "Determine which days are x-day crossover [stock-cross]\n"
                     + "View what stock datas are on file [stock-list]\n"
                     + "Download stock data from an API [stock-download]\n"
-                    + "Quit [quit]\n"
-                    + "Menu [menu]";
+                    + "Upload your own stock data in a csv file [stock-upload]\n"
+                    + "Quit [quit]";
 
     StringBuilder testString = new StringBuilder();
     String[] output1 = ap.toString().split("\n");
@@ -97,7 +94,8 @@ public class ViewTest {
     controller.goControl();
 
     String expectedMenu =
-            "Welcome to the stocks program!\n" +
+            "Welcome to the stocks program!\n"
+                    +
                     "Create new portfolio [port-create]\n"
                     + "Manage portfolio [port-manage]\n"
                     + "View existing portfolios [port-view]\n"
@@ -107,7 +105,7 @@ public class ViewTest {
                     + "Determine which days are x-day crossover [stock-cross]\n"
                     + "View what stock datas are on file [stock-list]\n"
                     + "Download stock data from an API [stock-download]\n"
-                    + "Quit [quit]";
+                    + "Upload your own stock data in a csv file [stock-upload]";
 
     StringBuilder testString = new StringBuilder();
     String[] output1 = ap.toString().split("\n");
@@ -134,11 +132,13 @@ public class ViewTest {
     String expectedMenu =
             "\nName of new portfolio: ";
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("Enter instruction to"
+            +
+            " the action you'd like to take!");
     String getOutput = output[1];
     String[] output2 = getOutput.split("Successfully added a new portfolio.");
     String now = output2[0];
-    assertEquals(expectedMenu, now.toString());
+    assertEquals(expectedMenu, now);
   }
 
   /**
@@ -156,11 +156,13 @@ public class ViewTest {
     String expectedMenu =
             "\nType just the NAME of the portfolio: ";
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("Enter instruction to "
+            +
+            "the action you'd like to take!");
     String getOutput = output[1];
     String[] output2 = getOutput.split("Enter Ticker ");
     String now = output2[0];
-    assertEquals(expectedMenu, now.toString());
+    assertEquals(expectedMenu, now);
   }
 
   /**
@@ -179,9 +181,11 @@ public class ViewTest {
 
     String[] output = ap.toString().split("portfolio: ");
     String getOutput = output[1];
-    String[] output2 = getOutput.split("How many shares do you want to add for ");
+    String[] output2 = getOutput.split("How many shares "
+            +
+            "do you want to add for ");
     String now = output2[0];
-    assertEquals(expectedMenu, now.toString());
+    assertEquals(expectedMenu, now);
   }
 
   /**
@@ -199,11 +203,13 @@ public class ViewTest {
     String expectedMenu =
             "\nType just the NAME of the portfolio: \n";
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("Enter instruction to the"
+            +
+            " action you'd like to take!");
     String getOutput = output[1];
     String[] output2 = getOutput.split("Thank you for using our program!");
     String now = output2[0];
-    assertEquals(expectedMenu, now.toString());
+    assertEquals(expectedMenu, now);
   }
 
   /**
@@ -221,11 +227,13 @@ public class ViewTest {
     String expectedMenu =
             "\nType just the NAME of the portfolio:";
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("Enter instruction to "
+            +
+            "the action you'd like to take!");
     String getOutput = output[1];
     String[] output2 = getOutput.split(" Enter the ticker:");
     String now = output2[0];
-    assertEquals(expectedMenu, now.toString());
+    assertEquals(expectedMenu, now);
   }
 
   /**
@@ -241,18 +249,24 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            " Type the starting date (YYYY-MM-DD): Type the ending date (YYYY-MM-DD): " +
+            " Type the starting date (YYYY-MM-DD): "
+                    +
+                    "Type the ending date (YYYY-MM-DD): "
+                    +
                     "\n";
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("Enter instruction t"
+            +
+            "o the action you'd like to take!");
     String getOutput = output[1];
     String[] output2 = getOutput.split("ticker:");
     String now = output2[1];
     String[] wow = now.split("Thank you");
     String result = wow[0];
-    assertEquals(expectedMenu, result.toString());
+    assertEquals(expectedMenu, result);
 
   }
+
   /**
    * For the six case on the menu.
    * Examine x-day move average
@@ -266,10 +280,14 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            " Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: ";
+            " Type the starting date (YYYY-MM-DD): Enter in the l"
+                    +
+                    "ast x-days since the current date: ";
 
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("Enter instruction to"
+            +
+            " the action you'd like to take!");
     String getOutput = output[1];
     String[] output2 = getOutput.split("ticker: Enter");
     String now = output2[1];
@@ -277,7 +295,7 @@ public class ViewTest {
     String call = more[1];
     String[] wow = call.split("Thank you");
     String result = wow[0];
-    assertEquals(expectedMenu, result.toString());
+    assertEquals(expectedMenu, result);
   }
 
   /**
@@ -292,16 +310,21 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: " +
+            "Type the starting date (YYYY-MM-DD): Enter"
+                    +
+                    " in the last x-days since the current date: "
+                    +
                     "\n";
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("Enter instru"
+            +
+            "ction to the action you'd like to take!");
     String getOutput = output[1];
     String[] wow = getOutput.split("ticker: ");
     String result = wow[1];
     String[] now = result.split("Thank you");
     String get = now[0];
-    assertEquals(expectedMenu, get.toString());
+    assertEquals(expectedMenu, get);
   }
 
   /**
@@ -318,11 +341,13 @@ public class ViewTest {
     String expectedMenu =
             "\n\nEnter the ticker: " +
                     "\n";
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("Enter instruction to "
+            +
+            "the action you'd like to take!");
     String getOutput = output[1];
     String[] wow = getOutput.split("Enter in the reference path to the CSV file: ");
     String result = wow[0];
-    assertEquals(expectedMenu, result.toString());
+    assertEquals(expectedMenu, result);
   }
 
   /**
@@ -337,16 +362,16 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: " +
-                    "\n";
+            "\nEnter in the reference path to the CSV file: ";
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("tion you'd like to take!");
     String getOutput = output[1];
-    String[] wow = getOutput.split("ticker: ");
-    String result = wow[1];
-    String[] now = result.split("Thank you");
-    String get = now[0];
-    assertEquals(expectedMenu, get.toString());
+    String[] wow = getOutput.split("Enter the ticker this file represents: ");
+    String result = wow[0];
+    String[] hello = result.split("ticker: ");
+    String there = hello[1];
+    assertEquals(expectedMenu, there);
+
   }
 
   /**
@@ -361,16 +386,13 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "Type the starting date (YYYY-MM-DD): Enter in the last x-days since the current date: " +
-                    "\n";
+            "\nEnter in the reference path to the CSV file: ";
 
-    String[] output = ap.toString().split("Enter instruction to the action you'd like to take!");
+    String[] output = ap.toString().split("tion you'd like to take!");
     String getOutput = output[1];
-    String[] wow = getOutput.split("ticker: ");
-    String result = wow[1];
-    String[] now = result.split("Thank you");
-    String get = now[0];
-    assertEquals(expectedMenu, get.toString());
+    String[] wow = getOutput.split("Enter the ticker this file represents: ");
+    String result = wow[0];
+    assertEquals(expectedMenu, result);
   }
 
 }

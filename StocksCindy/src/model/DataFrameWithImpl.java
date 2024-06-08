@@ -10,19 +10,19 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * This is a simple, and not a complete implementation of DataFrame. It can perform fundamental
- * tasks such as accessing columns and storing information, but it does not currently support
+ * This is a simple, and not a complete implementation of DataFrame. It can perform fundamental.
+ * tasks such as accessing columns and storing information, but it does not currently support.
  * table mutations.
  */
 public class DataFrameWithImpl implements DataFrame {
   private final Map<String, List<String>> map;
 
   /**
-   * constructor that reads the information from the csv file and registers it to a map
-   * with the keys being decided by the top row, and all the following elements are added into
-   * their columns
+   * constructor that reads the information from the csv file and registers it to a map.
+   * with the keys being decided by the top row, and all the following elements are added into.
+   * their columns.
    *
-   * @param csv csv file reference path
+   * @param csv csv file reference path.
    */
   public DataFrameWithImpl(String csv) {
     this.map = new HashMap<>();

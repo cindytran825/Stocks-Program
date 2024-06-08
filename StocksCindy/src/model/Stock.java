@@ -12,11 +12,11 @@ public class Stock implements Stocks {
   private final DataFrameWithImpl data;
 
   /**
-   * This constructor assigns a ticker to the stock and creates a data frame of all the available
+   * This constructor assigns a ticker to the stock and creates a data frame of all the available.
    * stock data of the specified ticker.
    *
-   * @param ticker stock ticker
-   * @param directory   directory where the file would be stored
+   * @param ticker    stock ticker
+   * @param directory directory where the file would be stored
    */
   public Stock(String ticker, String directory) {
     this.ticker = ticker;
@@ -40,6 +40,7 @@ public class Stock implements Stocks {
 
   /**
    * this converts the date into string.
+   *
    * @param date string user input.
    * @return a date.
    */
@@ -54,11 +55,12 @@ public class Stock implements Stocks {
   }
 
   /**
-   * this gets the closest available date with data points
-   * @param date a date input
-   * @param closestAfter true if look at the closest date after the input and false for the closest
-   *                     before the input date
-   * @return
+   * this gets the closest available date with data points.
+   *
+   * @param date         a date input.
+   * @param closestAfter true if look at the closest date after the input and false for the closest.
+   *                     before the input date.
+   * @return closest date index
    */
   public int getClosestDateIndex(String date, boolean closestAfter) {
     List<String> dateList = this.getTimestamp();
@@ -108,7 +110,7 @@ public class Stock implements Stocks {
 
   /**
    * returns the moving average of a stock given a specified starting date and the last x days.
-   * "X days" refer to days with data points available, and it begins counting from the
+   * "X days" refer to days with data points available, and it begins counting from the.
    * starting date (1 day is just starting date).
    *
    * @param startDate starting date to calculate moving average
@@ -129,7 +131,8 @@ public class Stock implements Stocks {
       List<String> dates = this.getTimestamp();
       throw new IllegalArgumentException(
               "There are not enough data points to fulfill request.\n"
-      + "We only have data from " + dates.get(0) + " to " + dates.get(dates.size() - 1));
+                      + "We only have data from " + dates.get(0)
+                      + " to " + dates.get(dates.size() - 1));
     }
 
     for (int i = startDateIndex; i > startDateIndex - lastX; i--) {
@@ -139,14 +142,14 @@ public class Stock implements Stocks {
   }
 
   /**
-   * returns a list of crossover days (when the closing price of that day is greater that the
-   * x-day moving average) given a specified starting date and the last x days. "X days"
-   * refer to days with data points available, and it begins counting from the starting
+   * returns a list of crossover days (when the closing price of that day is greater that the.
+   * x-day moving average) given a specified starting date and the last x days. "X days".
+   * refer to days with data points available, and it begins counting from the starting.
    * date (1 day is just starting date).
    *
-   * @param startDate starting date to calculate crossover days
-   * @param lastX     the last x days from starting date (crossover period)
-   * @return a list of all the crossover days
+   * @param startDate starting date to calculate crossover days.
+   * @param lastX     the last x days from starting date (crossover period).
+   * @return a list of all the crossover days.
    */
   @Override
   public List<String> getCrossOver(String startDate, int lastX) {
@@ -171,7 +174,8 @@ public class Stock implements Stocks {
 
   /**
    * gets the list of ticker.
-   * @return
+   *
+   * @return String ticker.
    */
   @Override
   public String getTicker() {
@@ -180,7 +184,8 @@ public class Stock implements Stocks {
 
   /**
    * gets the list of timestamp.
-   * @return
+   *
+   * @return all timestamps
    */
   @Override
   public List<String> getTimestamp() {
@@ -197,7 +202,8 @@ public class Stock implements Stocks {
 
   /**
    * gets the list of open price.
-   * @return
+   *
+   * @return  list.
    */
   @Override
   public List<Double> getOpen() {
@@ -207,7 +213,8 @@ public class Stock implements Stocks {
 
   /**
    * the list of high price.
-   * @return
+   *
+   * @return all high values
    */
   @Override
   public List<Double> getHigh() {
@@ -217,7 +224,8 @@ public class Stock implements Stocks {
 
   /**
    * list of low price.
-   * @return
+   *
+   * @return all low values
    */
   @Override
   public List<Double> getLow() {
@@ -226,8 +234,9 @@ public class Stock implements Stocks {
   }
 
   /**
-   * list of closing price
-   * @return
+   * list of closing price.
+   *
+   * @return all closing values
    */
   @Override
   public List<Double> getClose() {
@@ -237,7 +246,8 @@ public class Stock implements Stocks {
 
   /**
    * list of volume.
-   * @return
+   *
+   * @return all volumes
    */
   @Override
   public List<Double> getVolume() {

@@ -3,8 +3,6 @@ import java.util.Scanner;
 
 import controller.Controller;
 import model.Model;
-import model.StocksModel;
-import view.StockProgramView;
 import view.View;
 
 /**
@@ -22,9 +20,9 @@ public class ControllerMock implements Controller {
   /**
    * constructor for testing.
    * takes in mockview and model.
-   * @param mockModel
-   * @param mockView
-   * @param userInput
+   * @param mockModel .
+   * @param mockView .
+   * @param userInput .
    */
   ControllerMock(Model mockModel, View mockView, String userInput) {
     this.mockModel = mockModel;
@@ -85,12 +83,15 @@ public class ControllerMock implements Controller {
         break;
       case "stock-list":
         mockView.emptyLine();
+        break;
       case "stock-download":
         mockView.getTicker();
         mockView.emptyLine();
+        break;
       case "stock-upload":
         mockView.getPath();
         mockView.getNameFile();
+        break;
       case "menu":
         mockView.printMenu();
         mockView.emptyLine();

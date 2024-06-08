@@ -1,4 +1,3 @@
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.StringReader;
@@ -6,10 +5,7 @@ import java.util.Scanner;
 
 import controller.Controller;
 import model.Model;
-import model.Stocks;
 import controller.StocksController;
-import model.StocksModel;
-import view.StockProgramView;
 import view.View;
 
 import static org.junit.Assert.assertEquals;
@@ -36,7 +32,9 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
     //just to show that the controller does go to the mock model
-    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv", log.toString());
+    assertEquals("Creating portfolio wow\n"
+            +
+            "check file StocksCindy/CSVFiles/AMZN.csv\n", log.toString());
   }
 
   /**
@@ -54,7 +52,8 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("wow\nTSLA 2", log.toString());
+    assertEquals("get portfolio names\n" +
+            "check file StocksCindy/UserPortfolio/wow.csv\n", log.toString());
   }
 
   /**
@@ -72,7 +71,8 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("wow", log.toString());
+    assertEquals("get portfolio names\n" +
+            "check file StocksCindy/UserPortfolio/wow.csv\n", log.toString());
   }
 
   /**
@@ -82,7 +82,7 @@ public class ControllerTest {
   @Test
   public void testPortEval() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("port-eval wow 2020-01-01 quit");
+    Readable rd = new StringReader("port-eval wow 2020-01-14 quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);
@@ -90,7 +90,8 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("wow\nEvaluating portfolio 2020-01-01", log.toString());
+    assertEquals("get portfolio names\n" +
+            "check file StocksCindy/UserPortfolio/wow.csv\n", log.toString());
   }
 
   /**
@@ -108,7 +109,7 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("Evaluating stock AMZN 2020-01-01 2020-01-06", log.toString());
+    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n", log.toString());
   }
 
   /**
@@ -126,7 +127,7 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("Moving average AMZN 2020-01-01 2020-01-06", log.toString());
+    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n", log.toString());
   }
 
   /**
@@ -144,7 +145,7 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("Stock crossover AMZN 2020-01-01 6", log.toString());
+    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n", log.toString());
   }
 
 

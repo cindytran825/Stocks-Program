@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.Scanner;
+import java.util.function.DoublePredicate;
 
 import model.Model;
 import view.View;
@@ -117,7 +118,7 @@ public class StocksController implements Controller {
               view.invalidNumber();
               break;
             } else {
-              model.managePortfolio(name, ticker, Integer.parseInt(shares));
+              model.managePortfolio(name, ticker, Double.parseDouble(shares));
             }
           }
           view.terminating();
@@ -206,7 +207,7 @@ public class StocksController implements Controller {
             break;
           }
 
-          view.movingAvg(model.movingAverage(ticker, date, Integer.parseInt(lastDays)));
+          view.movingAvg(model.movingAverage(ticker, date, Double.parseDouble(lastDays)));
           view.emptyLine();
           break;
 
@@ -233,7 +234,7 @@ public class StocksController implements Controller {
             break;
           }
 
-          view.printCrossover(model.getCrossoverDays(ticker, date, Integer.parseInt(lastDays)));
+          view.printCrossover(model.getCrossoverDays(ticker, date, Double.parseDouble(lastDays)));
           view.emptyLine();
           break;
 

@@ -120,7 +120,7 @@ public class Stock implements Stocks {
    *                                  satisfy the given last x days
    */
   @Override
-  public double getMovingAverage(String startDate, int lastX) throws IllegalArgumentException {
+  public double getMovingAverage(String startDate, double lastX) throws IllegalArgumentException {
 
     List<String> tempDataClose = data.getColumn("close");
 
@@ -152,7 +152,7 @@ public class Stock implements Stocks {
    * @return a list of all the crossover days.
    */
   @Override
-  public List<String> getCrossOver(String startDate, int lastX) {
+  public List<String> getCrossOver(String startDate, double lastX) {
     List<String> crossDays = new ArrayList<>();
     double avg;
     List<String> tempDataClose = data.getColumn("close");

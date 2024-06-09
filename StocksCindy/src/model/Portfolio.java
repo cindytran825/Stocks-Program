@@ -15,7 +15,7 @@ public interface Portfolio {
    * calls deep copy that copies the map.
    * @return a map of the port of inventory.
    */
-  Map<String, Integer> getListInventories();
+  Map<String, Double> getListInventories();
 
   /**
    * turns the list of inventories to a string.
@@ -33,9 +33,9 @@ public interface Portfolio {
    * @return a map of the ticker and share.
    * @throws IllegalArgumentException when the share is negative.
    */
-  Map<String, Integer> editPortfolio(
+  Map<String, Double> editPortfolio(
           String companyName,
-          int share
+          double share
   ) throws IllegalArgumentException;
 
   /**

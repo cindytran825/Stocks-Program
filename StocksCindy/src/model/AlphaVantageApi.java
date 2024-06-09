@@ -14,7 +14,7 @@ public class AlphaVantageApi implements StockApi {
 
   @Override
   public void addStock(String ticker) {
-    String apiKey = "QVCUWBQJ0HN2H0MW";
+    String apiKey = "2Q8AT87UOUTGOPGY";
     URL url = null;
 
     try {

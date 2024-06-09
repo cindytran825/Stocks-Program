@@ -94,7 +94,7 @@ public class ModelMock implements Model {
    * @param shares the user inputs.
    */
   @Override
-  public void managePortfolio(String name, String ticker, int shares) {
+  public void managePortfolio(String name, String ticker, double shares) {
     log.append(ticker + " " + shares);
   }
 
@@ -131,7 +131,7 @@ public class ModelMock implements Model {
    * @return string.
    */
   @Override
-  public String movingAverage(String ticker, String startDate, int lastX) {
+  public String movingAverage(String ticker, String startDate, double lastX) {
     log.append("Moving average " + ticker + " " + startDate + " " + lastX);
     return "";
   }
@@ -144,7 +144,7 @@ public class ModelMock implements Model {
    * @return string.
    */
   @Override
-  public String getCrossoverDays(String ticker, String startDate, int lastX) {
+  public String getCrossoverDays(String ticker, String startDate, double lastX) {
     log.append("Stock crossover " + ticker + " " + startDate + " " + lastX);
     return "";
   }

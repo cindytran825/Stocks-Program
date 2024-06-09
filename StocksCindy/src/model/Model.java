@@ -21,9 +21,8 @@ public interface Model {
    * @param date a date input.
    * @return true if the date is of format YYYY-MM-DD and are numbers.
    */
-  boolean checkIfDate(String date); // TODO NEED TO ADD TO MOCKS AND TESTS
+  boolean checkIfDate(String date);
 
-  // TODO DOCUMENTATION
 
   /**
    * checks if the specified string is a number.
@@ -31,7 +30,7 @@ public interface Model {
    * @param n any string
    * @return true if the provided string is a number
    */
-  boolean checkIfNumber(String n); // TODO NEED TO ADD TO MOCKS AND TESTS
+  boolean checkIfNumber(String n);
 
   /**
    * allows the user to upload the file.
@@ -40,7 +39,7 @@ public interface Model {
    * @param path   a path of the file.
    * @return a string.
    */
-  String uploadStock(String ticker, String path); // TODO NEED TO ADD TO MOCKS AND TESTS
+  String uploadStock(String ticker, String path);
 
   /**
    * generates the stock.
@@ -63,7 +62,7 @@ public interface Model {
    * @param ticker of the company.
    * @param shares the user inputs.
    */
-  void managePortfolio(String name, String ticker, int shares);
+  void managePortfolio(String name, String ticker, double shares);
 
   /**
    * called when the user asks for the value in their portfolio.
@@ -95,7 +94,7 @@ public interface Model {
    * @param lastX     integer user inputs.
    * @return a string that calls method.
    */
-  String movingAverage(String ticker, String startDate, int lastX);
+  String movingAverage(String ticker, String startDate, double lastX);
 
   /**
    * This gets the x-day crossovers for a specified stock over a specified date range.
@@ -105,7 +104,7 @@ public interface Model {
    * @param lastX     the intger user inputs.
    * @return the days as a string.
    */
-  String getCrossoverDays(String ticker, String startDate, int lastX);
+  String getCrossoverDays(String ticker, String startDate, double lastX);
 
   /**
    * gets the name of the portfolios in the files.

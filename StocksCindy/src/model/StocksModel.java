@@ -124,7 +124,7 @@ public class StocksModel implements Model {
   }
 
   @Override
-  public void managePortfolio(String name, String ticker, int shares) {
+  public void managePortfolio(String name, String ticker, double shares) {
     Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, true);
     existingPortfolio.editPortfolio(ticker, shares);
   }
@@ -142,13 +142,13 @@ public class StocksModel implements Model {
   }
 
   @Override
-  public String movingAverage(String ticker, String startDate, int lastX) {
+  public String movingAverage(String ticker, String startDate, double lastX) {
     Stock stock = new Stock(ticker, stockFolderPath);
     return String.valueOf(stock.getMovingAverage(startDate, lastX));
   }
 
   @Override
-  public String getCrossoverDays(String ticker, String startDate, int lastX) {
+  public String getCrossoverDays(String ticker, String startDate, double lastX) {
     Stock stock = new Stock(ticker, stockFolderPath);
     List<String> days = stock.getCrossOver(startDate, lastX);
     StringBuilder sb = new StringBuilder();

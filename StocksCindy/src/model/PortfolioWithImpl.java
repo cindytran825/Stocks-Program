@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class PortfolioWithImpl implements Portfolio {
 
   private final String portfolioName;
-  private final Map<String, Integer> listInventories;
+  private final Map<String, Double> listInventories;
   private final String reference;
 
   /**
@@ -38,7 +38,7 @@ public class PortfolioWithImpl implements Portfolio {
         while (scan.hasNext()) {
           String line = scan.nextLine();
           String[] parts = line.split(",");
-          listInventories.put(parts[0], Integer.parseInt(parts[1]));
+          listInventories.put(parts[0], Double.parseDouble(parts[1]));
         }
       } catch (FileNotFoundException e) {
         e.printStackTrace();
@@ -64,14 +64,14 @@ public class PortfolioWithImpl implements Portfolio {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (String key : listInventories.keySet()) {
-      sb.append(String.format("%s : %d\n", key, listInventories.get(key)));
+      sb.append(String.format("%s : %f\n", key, listInventories.get(key)));
     }
     return sb.toString();
   }
 
 
-  private Map<String, Integer> deepCopy(Map<String, Integer> original) {
-    Map<String, Integer> copy = new HashMap<>(original.size());
+  private Map<String, Double> deepCopy(Map<String, Double> original) {
+    Map<String, Double> copy = new HashMap<>(original.size());
     for (String key : original.keySet()) {
       copy.put(key, original.get(key));
     }
@@ -85,7 +85,7 @@ public class PortfolioWithImpl implements Portfolio {
    * @return a map of the port of inventory.
    */
   @Override
-  public Map<String, Integer> getListInventories() {
+  public Map<String, Double> getListInventories() {
     return deepCopy(this.listInventories);
   }
 
@@ -101,9 +101,9 @@ public class PortfolioWithImpl implements Portfolio {
    * @throws IllegalArgumentException when the share is negative.
    */
   @Override
-  public Map<String, Integer> editPortfolio(
+  public Map<String, Double> editPortfolio(
           String companyName,
-          int share
+          double share
   ) throws IllegalArgumentException {
     if (share < 0) {
       throw new IllegalArgumentException();

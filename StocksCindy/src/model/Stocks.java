@@ -31,7 +31,7 @@ public interface Stocks {
    * @throws IllegalArgumentException when there are not enough days with data points to
    *                                  satisfy the given last x days
    */
-  double getMovingAverage(String startDate, int lastX) throws IllegalArgumentException;
+  double getMovingAverage(String startDate, double lastX) throws IllegalArgumentException;
 
   /**
    * returns a list of crossover days (when the closing price of that day is greater that the
@@ -43,7 +43,7 @@ public interface Stocks {
    * @param lastX     the last x days from starting date (crossover period)
    * @return a list of all the crossover days
    */
-  List<String> getCrossOver(String startDate, int lastX);
+  List<String> getCrossOver(String startDate, double lastX);
 
   /**
    * returns the ticker.

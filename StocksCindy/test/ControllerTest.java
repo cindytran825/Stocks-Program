@@ -145,8 +145,39 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n", log.toString());
+    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n" +
+            "check date 2020-01-01\n", log.toString());
   }
 
+  /**
+   * this for the case for when an invalid ticker is entered.
+   */
+  @Test
+  public void testInvalidTicker() {
+    StringBuilder log = new StringBuilder();
+    Readable rd = new StringReader("stock-cross RDDT 2020-01-01 6 quit");
+    Scanner scan = new Scanner(rd);
+    View view = new ViewMock(log);
+    Model mockModel = new ModelMock(log);
+    Controller controller = new StocksController(mockModel, view, rd);
+    controller.goControl();
+    assertEquals("Cannot find stock on file. ", log.toString());
+  }
+
+  /**
+   * this is for the case when an invalid date is entered.
+   */
+  @Test
+  //(expected = IllegalArgumentException.class)
+  public void testInvalidDate() {
+    StringBuilder log = new StringBuilder();
+    Readable rd = new StringReader("stock-avg AMZN 1880-100-10 6.0 quit");
+    Scanner scan = new Scanner(rd);
+    View view = new ViewMock(log);
+    Model mockModel = new ModelMock(log);
+    Controller controller = new StocksController(mockModel, view, rd);
+    controller.goControl();
+    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\nInvalid date. ", log.toString());
+  }
 
 }

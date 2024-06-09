@@ -1,6 +1,10 @@
+import java.io.File;
+import java.util.List;
 import java.util.Objects;
 
 import model.Model;
+import model.MyDateWithImpl;
+import model.Stock;
 
 /**
  * Mock class of model.
@@ -31,8 +35,14 @@ public class ModelMock implements Model {
    */
   @Override
   public boolean checkIfFileExist(String path) {
-    log.append("check file " + path + "\n");
-    return false;
+    File file = new File(path);
+    if(file.exists()) {
+      log.append("check file " + path + "\n");
+    }
+    else {
+      log.append("Cannot find stock on file. ");
+    }
+    return file.exists();
   }
 
   /**
@@ -42,8 +52,18 @@ public class ModelMock implements Model {
    */
   @Override
   public boolean checkIfDate(String date) {
-    log.append("check date " + date + "\n");
-    return false;
+    try {
+      String[] dateInfo = date.split("-");
+      // just initializing, no need to store
+      new MyDateWithImpl(
+              Integer.parseInt(dateInfo[2]),
+              Integer.parseInt(dateInfo[1]),
+              Integer.parseInt(dateInfo[0]));
+      return true;
+    } catch (Exception e) {
+      log.append("Invalid date. ");
+      return false;
+    }
   }
 
   /**
@@ -133,7 +153,9 @@ public class ModelMock implements Model {
   @Override
   public String movingAverage(String ticker, String startDate, double lastX) {
     log.append("Moving average " + ticker + " " + startDate + " " + lastX);
-    return "";
+    Stock stock = new Stock(ticker, "StocksCindy/CSVFiles");
+    return String.valueOf(stock.getMovingAverage(startDate, lastX));
+//    return "";
   }
 
   /**
@@ -146,7 +168,15 @@ public class ModelMock implements Model {
   @Override
   public String getCrossoverDays(String ticker, String startDate, double lastX) {
     log.append("Stock crossover " + ticker + " " + startDate + " " + lastX);
-    return "";
+    Stock stock = new Stock(ticker, "StocksCindy/CSVFiles");
+    List<String> days = stock.getCrossOver(startDate, lastX);
+    StringBuilder sb = new StringBuilder();
+    for (String day : days) {
+      sb.append(day + "\n");
+    }
+
+    return sb.toString();
+//    return "";
   }
 
   /**

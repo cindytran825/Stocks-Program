@@ -4,7 +4,7 @@ package model;
  * represents the model. It does the implementations.
  * and it is called in the controller when it picks up the user inputs.
  */
-public interface Model {
+public interface Model extends Observable{
 
 
   /**

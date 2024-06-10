@@ -1,10 +1,13 @@
 package view;
 
+import model.Observable;
+import model.Observer;
+
 /**
  * the view which does the display.
  * is called in the controller.
  */
-public interface View {
+public interface View extends Observer {
 
   /**
    * this prints the menu, first thing user sees.

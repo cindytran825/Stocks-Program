@@ -1,8 +1,7 @@
 
-
 - write tests for the controller / view. Finish that and make sure that it does work (below are missed test cases on the self-eval)
-   - need a test that checks what happens when an invalid ticker is entered
-   - need a test that checks what happens when an invalid date is entered
+   - DONE need a test that checks what happens when an invalid ticker is entered
+   - DONE need a test that checks what happens when an invalid date is entered
 - Double check all documentation as well as the README files.
 - implement purchase: entered a specific share and a specific stock to be bought on a specific date (question for piazza, do we use closing price or open) 
 and add them to the portfolio
@@ -10,7 +9,8 @@ and add them to the portfolio
 
 ===== IMPLEMENT A TRANSACTION LOG SYSTEM FOR THESE NEXT FEW STEPS =====
 
-- Determine the composition of a portfolio at a specific date. Note that the composition may change over time. The composition must include (a) the list of
+- Determine the composition of a portfolio at a specific date.
+ Note that the composition may change over time. The composition must include (a) the list of
 stocks and (b) the number of shares of each stock (display value of EACH stock of a portfolio)
 
 - Determine the value of a portfolio on a specific date (to be exact, the end of that day).
@@ -77,4 +77,5 @@ readme file
 will cost you points! A good implementation of MVC allows us to substitute one part with
 minimal changes to the others.": WHAT DOES THIS MEAN? IT'S OKAY FOR US TO ADD NEW METHODS TO THE VIEW
 TO PRINT NEW LINES, RIGHT? IS IT SAYING WE NEED TO MAKE A NEW VIEW THAT EXTENDS IT
+
 

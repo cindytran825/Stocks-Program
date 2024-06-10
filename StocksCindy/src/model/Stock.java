@@ -172,6 +172,7 @@ public class Stock implements Stocks {
     return crossDays;
   }
 
+  //
   /**
    * gets the list of ticker.
    *

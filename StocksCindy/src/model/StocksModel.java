@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 /**
  * the StocksModel is where all the implementation is at. It holds all the methods that
@@ -187,6 +189,68 @@ public class StocksModel implements Model {
     }
     return sb.toString();
   }
+
+//  public void getTimestamp(String name, String startDate, String endDate) {
+////    Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, true);
+////    return String.valueOf(existingPortfolio.getValue(startDate, stockFolderPath));
+////    compareTo(endDate)
+//    String[] dateInfo = startDate.split("-");
+//    MyDate firstDate = new MyDateWithImpl(
+//            Integer.parseInt(dateInfo[2]),
+//            Integer.parseInt(dateInfo[1]),
+//            Integer.parseInt(dateInfo[0]));
+//    String[] dateInfoOther = endDate.split("-");
+//    MyDate secondDate = new MyDateWithImpl(
+//            Integer.parseInt(dateInfoOther[2]),
+//            Integer.parseInt(dateInfoOther[1]),
+//            Integer.parseInt(dateInfoOther[0]));
+//
+//    int result = firstDate.compareTo(secondDate);
+//    String decide = "";
+//    //greater than 5 years
+//    if (result > 1825 ) {
+//      decide = "year";
+//      //call method that gets the value of last day of year
+//    }
+//    else if (result < 1825 && result > 365) {
+//      //less than 5 years, time span every three months
+//      decide = "3month";
+//    }
+//    else if (result > 150 && result < 365) {
+//      //between 5 - 12 months, time span is every month
+//      decide = "month";
+//    }
+//    else if (result < 30) {
+//      //month timespan, time span is in days.
+//      decide = "day";
+//    }
+//    timeValue(startDate, endDate, result, decide);
+//    //for loop that gets the value according to the timestamp
+//    //get the scale
+//  }
+//
+//  /**
+//   * gets the value according to the timespan.
+//   * Called in the timeStamp method after determined timespan.
+//   * (year, months, days) and gets the value for each at the.
+//   * end of the date.
+//   * Use the getvalue method to get hte value for the specific day.
+//   * And calls the getIndex to the next closest date.
+//   * @return an arraylist of the values in order.
+//   */
+//  //how do i represent the decision? String? or number them
+//  public List<Double> timeValue(String startDate, String endDate, int result, String decide) {
+////    List<String> list = new ArrayList<>();
+//    List<Double> listOfValues = new ArrayList<>();
+//
+//
+//    return listOfValues;
+//  }
+
+
+
+
+  //method that draws the data as a string and call that in the view
 
 
 }

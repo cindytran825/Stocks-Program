@@ -19,7 +19,7 @@ public interface DataFrame {
   Set<String> getColumnNames();
 
   /**
-   * This gets all elements in a column.
+   * This gets all elements in a specified column.
    *
    * @param key the column name
    * @return a list of column elements.

@@ -10,14 +10,15 @@ public class StockProgramView implements View {
   private Appendable appendable;
 
   /**
-   * empty contructor for the view.
+   * empty constructor for the view. Automatically assigns it to System.out when given no argument.
    */
   public StockProgramView() {
     this.appendable = System.out;
   }
 
   /**
-   * contructor that takes in the appendable.
+   * constructor that takes in the appendable.
+   *
    * @param appendable any appendable that view can add strings to
    */
   public StockProgramView(Appendable appendable) {
@@ -208,6 +209,7 @@ public class StockProgramView implements View {
 
   /**
    * display invalid.
+   *
    * @throws IllegalStateException .
    */
   @Override

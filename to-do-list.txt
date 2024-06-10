@@ -3,9 +3,13 @@
 - write tests for the controller / view. Finish that and make sure that it does work (below are missed test cases on the self-eval)
    - need a test that checks what happens when an invalid ticker is entered
    - need a test that checks what happens when an invalid date is entered
+   - need to change invalid date so that invalid date actually throws an error when its a data
+     point that doesn't exist. It's okay to assume dates but now when functions that need a single
+     day evaluation gets an invalid date. This does throw an exception but we need to implement it
+     into the view
 - Double check all documentation as well as the README files.
-- implement purchase: entered a specific share and a specific stock to be bought on a specific date (question for piazza, do we use closing price or open) 
-and add them to the portfolio
+- implement purchase: entered a specific share and a specific stock to be bought on a specific date
+  and add them to the portfolio
 - implement selling: Sell a specific number of shares of a specific stock on a specified date from a given portfolio
 
 ===== IMPLEMENT A TRANSACTION LOG SYSTEM FOR THESE NEXT FEW STEPS =====
@@ -26,6 +30,7 @@ of that portfolio on that date.
     - prompt the user to enter a percentage for each stock on file (while loop)
     then also show remaining distribution percentage to ensure it doesn't go over 100% and adds
     up to 100%
+    - this is the only way to have fractional share. You are not able to buy/sell fractional share
 
 - implement a bar chart given a specific stock and time period, example format below
 ====================================================
@@ -72,9 +77,17 @@ specifications, for a specific portfolio and a specified time range.
 
 - make sure to still follow SOLID. Any design changes must be documented and justified in the design-
 readme file
+
 ========= OFFICE HOURS QUESTIONS ===========
 - "We expect your design to follow the MVC architecture. Adding feature logic code in the view
 will cost you points! A good implementation of MVC allows us to substitute one part with
 minimal changes to the others.": WHAT DOES THIS MEAN? IT'S OKAY FOR US TO ADD NEW METHODS TO THE VIEW
 TO PRINT NEW LINES, RIGHT? IS IT SAYING WE NEED TO MAKE A NEW VIEW THAT EXTENDS IT
+- (question for piazza, do we use closing price or open) for implement purchase
+- how to represents data points where the time is more than 30 days but less than 5 months
+     - do we represent it by date?
 
+- what to put in the register (observable) and notify (observer) methods
+
+what does notify return
+is stocksModel implements model and model extends Obseravle, what do i put in resgister in stocksModel

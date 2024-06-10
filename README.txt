@@ -28,7 +28,11 @@ Out user interface is interactive -
 
    [stock-upload] allows the user to upload a file.
 
-   [stock-download] allows the user to download a file. (It takes a while to call from the API so it'll show that the file was made, but it requires about 2-3 minutes to fully install all the information. This is an API issue as we reused the starter code almost exactly.
+   [stock-download] allows the user to download a file.
+   (It takes a while to call from the API so it'll show that the file was made, but it requires
+   about 2-3 minutes to fully install all the information. This is an API issue as we reused the
+   starter code almost exactly. Run this command to also update the latest stock data into the
+   csv file.
 
    [quit] quits.
 

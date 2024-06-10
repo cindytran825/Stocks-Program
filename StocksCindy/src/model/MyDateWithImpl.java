@@ -26,6 +26,35 @@ public class MyDateWithImpl implements MyDate {
     this.year = year;
   }
 
+  /**
+   * Constructor for MyDate that checks if the provided date is a valid date.
+   *
+   * @param date date in the format YYYY-MM-DD
+   * @throws IllegalArgumentException if the date is invalid and not a real date.
+   */
+  public MyDateWithImpl(String date) throws IllegalArgumentException {
+    String[] dateSplit = date.split("-");
+
+    // try catch block to catch invalid number input
+    try {
+      if (dateSplit[0].length() == 4) {
+        this.year = Integer.parseInt(dateSplit[0]);
+      } else if (dateSplit[1].length() == 2) {
+        this.month = Integer.parseInt(dateSplit[1]);
+      } else if (dateSplit[2].length() == 2 ) {
+        this.day = Integer.parseInt(dateSplit[2]);
+      } else {
+        throw new IllegalArgumentException();
+      }
+
+      if (!checkIfValidDate(day, month, year)) {
+        throw new IllegalArgumentException("Invalid date.");
+      }
+    } catch (Exception e) {
+      throw new IllegalArgumentException();
+    }
+  }
+
   private boolean checkIfValidDate(int day, int month, int year) {
     final int monthLength = getMonthLength(month, year);
     return (day > 0 && day <= monthLength)
@@ -107,48 +136,26 @@ public class MyDateWithImpl implements MyDate {
     this.year = defensiveYear;
   }
 
-  /**
-   * gets the day.
-   * @return
-   */
   @Override
   public int getDay() {
     return day;
   }
 
-  /**
-   * gets the month.
-   * @return
-   */
   @Override
   public int getMonth() {
     return month;
   }
 
-  /**
-   * gets the year.
-   * @return
-   */
   @Override
   public int getYear() {
     return year;
   }
 
-  /**
-   * formats the date.
-   * @return the date.
-   */
   @Override
   public String toString() {
     return String.format("%04d-%02d-%02d", year, month, day);
   }
 
-
-  /**
-   * gets the difference of the dates.
-   * @param other the object to be compared.
-   * @return an integer.
-   */
   @Override
   public int compareTo(MyDate other) {
     MyDate start = new MyDateWithImpl(1, 1, 0);

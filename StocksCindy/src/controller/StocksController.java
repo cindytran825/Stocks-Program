@@ -36,12 +36,6 @@ public class StocksController implements Controller {
     this.readable = readable;
   }
 
-  private StocksController() {
-    this.name = name;
-    this.scan = scan;
-
-  }
-
   /**
    * this is called in the view and is used to read.
    * the inputs that the user puts.

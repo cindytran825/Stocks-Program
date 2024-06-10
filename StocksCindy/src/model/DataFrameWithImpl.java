@@ -15,7 +15,7 @@ import java.util.Set;
  * table mutations.
  */
 public class DataFrameWithImpl implements DataFrame {
-  private final Map<String, List<String>> map;
+  protected final Map<String, List<String>> map;
 
   /**
    * constructor that reads the information from the csv file and registers it to a map.
@@ -54,10 +54,6 @@ public class DataFrameWithImpl implements DataFrame {
     }
   }
 
-  /**
-   * gets the name of the columns.
-   * @return a set string.
-   */
   @Override
   public Set<String> getColumnNames() {
     return map.keySet();
@@ -65,6 +61,7 @@ public class DataFrameWithImpl implements DataFrame {
 
   /**
    * makes a copy of the list.
+   *
    * @param original original strings in list.
    * @return a new arraylist.
    */
@@ -74,11 +71,6 @@ public class DataFrameWithImpl implements DataFrame {
     return copy;
   }
 
-  /**
-   * get the column in csv file.
-   * @param key the column name
-   * @return
-   */
   @Override
   public List<String> getColumn(String key) {
     return deepCopy(map.get(key));

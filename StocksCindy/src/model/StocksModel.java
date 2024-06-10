@@ -26,23 +26,12 @@ public class StocksModel implements Model {
     this.api = new AlphaVantageApi(); // whichever api
   }
 
-
-  /**
-   * this checks if the file exists.
-   * @param path name of the csv file (excl
-   * @return a boolean.
-   */
   @Override
   public boolean checkIfFileExist(String path) {
     File file = new File(path);
     return file.exists();
   }
 
-  /**
-   * check if the date is in correct format.
-   * @param date string inputted.
-   * @return boolean.
-   */
   @Override
   public boolean checkIfDate(String date) {
     try {
@@ -58,11 +47,6 @@ public class StocksModel implements Model {
     }
   }
 
-  /**
-   * checks if the number can be a long.
-   * @param n string inputted.
-   * @return boolean.
-   */
   @Override
   public boolean checkIfNumber(String n) {
     try {
@@ -73,13 +57,6 @@ public class StocksModel implements Model {
     }
   }
 
-  /**
-   * allows the user to upload the file.
-   *
-   * @param ticker gets the ticker user input.
-   * @param path   a path of the file.
-   * @return a string.
-   */
   @Override
   public String uploadStock(String ticker, String path) {
     File original = new File(path);
@@ -100,10 +77,6 @@ public class StocksModel implements Model {
     }
   }
 
-  /**
-   * generates the stock.
-   * @param ticker the company user inputs.
-   */
   @Override
   public void generateStock(String ticker) {
     if (!checkIfFileExist(stockFolderPath + "/" + ticker + ".csv")) {
@@ -112,12 +85,6 @@ public class StocksModel implements Model {
     Stock stock = new Stock(ticker, stockFolderPath);
   }
 
-
-  /**
-   * this creates a new portfolio and is called in the controller.
-   *
-   * @param name is the name of the portfolio the user inputs.
-   */
   @Override
   public void createPortfolio(String name) {
     Portfolio newPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, false);
@@ -187,6 +154,9 @@ public class StocksModel implements Model {
     }
     return sb.toString();
   }
+
+//  @Override
+//  public String purchaseStock()
 
 
 }

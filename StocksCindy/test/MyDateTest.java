@@ -42,6 +42,9 @@ public class MyDateTest {
     // Jun 30 1342
     MyDate jun301342 = new MyDateWithImpl(30, 6, 1342);
     assertEquals("1342-06-30", jun301342.toString());
+
+    MyDate stringImpl = new MyDateWithImpl("2024-06-03");
+    assertEquals("2024-06-03", stringImpl.toString());
   }
 
   @Test(expected = IllegalArgumentException.class)

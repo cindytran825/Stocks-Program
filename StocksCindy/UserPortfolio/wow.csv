@@ -1,2 +1,5 @@
-TSLA,10
-AMZN,3
+timestamp,action,ticker,share,close
+2024-06-03,true,TSLA,5000,100
+2024-06-03,false,TSLA,400,200
+
+

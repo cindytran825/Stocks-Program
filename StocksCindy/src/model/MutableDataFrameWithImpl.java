@@ -31,7 +31,6 @@ public class MutableDataFrameWithImpl extends DataFrameWithImpl implements Mutab
     if (!(inputKey.containsAll(mapKey) && mapKey.containsAll(inputKey))) {
       throw new IllegalArgumentException("Input is not formatted correctly.");
     }
-
     for (String key : inputKey) {
       map.get(key).addAll(newRowElements.get(key));
     }

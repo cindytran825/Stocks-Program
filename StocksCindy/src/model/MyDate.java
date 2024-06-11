@@ -33,4 +33,13 @@ public interface MyDate extends Comparable<MyDate> {
    */
   int getYear();
 
+  /**
+   * gets a 3-letter representation of a month (month name), given the month number.
+   *
+   * @param num month number
+   * @return 3-letter string of month (first three letter  of month name)
+   * @throws IllegalArgumentException when given a month number that doesn't exist
+   */
+  String getStringMonth(int num) throws IllegalArgumentException;
+
 }

@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.MyDateWithImpl;
 import model.Stock;
 
 import static org.junit.Assert.assertEquals;
@@ -152,5 +153,14 @@ public class StockTest {
     );
     assertEquals(expectedCross2, goog.getCrossOver("2024-04-23", 29));
   }
+
+//  /**
+//   * tests for the bar chart method.
+//   */
+//  @Test
+//  public void testBarChart() {
+////    MyDate mydate1 = new MyDateWithImpl(2020-01-02)
+//    getBarChart("portfolio", "2020-01-02", "2020-01-05");
+//  }
 
 }

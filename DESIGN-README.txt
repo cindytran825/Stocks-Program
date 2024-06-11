@@ -42,3 +42,4 @@ from the file. In doing so, we also changed the format that the file is being re
 this new format change, we also had to change the editPortfolio method so that it writes the file
 in the proper format. I know this sounds like a lot of change, but it cannot be helped as the format
 had to change to accommodate the new directions
+- added a method in MyDate to return a string representation of a month integer

@@ -216,5 +216,4 @@ public class StockProgramView implements View {
   public void invalidCommand() throws IllegalStateException {
     writeMessage("This is an invalid command!" + System.lineSeparator());
   }
-
 }

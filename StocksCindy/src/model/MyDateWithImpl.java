@@ -39,9 +39,11 @@ public class MyDateWithImpl implements MyDate {
     try {
       if (dateSplit[0].length() == 4) {
         this.year = Integer.parseInt(dateSplit[0]);
-      } else if (dateSplit[1].length() == 2) {
+      }
+      if (dateSplit[1].length() == 2) {
         this.month = Integer.parseInt(dateSplit[1]);
-      } else if (dateSplit[2].length() == 2 ) {
+      }
+      if (dateSplit[2].length() == 2) {
         this.day = Integer.parseInt(dateSplit[2]);
       } else {
         throw new IllegalArgumentException();
@@ -91,6 +93,7 @@ public class MyDateWithImpl implements MyDate {
   /**
    * advances the date if the date is on a weekend.
    * or isn't a part of the data in the api.
+   *
    * @param days number of days the date is to be advanced by.
    */
   @Override
@@ -174,5 +177,45 @@ public class MyDateWithImpl implements MyDate {
       daysSinceStart2++;
     }
     return daysSinceStart1 - daysSinceStart2;
+  }
+
+  @Override
+  public boolean equals(Object otherDate) {
+    return (otherDate instanceof MyDate other)
+            && this.day == other.getDay()
+            && this.month == other.getMonth()
+            && this.year == other.getYear();
+  }
+
+  @Override
+  public String getStringMonth(int num) throws IllegalArgumentException {
+    switch (num) {
+      case 1:
+        return "JAN";
+      case 2:
+        return "FEB";
+      case 3:
+        return "MAR";
+      case 4:
+        return "APR";
+      case 5:
+        return "MAY";
+      case 6:
+        return "JUN";
+      case 7:
+        return "JUL";
+      case 8:
+        return "AUG";
+      case 9:
+        return "SEP";
+      case 10:
+        return "OCT";
+      case 11:
+        return "NOV";
+      case 12:
+        return "DEC";
+      default:
+        throw new IllegalArgumentException("Invalid month integer.");
+    }
   }
 }

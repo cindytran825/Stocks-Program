@@ -11,7 +11,7 @@ import java.util.Map;
 public interface Portfolio {
 
   /**
-   * gets the list of tickers+shares that the
+   * gets the map of tickers and shares that the
    * user inputs to the portfolio
    * calls deep copy that copies the map.
    *
@@ -21,33 +21,18 @@ public interface Portfolio {
 
   /**
    * turns the list of inventories to a string
-   * also reformatting it in the file.
+   * also reformatting it in the file (Stock : shares)
    *
    * @return a string of the inventories.
    */
   public String toString();
 
   /**
-   * this is used the edit the portfolio
-   * after it is created and the user wants to add
-   * anything in it, it is called.
-   *
-   * @param companyName the ticker the user inputs.
-   * @param share       the share for that ticker.
-   * @return a map of the ticker and share.
-   * @throws IllegalArgumentException when the share is negative.
-   */
-  Map<String, Double> editPortfolio(
-          String companyName,
-          double share
-  ) throws IllegalArgumentException;
-
-  /**
    * is called when the user wants to get the value of a portfolio.
    *
-   * @param date        the date they input.
-   * @param pathToStock string of located file.
-   * @return a double(value).
+   * @param date        the date they input in the format (YYYY-MM-DD)
+   * @param pathToStock the directory of located file
+   * @return the value of the portfolio
    */
   double getValue(String date, String pathToStock);
 
@@ -59,16 +44,64 @@ public interface Portfolio {
   String getPortfolioName();
 
   /**
-   * This is a buying function of a portfolio. It can add stock shares to the portfolio along
-   * with the associated cost that comes with the specified purchasing date.
+   * This is a buying function of a portfolio. It can add stock shares to the portfolio using
+   * the associated CLOSING price that comes with the specified purchasing date.
    *
-   * @param ticker
-   * @param shares
-   * @param date
-   * @throws IllegalArgumentException
+   * @param ticker stock ticker
+   * @param shares quantity for purchase
+   * @param date   the date the transaction is being made in the format (YYYY-MM-DD)
+   * @throws IllegalArgumentException when there's an attempt to make a purchase with a date
+   *                                  that is not chronological to previous transactions, or
+   *                                  the given date is a date where there are no stock data
+   *                                  available (closed market).
    */
   void buyStock(String ticker, double shares, String date) throws IllegalArgumentException;
 
+  /**
+   * This is a selling function of a portfolio. It can remove stock shares from the portfolio
+   * using the associated CLOSING price that comes with the specified purchasing date.
+   *
+   * @param ticker stock ticker
+   * @param shares quantity for sale
+   * @param date   date the transaction is being made in the format (YYYY-MM-DD)
+   * @throws IllegalArgumentException when there's an attempt to make a purchase with a date
+   *                                  that is not chronological to previous transactions, or
+   *                                  the given date is a date where there are no stock data
+   *                                  available (closed market). Also when there's an attempt
+   *                                  to sell more shares than what is available in the portfolio
+   */
   void sellStock(String ticker, double shares, String date) throws IllegalArgumentException;
 
+  /**
+   * This method gets the portfolio's stock composition (the stocks and its shares)
+   * at the time of the specified date.
+   *
+   * @param date any date for evaluation of stock composition in the format (YYYY-MM-DD)
+   * @return a map of the portfolio's composition (stock : shares)
+   * @throws IllegalStateException when an unknown action is read from the log
+   */
+  Map<String, Double> getComposition(String date) throws IllegalStateException;
+
+  /**
+   * This method equalizes the current portfolio's stock shares to the specified percentages.
+   * For example, let us assume that on a particular date, the price per share of Netflix, Google,
+   * Microsoft, and Apple were $15, $30, $10 and $30 respectively. The values of these stocks
+   * (price per share multiplied by number of shares) would be $375, $300, $250 and $150
+   * respectively, bringing the total value of the portfolio to $1075. If the intended
+   * distribution of these stocks in the portfolio was supposed to be (25%, 25%, 25%, 25%),
+   * the portfolio should have $268.75 worth of each stock. Therefore, the investor will have
+   * to sell $106.25 worth of Netflix stock (7.0833 shares) and $31.25 worth of Google stock
+   * (1.0417 shares)to purchase $18.75 worth of Microsoft stock (1.875 shares) and $118.75
+   * (3.9583 shares) of Apple stock.
+   *
+   * @param percentages percentage distribution to each stock
+   * @param date        a date in the format of (YYYY-MM-DD).
+   * @throws IllegalArgumentException when an invalid date is given (bad format, not chronological
+   *                                  to transaction history, or a date with no data available).
+   *                                  Or, when the percentages don't add up to 100%
+   */
+  void rebalance(
+          Map<String, Double> percentages,
+          String date
+  ) throws IllegalArgumentException;
 }

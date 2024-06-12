@@ -254,4 +254,9 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
     );
   }
 
+  @Test
+  public void testColumnSize() {
+    assertEquals(3, stock.getColumnSize());
+  }
+
 }

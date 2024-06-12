@@ -4,9 +4,11 @@
    - need a test that checks what happens when an invalid ticker is entered
    - need a test that checks what happens when an invalid date is entered
 - Double check all documentation as well as the README files.
-- implement purchase: entered a specific share and a specific stock to be bought on a specific date (question for piazza, do we use closing price or open) 
+- Change the Setup readme guide on how to create the portfolio
+
+- DONE implement purchase: entered a specific share and a specific stock to be bought on a specific date (question for piazza, do we use closing price or open)
 and add them to the portfolio
-- implement selling: Sell a specific number of shares of a specific stock on a specified date from a given portfolio
+- DONE implement selling: Sell a specific number of shares of a specific stock on a specified date from a given portfolio
 
 ===== IMPLEMENT A TRANSACTION LOG SYSTEM FOR THESE NEXT FEW STEPS =====
 

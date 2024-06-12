@@ -25,12 +25,11 @@ public class PortfolioWithImpl implements Portfolio {
 
   /**
    * it also creates a new portfolio as a csv file when the user creates one.
-   * The portfolio file must be in a proper format of [timestamp,action,ticker,share,close].
-   * Timestamp refers to the date of transaction in the format of YYYY-MM-DD. Action refers
-   * to the action performed such as 'buy' or 'sell'. Ticker refers to the stock that is
-   * involved in the transaction, represented by their ticker. Share refers to the quantity
-   * that is involved in the transaction. Close refers to the price per share on the specified
-   * date. It must have these keywords at the top of the file, separated by a comma.
+   * The portfolio file must be in a proper format of [action,stock,share,timestamp].
+   * Action refers to the action performed such as 'buy' or 'sell'. Stock refers to the stock
+   * that is involved in the transaction, represented by their ticker. Share refers to the quantity
+   * that is involved in the transaction. Timestamp refers to the date of transaction in the format
+   * of YYYY-MM-DD. The file must have these keywords at the top of the file, separated by a comma.
    * The csv file is the log of the portfolio, and portfolio data will be initialized
    * from reading this log csv file.
    *
@@ -120,18 +119,7 @@ public class PortfolioWithImpl implements Portfolio {
   }
 
 
-  /**
-   * this is used the edit the portfolio.
-   * after it is created and the user wants to add.
-   * anything in it, it is called.
-   *
-   * @param companyName the ticker the user inputs.
-   * @param share       the share for that ticker.
-   * @return a map of the ticker and share.
-   * @throws IllegalArgumentException when the share is negative.
-   */
-  @Override // TODO MAKE THIS PRIVATE NOT PUBLIC
-  public Map<String, Double> editPortfolio(
+  private Map<String, Double> editPortfolio(
           String companyName,
           double share
   ) throws IllegalArgumentException {
@@ -144,13 +132,25 @@ public class PortfolioWithImpl implements Portfolio {
     return deepCopy(listInventories);
   }
 
-  /**
-   * is called when the user wants to get the value of a portfolio.
-   *
-   * @param date        the date they input.
-   * @param pathToStock string of located file.
-   * @return a double(value).
-   */
+//  @Override
+//  public double getValue(String date, String pathToStock) {
+//    double totalValue = 0.0;
+//    Stock stock;
+//    List<Double> closePrices;
+//    double closePrice;
+//    int dateIndex;
+//    for (String ticker : listInventories.keySet()) {
+//      stock = new Stock(ticker, pathToStock);
+//      closePrices = stock.getClose();
+//      dateIndex = stock.getClosestDateIndex(date, false);
+//      closePrice = closePrices.get(dateIndex);
+//      totalValue += closePrice * listInventories.get(ticker);
+//    }
+//    return totalValue;
+//  }
+
+
+  // this had to change previous implementation in the comment above
   @Override
   public double getValue(String date, String pathToStock) {
     double totalValue = 0.0;
@@ -158,12 +158,13 @@ public class PortfolioWithImpl implements Portfolio {
     List<Double> closePrices;
     double closePrice;
     int dateIndex;
-    for (String ticker : listInventories.keySet()) {
+    Map<String, Double> composition = getComposition(date);
+    for (String ticker : composition.keySet()) {
       stock = new Stock(ticker, pathToStock);
       closePrices = stock.getClose();
       dateIndex = stock.getClosestDateIndex(date, false);
       closePrice = closePrices.get(dateIndex);
-      totalValue += closePrice * listInventories.get(ticker);
+      totalValue += closePrice * composition.get(ticker);
     }
     return totalValue;
   }
@@ -183,19 +184,12 @@ public class PortfolioWithImpl implements Portfolio {
     // and a valid date (YYYY-MM-DD, doesn't have to be a date in the data)
 
     // check that the date is valid (in chronological order)
-    Stock stock = new Stock(ticker, stockDirectory);
-    List<String> dateList = stock.getTimestamp();
-    List<String> transactionDates = this.log.getColumn("timestamp");
-    String latestTransactionDate =
-            !transactionDates.isEmpty() ? transactionDates.getLast() : "0000-01-01";
-
-    if (!checkDateChronology(latestTransactionDate, date, dateList)) {
-      throw new IllegalArgumentException("Invalid date.");
-    }
+    checkDateValidity(date, ticker);
     MyDate inputDate = new MyDateWithImpl(date);
 
     double originalPrice = listInventories.containsKey(ticker) ? listInventories.get(ticker) : 0;
-    this.editPortfolio(ticker, originalPrice + shares);
+    double rounded = Double.parseDouble(String.format("%.04f", originalPrice + shares));
+    listInventories.put(ticker, rounded);
 
     // adding to log
     logActivity(ticker, shares, inputDate, "buy");
@@ -228,28 +222,19 @@ public class PortfolioWithImpl implements Portfolio {
     // TODO MAKE SURE TO CHECK IN CONTROLLER THATTHEY CAN'T BUY OR SELL FRACTIONAL SHARES
     // TODO CHECK DATE VALIDITY REFACTOR
     // check that the date is valid (in chronological order)
-    Stock stock = new Stock(ticker, stockDirectory);
-    List<String> dateList = stock.getTimestamp();
-    List<String> transactionDates = this.log.getColumn("timestamp");
-    String latestTransactionDate =
-            !transactionDates.isEmpty() ? transactionDates.getLast() : "0000-01-01";
-    if (!checkDateChronology(latestTransactionDate, date, dateList)) {
-      throw new IllegalArgumentException("Invalid date.");
-    }
+    checkDateValidity(date, ticker);
     MyDate inputDate = new MyDateWithImpl(date);
-
 
     // can sell
     if (listInventories.containsKey(ticker) && listInventories.get(ticker) >= shares) {
       double originalPrice = listInventories.containsKey(ticker) ? listInventories.get(ticker) : 0;
-      this.editPortfolio(ticker, originalPrice - shares);
+      double rounded = Double.parseDouble(String.format("%.04f", originalPrice - shares));
+      listInventories.put(ticker, rounded);
       // adding to log
       logActivity(ticker, shares, inputDate, "sell");
     } else {
       throw new IllegalArgumentException("Not enough shares to sell specified stock.");
     }
-    // TODO WRITE TEST
-    // TODO HAVE IT TRACK THE COST FOR THAT DATE TOO
   }
 
   /**
@@ -265,7 +250,7 @@ public class PortfolioWithImpl implements Portfolio {
     newTransaction.put("timestamp", List.of(inputDate.toString()));
     newTransaction.put("action", List.of(activity));
     newTransaction.put("stock", List.of(ticker));
-    newTransaction.put("share", List.of(String.valueOf(shares)));
+    newTransaction.put("share", List.of(String.format("%.4f", shares)));
 
     // add to log and also write to file
     this.log.addLastRow(newTransaction);
@@ -295,12 +280,113 @@ public class PortfolioWithImpl implements Portfolio {
     } catch (IOException e) {
       // doesn't matter
     }
+  }
 
-    // get closing price
-//    Stock tempStock = new Stock(ticker, stockDirectory);
-//    double value = tempStock.getMovingAverage(inputDate.toString(), 1);
-//    newTransaction.put("close", List.of(String.valueOf(value)));
+
+  @Override
+  public void rebalance(
+          Map<String, Double> percentages,
+          String date
+  ) throws IllegalArgumentException {
+
+    //Map<String, Double> comp = getComposition(date);
+
+    // checks if the date has information available AND it's chronological
+    double totalPercentage = 0.0;
+    for (String ticker : listInventories.keySet()) {
+      checkDateValidity(date, ticker);
+      totalPercentage += percentages.get(ticker);
+    }
+    if (totalPercentage != 1.0) {
+      throw new IllegalArgumentException("Total percentage does not equal to 1.0.");
+    }
+
+    // applying the percentages
+    double totalValue = getValue(date, stockDirectory);
+    double closedPrice;
+    double target;
+    double currentValue;
+    double totalShares;
+    double percentage;
+    Stock stock;
+    for (String ticker : percentages.keySet()) {
+      stock = new Stock(ticker, stockDirectory);
+      closedPrice = stock.getMovingAverage(date, 1);
+      currentValue = listInventories.get(ticker) * closedPrice;
+      percentage = percentages.get(ticker);
+      target = totalValue * percentage;
+      // buy more to reach target
+      if (target > currentValue) {
+        totalShares = (target - currentValue) / closedPrice;
+        totalShares = Double.parseDouble(String.format("%.4f", totalShares));
+        buyStock(ticker, totalShares, date);
+      } else if (target < currentValue) {
+        // sell more to reach target
+        totalShares = (currentValue - target) / closedPrice;
+        totalShares = Double.parseDouble(String.format("%.4f", totalShares));
+        sellStock(ticker, totalShares, date);
+      } else {
+        continue;
+      }
+    }
 
   }
 
+  private void checkDateValidity(String date, String ticker) {
+    Stock stock = new Stock(ticker, stockDirectory);
+    List<String> dateList = stock.getTimestamp();
+    List<String> transactionDates = this.log.getColumn("timestamp");
+    String latestTransactionDate =
+            !transactionDates.isEmpty() ? transactionDates.getLast() : "0000-01-01";
+    if (!checkDateChronology(latestTransactionDate, date, dateList)) {
+      throw new IllegalArgumentException("Invalid date.");
+    }
+  }
+
+
+  @Override
+  public Map<String, Double> getComposition(String date) throws IllegalStateException {
+    List<String> actionLog = log.getColumn("action");
+    List<String> shareLog = log.getColumn("share");
+    List<String> stockLog = log.getColumn("stock");
+    List<String> dateLog = log.getColumn("timestamp");
+
+    Map<String, Double> inventory = new HashMap<>();
+    MyDate inputDate = new MyDateWithImpl(date);
+    MyDate logDate;
+
+    int columnSize = log.getColumnSize();
+    double shares;
+    String stock;
+    String action;
+    if (columnSize != 0) {
+      for (int i = 0; i < columnSize; i++) {
+        logDate = new MyDateWithImpl(dateLog.get(i));
+
+        // if the date in the log is past the given date
+        if (logDate.compareTo(inputDate) <= 0) {
+          stock = stockLog.get(i);
+          action = actionLog.get(i);
+
+          // evaluating action
+          switch (action) {
+            case "buy":
+              shares = inventory.containsKey(stock)
+                      ? inventory.get(stock) + Double.parseDouble(shareLog.get(i))
+                      : Double.parseDouble(shareLog.get(i));
+              break;
+            case "sell":
+              shares = inventory.containsKey(stock)
+                      ? inventory.get(stock) - Double.parseDouble(shareLog.get(i))
+                      : Double.parseDouble(shareLog.get(i));
+              break;
+            default:
+              throw new IllegalStateException("Unknown action.");
+          }
+          inventory.put(stock, shares);
+        }
+      }
+    }
+    return inventory;
+  }
 }

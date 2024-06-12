@@ -122,18 +122,41 @@ public class StocksModel implements Model {
    */
   @Override
   public void createPortfolio(String name) {
-    Portfolio newPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, false);
+    Portfolio newPortfolio = new PortfolioWithImpl(
+            name,
+            portfolioFolderPath,
+            stockFolderPath,
+            false);
   }
+
+  // changing structure of model?
+  /*
+  still keep create portfolio a separate method ->
+  manage portfolio -> list portfolios and have the user select one
+                   -> loop for action stock and quantity:
+                              What would you like to do in this portfolio?
+                              [buy TICKER SHARES date]
+                              [sell TICKER SHARES date]
+   */
 
   @Override
   public void managePortfolio(String name, String ticker, double shares) {
-    Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, true);
-    existingPortfolio.editPortfolio(ticker, shares);
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            name,
+            portfolioFolderPath,
+            stockFolderPath,
+            true);
+    // existingPortfolio.editPortfolio(ticker, shares);
   }
+
 
   @Override
   public String evaluatePortfolio(String name, String date) {
-    Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, true);
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            name,
+            portfolioFolderPath,
+            stockFolderPath,
+            true);
     return String.valueOf(existingPortfolio.getValue(date, stockFolderPath));
   }
 
@@ -174,7 +197,11 @@ public class StocksModel implements Model {
 
   @Override
   public String getPortfolio(String name) {
-    Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, true);
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            name,
+            portfolioFolderPath,
+            stockFolderPath,
+            true);
     return existingPortfolio.toString();
   }
 

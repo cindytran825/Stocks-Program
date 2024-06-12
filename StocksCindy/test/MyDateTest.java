@@ -195,5 +195,10 @@ public class MyDateTest {
     assertEquals(2023, day2.getYear());
   }
 
+  @Test
+  public void testGetMonthString() {
+    assertEquals("JAN", day1.getStringMonth());
+    assertEquals("MAY", day1.getStringMonth(5));
+  }
 
 }

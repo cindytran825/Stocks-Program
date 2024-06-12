@@ -41,5 +41,16 @@ a log to the constructor for initialization as well as a "load" function to read
 from the file. In doing so, we also changed the format that the file is being read. To accommodate
 this new format change, we also had to change the editPortfolio method so that it writes the file
 in the proper format. I know this sounds like a lot of change, but it cannot be helped as the format
-had to change to accommodate the new directions
+had to change to accommodate the new directions.
+- since the format changed, the getValue method had to change just a little bit with the
+introduction of a logging system. It originally used the current (latest) transaction available
+with the idea that all the portfolio was being evaluated at a single given date. With the new
+addition of a logging system and evaluation of different timestamps, the getValue will now call
+getComposition to receive the stock count at a certain time period instead.
 - added a method in MyDate to return a string representation of a month integer
+- as we did not implement a "buy" or a "sell" method buy combined them in the "editPortfolio",
+not that we have been given directions to implement the new methods, we've made the edit portfolio
+method private and broke it up into buy and sell. The controller and model had to accommodate this
+change. I do think that this change is justified as there were no directions saying that changing
+the portfolio had to incorporate a buying and selling method. It is possible to infer that
+it could've been refactored into one method based on the given directions in part I.

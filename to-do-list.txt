@@ -12,19 +12,19 @@ and add them to the portfolio
 
 ===== IMPLEMENT A TRANSACTION LOG SYSTEM FOR THESE NEXT FEW STEPS =====
 
-- Determine the composition of a portfolio at a specific date. Note that the composition may change over time. The composition must include (a) the list of
+- DONE Determine the composition of a portfolio at a specific date. Note that the composition may change over time. The composition must include (a) the list of
 stocks and (b) the number of shares of each stock (display value of EACH stock of a portfolio)
 
-- Determine the value of a portfolio on a specific date (to be exact, the end of that day).
+- DONE Determine the value of a portfolio on a specific date (to be exact, the end of that day).
 The value for a portfolio before the date of its first purchase would be 0, since
 each stock in the portfolio now was purchased at a specific point in time.
 
-- The distribution of value of a portfolio on a specific date (to be exact, the end of that day).
+- DONE The distribution of value of a portfolio on a specific date (to be exact, the end of that day).
 The distribution of value should include (a) the stock itself (b) the value of each
 individual stock in the portfolio. The sum of the values in (b) should equal to the value
 of that portfolio on that date.
 
-- balance a portfolio with the given weights and a date
+- DONE balance a portfolio with the given weights and a date
     - prompt the user to enter a percentage for each stock on file (while loop)
     then also show remaining distribution percentage to ensure it doesn't go over 100% and adds
     up to 100%

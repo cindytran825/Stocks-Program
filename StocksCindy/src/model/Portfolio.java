@@ -104,4 +104,15 @@ public interface Portfolio {
           Map<String, Double> percentages,
           String date
   ) throws IllegalArgumentException;
+
+  /**
+   * This gets the distribution of the portfolio's stock values on a specified date.
+   * Any invalid dates will be checked in getComposition.
+   *
+   * @param date a date in the format YYYY-MM-DD
+   * @return the values associated with each stock
+   */
+  Map<String, Double> getDistribution(String date);
+
+
 }

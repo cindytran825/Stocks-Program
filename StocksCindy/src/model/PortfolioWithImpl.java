@@ -99,37 +99,9 @@ public class PortfolioWithImpl implements Portfolio {
   }
 
 
-  private Map<String, Double> deepCopy(Map<String, Double> original) {
-    Map<String, Double> copy = new HashMap<>(original.size());
-    for (String key : original.keySet()) {
-      copy.put(key, original.get(key));
-    }
-    return copy;
-  }
-
-  /**
-   * gets the list of tickers+shares that.
-   * user inputs to the portfolio.
-   *
-   * @return a map of the port of inventory.
-   */
   @Override
   public Map<String, Double> getListInventories() {
     return deepCopy(this.listInventories);
-  }
-
-
-  private Map<String, Double> editPortfolio(
-          String companyName,
-          double share
-  ) throws IllegalArgumentException {
-    if (share < 0) {
-      throw new IllegalArgumentException();
-    }
-    // will eventually implement checker for budget and volume to ensure shares don't exceed
-    // once buying gets implemented
-    listInventories.put(companyName, share);
-    return deepCopy(listInventories);
   }
 
 //  @Override
@@ -195,19 +167,6 @@ public class PortfolioWithImpl implements Portfolio {
     logActivity(ticker, shares, inputDate, "buy");
   }
 
-  private boolean checkDateChronology(
-          String lastDate,
-          String date,
-          List<String> dateList
-  ) {
-
-    MyDate latestDate = new MyDateWithImpl(lastDate);
-    MyDate inputDate = new MyDateWithImpl(date);
-    // check if the date is an available data point
-    return dateList.contains(inputDate.toString())
-            && inputDate.compareTo(latestDate) >= 0;
-  }
-
   // TODO MENTION IN DESIGN README THAT THE EDITPORTFOLIO FUNCTION WILL BE MADE PRIVATE
   // TODO ALSO NEED TO CHANGE PORTFOLIO SO THAT IT IS TRACKING / UPDATING THE AMOUNT OF STOCKS CORRECTLY
   @Override
@@ -236,52 +195,6 @@ public class PortfolioWithImpl implements Portfolio {
       throw new IllegalArgumentException("Not enough shares to sell specified stock.");
     }
   }
-
-  /**
-   * Registers the activity into the CSV file log and the DataFrame.
-   *
-   * @param ticker    stock ticker
-   * @param shares    shares involved in transaction
-   * @param inputDate date of transaction
-   * @param activity  purpose of transaction (buy/sell)
-   */
-  private void logActivity(String ticker, double shares, MyDate inputDate, String activity) {
-    Map<String, List<String>> newTransaction = new HashMap<>();
-    newTransaction.put("timestamp", List.of(inputDate.toString()));
-    newTransaction.put("action", List.of(activity));
-    newTransaction.put("stock", List.of(ticker));
-    newTransaction.put("share", List.of(String.format("%.4f", shares)));
-
-    // add to log and also write to file
-    this.log.addLastRow(newTransaction);
-
-    File portFile = new File(reference);
-    try {
-      List<List<String>> columns = new ArrayList<>();
-      // write the column titles
-      FileWriter fw = new FileWriter(portFile);
-      StringBuilder line = new StringBuilder();
-      for (String key : log.getColumnNames()) {
-        line.append(key).append(",");
-        columns.add(log.getColumn(key));
-      }
-      line.append("\n");
-
-      // add rows
-      int columnSize = log.getColumnSize();
-      for (int i = 0; i < columnSize; i++) {
-        for (List<String> column : columns) {
-          line.append(column.get(i)).append(",");
-        }
-        line.append("\n");
-      }
-      fw.write(line.toString().strip());
-      fw.close();
-    } catch (IOException e) {
-      // doesn't matter
-    }
-  }
-
 
   @Override
   public void rebalance(
@@ -329,18 +242,20 @@ public class PortfolioWithImpl implements Portfolio {
         continue;
       }
     }
-
   }
 
-  private void checkDateValidity(String date, String ticker) {
-    Stock stock = new Stock(ticker, stockDirectory);
-    List<String> dateList = stock.getTimestamp();
-    List<String> transactionDates = this.log.getColumn("timestamp");
-    String latestTransactionDate =
-            !transactionDates.isEmpty() ? transactionDates.getLast() : "0000-01-01";
-    if (!checkDateChronology(latestTransactionDate, date, dateList)) {
-      throw new IllegalArgumentException("Invalid date.");
+  @Override
+  public Map<String, Double> getDistribution(String date) {
+    Map<String, Double> comp = getComposition(date);
+    Map<String, Double> distribution = new HashMap<>();
+    for (String key : comp.keySet()) {
+      Stock stock = new Stock(key, stockDirectory);
+      Double stockValue = comp.get(key) * stock.getMovingAverage(date, 1);
+      distribution.put(
+              key,
+              Double.parseDouble(String.format("%.4f", stockValue)));
     }
+    return distribution;
   }
 
 
@@ -389,4 +304,96 @@ public class PortfolioWithImpl implements Portfolio {
     }
     return inventory;
   }
+
+  private boolean checkDateChronology(
+          String lastDate,
+          String date,
+          List<String> dateList
+  ) {
+
+    MyDate latestDate = new MyDateWithImpl(lastDate);
+    MyDate inputDate = new MyDateWithImpl(date);
+    // check if the date is an available data point
+    return dateList.contains(inputDate.toString())
+            && inputDate.compareTo(latestDate) >= 0;
+  }
+
+  /**
+   * Registers the activity into the CSV file log and the DataFrame.
+   *
+   * @param ticker    stock ticker
+   * @param shares    shares involved in transaction
+   * @param inputDate date of transaction
+   * @param activity  purpose of transaction (buy/sell)
+   */
+  private void logActivity(String ticker, double shares, MyDate inputDate, String activity) {
+    Map<String, List<String>> newTransaction = new HashMap<>();
+    newTransaction.put("timestamp", List.of(inputDate.toString()));
+    newTransaction.put("action", List.of(activity));
+    newTransaction.put("stock", List.of(ticker));
+    newTransaction.put("share", List.of(String.format("%.4f", shares)));
+
+    // add to log and also write to file
+    this.log.addLastRow(newTransaction);
+
+    File portFile = new File(reference);
+    try {
+      List<List<String>> columns = new ArrayList<>();
+      // write the column titles
+      FileWriter fw = new FileWriter(portFile);
+      StringBuilder line = new StringBuilder();
+      for (String key : log.getColumnNames()) {
+        line.append(key).append(",");
+        columns.add(log.getColumn(key));
+      }
+      line.append("\n");
+
+      // add rows
+      int columnSize = log.getColumnSize();
+      for (int i = 0; i < columnSize; i++) {
+        for (List<String> column : columns) {
+          line.append(column.get(i)).append(",");
+        }
+        line.append("\n");
+      }
+      fw.write(line.toString().strip());
+      fw.close();
+    } catch (IOException e) {
+      // doesn't matter
+    }
+  }
+
+  private void checkDateValidity(String date, String ticker) {
+    Stock stock = new Stock(ticker, stockDirectory);
+    List<String> dateList = stock.getTimestamp();
+    List<String> transactionDates = this.log.getColumn("timestamp");
+    String latestTransactionDate =
+            !transactionDates.isEmpty() ? transactionDates.getLast() : "0000-01-01";
+    if (!checkDateChronology(latestTransactionDate, date, dateList)) {
+      throw new IllegalArgumentException("Invalid date.");
+    }
+  }
+
+  private Map<String, Double> deepCopy(Map<String, Double> original) {
+    Map<String, Double> copy = new HashMap<>(original.size());
+    for (String key : original.keySet()) {
+      copy.put(key, original.get(key));
+    }
+    return copy;
+  }
+
+// TODO CAN REMOVE EDIT PORTFOLIO
+  private Map<String, Double> editPortfolio(
+          String companyName,
+          double share
+  ) throws IllegalArgumentException {
+    if (share < 0) {
+      throw new IllegalArgumentException();
+    }
+    // will eventually implement checker for budget and volume to ensure shares don't exceed
+    // once buying gets implemented
+    listInventories.put(companyName, share);
+    return deepCopy(listInventories);
+  }
+
 }

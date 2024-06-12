@@ -452,4 +452,31 @@ public class PortfolioTest {
     assertEquals(
             "GOOG : 5000.000000\ntestStockFormat : 123.000000\n", bob.toString());
   }
+
+  @Test
+  public void testGetDistribution() {
+    double valueOfPortfolio = bob.getValue("2024-04-04", testFolderPath);
+    Map<String, Double> distribution = bob.getDistribution("2024-04-04");
+    double totalValue = 0;
+    for (Double val : distribution.values()) {
+      totalValue += val;
+    }
+    assertEquals(new HashMap<>(), distribution);
+    assertEquals(0.0, valueOfPortfolio, 0.01);
+    assertEquals(valueOfPortfolio, totalValue, 0.01);
+
+    distribution = bob.getDistribution("2024-06-03");
+    Map<String, Double> expected = new HashMap<>();
+    expected.put("GOOG", 872100.0);
+    expected.put("testStockFormat", 21453.66);
+    assertEquals(expected, distribution);
+
+    valueOfPortfolio = bob.getValue("2024-06-03", testFolderPath);
+    totalValue = 0.0;
+    for (Double val : distribution.values()) {
+      totalValue += val;
+    }
+    assertEquals(893553.66, valueOfPortfolio, 0.01);
+    assertEquals(valueOfPortfolio, totalValue, 0.01);
+  }
 }

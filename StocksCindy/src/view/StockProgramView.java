@@ -143,6 +143,16 @@ public class StockProgramView implements View {
   }
 
   @Override
+  public void startDate() {
+    writeMessage("Enter in the starting date below.\n");
+  }
+
+  @Override
+  public void endDate() {
+    writeMessage("Enter in the ending date below:\n");
+  }
+
+  @Override
   public void getDays() {
     writeMessage("Enter in the last x-days since the current date: ");
   }
@@ -241,7 +251,7 @@ public class StockProgramView implements View {
   }
 
   @Override
-  public void editPortfolioMenu() {
+  public void printEditPortfolioMenu() {
     writeMessage("Actions you can perform on this portfolio: \n");
     writeMessage("Buy stock [buy]\n");
     writeMessage("Sell stock [sell]\n");
@@ -257,6 +267,16 @@ public class StockProgramView implements View {
     writeMessage("View the portfolio's total value [value]\n");
     writeMessage("View a bar chart of the portfolio's value over time [bar-chart]\n");
     writeMessage("To finish viewing the portfolio [finish]\n");
+  }
+
+  @Override
+  public void printStockViewMenu() {
+    writeMessage("Actions you can perform on this portfolio: \n");
+    writeMessage("View the stock's value growth over a time period [value]\n");
+    writeMessage("View the stock moving average [move-avg]\n");
+    writeMessage("View the stock crossover dates [crossover]\n");
+    writeMessage("View a bar chart of the stock's value over time [bar-chart]\n");
+    writeMessage("To finish view the stock [finish]\n");
   }
 
   @Override

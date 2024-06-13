@@ -200,6 +200,7 @@ public interface View {
    * display the query for a portfolio's new name upon creation.
    */
   void newName();
+
   /**
    * displays the given bar chart.
    *
@@ -212,7 +213,25 @@ public interface View {
    * displays the types of action the user can perform on the portfolio that will edit
    * the portfolio (buy, sell, balance, etc.).
    */
-  void editPortfolioMenu();
+  void printEditPortfolioMenu();
+
+  /**
+   * displays a message to let the user know that they are entering the date for the start of
+   * the evaluation period.
+   */
+  void startDate();
+
+  /**
+   * displays a message to let the user know that they are entering the date for the end of
+   * the evaluation period.
+   */
+  void endDate();
+
+  /**
+   * displays the types of action the user can perform on the stock that will analyze the stock
+   * (growth, moving average, crossover days, bar chart, etc.).
+   */
+  void printStockViewMenu();
 
   /**
    * displays the types of action the user can perform on the portfolio that will analyze

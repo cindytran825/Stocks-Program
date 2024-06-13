@@ -151,7 +151,7 @@ public interface Model {
 
   String getPortfolioComposition(String name, String date);
 
-  String getPortfolioDistribution(String name, String date)
+  String getPortfolioDistribution(String name, String date);
 
   /**
    * Checks if the provided string is a whole number.

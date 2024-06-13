@@ -23,6 +23,19 @@ public class StocksController implements Controller {
   private final String stockDirectory;
   private final String portfolioDirectory;
 
+  private String day;
+  private String userInput;
+  private String date;
+  private String startDate;
+  private String endDate;
+  private String ticker;
+  private String name;
+  private String month;
+  private String shares;
+  private String year;
+  private String daysAfter;
+  private boolean finish;
+
   /**
    * public constructor that takes in the model, view, and readable.
    * is called in the program display.
@@ -51,293 +64,114 @@ public class StocksController implements Controller {
    */
   public void goControl() throws IllegalStateException {
     boolean quit = false;
-    String name;
-    String shares;
-    String ticker;
-    String userInput;
-    String day;
-    String month;
-    String year;
-    String date;
-
     view.welcomeMessage(); //TODO take menu out of welcome message
 
     while (!quit) {
       view.printMenu(); //TODO clarify TA
-//      view.inputNumber();
+      view.userInput();
       userInput = scan.next();
 
       switch (userInput) {
+
         // create new portfolio
         case "port-create":
           portfolioCreate();
           break;
-//          String shares;
-//          String ticker;
-//          while (true) {
-//            view.tickerType();
-//            ticker = scan.next();
-//            if (ticker.equals("f")) {
-//              break;
-//            }
-//            if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
-//              view.invalidStock();
-//              break;
-//            }
-//            view.stockAdd();
-//            shares = scan.next();
-//            if (!model.checkIfNumber(shares)) {
-//              view.invalidNumber();
-//              break;
-//            } else {
-//              //TODO helper method for buy/sell fix in view
-////              model.managePortfolio(name, ticker, Integer.parseInt(shares));
-//            }
-//          }
-//          view.terminating();
 
         // make changes to existing portfolio
-        case "port-manage": // TODO REFACTOR THIS METHODDDDD AND THE SWTICH CASE IN THE REFACTOR ALSO
-          // TODO helper that gets buystock and sell
-          // TODO REBALANCE in here
-          view.getNameOfFile(model.getPortfolioNames());
-          name = getName();
+        case "port-manage":
+          portManage();
+          break;
 
-          // checks if file exist
-          if (checkFile(name, "StocksCindy/UserPortfolio")) {
+        case "port-list":
+          portfolioList();
+          break;
+
+        case "port-view":
+          portView();
+          break;
+
+        //====================================
+
+        case "stock-view":
+          view.printStockNames(model.getStockNames());
+          view.getTicker();
+          ticker = scan.next();
+          if (checkFile(ticker, stockDirectory)) {
             break;
           }
 
-          boolean finish = false;
+          finish = false;
           while (!finish) {
-            view.editPortfolioMenu();
+            view.printStockViewMenu();
             view.userInput();
             userInput = scan.next();
+
             switch (userInput) {
               case "finish":
                 finish = true;
                 break;
 
-              case "buy":
-                // process ticker TODO CAN DEFINITELY REFACTOR THIS SECTION
-                view.getTicker();
-                ticker = scan.next();
-                if (!model.checkIfFileExist(stockDirectory + "/" + ticker + ".csv")) {
-                  view.invalidStock();
-                  view.emptyLine();
-                  break;
-                }
-
-                // process shares // TODO CAN DEFINITELY REFACTOR
-                view.getShares();
-                shares = scan.next();
-                if (!model.checkIfWholeNumber(shares)) {
-                  view.invalidShares();
-                  view.emptyLine();
-                  break;
-                }
-
-                // process dates // TODO CAN DEFINITELY REFACTOR
-                view.getDay();
-                day = scan.next();
-                view.getMonth();
-                month = scan.next();
-                view.getYear();
-                year = scan.next();
-                date = String.format("%s-%s-%s", day, month, year);
-
-                // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
-
-                model.buyStock(name, ticker, shares, date);
-                view.emptyLine();
-                // promts ticker
-                // primpts shares
-                // checks that shares not fractional
-                // prompts date of transaction
-                // checks date of transaction
-                break;
-
-              case "sell":
-                // process ticker TODO CAN DEFINITELY REFACTOR THIS SECTION
-                view.getTicker();
-                ticker = scan.next();
-                if (!model.checkIfFileExist(stockDirectory + "/" + ticker + ".csv")) {
-                  view.invalidStock();
-                  view.emptyLine();
-                  break;
-                }
-
-                // process shares // TODO CAN DEFINITELY REFACTOR
-                view.getShares();
-                shares = scan.next();
-                if (!model.checkIfWholeNumber(shares)) {
-                  view.invalidShares();
-                  view.emptyLine();
-                  break;
-                } // TODO check if there's enough shares?
-
-                // process dates // TODO CAN DEFINITELY REFACTOR
-                view.getDay();
-                day = scan.next();
-                view.getMonth();
-                month = scan.next();
-                view.getYear();
-                year = scan.next();
-                date = String.format("%s-%s-%s", day, month, year);
-
-                // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
-
-                model.sellStock(name, ticker, shares, date);
-                view.emptyLine();
-                // promts ticker
-                // primpts shares
-                // checks that shares not fractional
-                // checks that there's enough shares for transaction
-                // prompts date of transaction
-                // checks date of transaction
-                break;
-
-              case "balance":
-                view.balanceFormat();
-
-                // process dates // TODO CAN DEFINITELY REFACTOR
-                view.getDay();
-                day = scan.next();
-                view.getMonth();
-                month = scan.next();
-                view.getYear();
-                year = scan.next();
-                date = String.format("%s-%s-%s", day, month, year);
-                // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
-
-                // TODO IS THIS AN ALRIGHT AMOUNT OF LOGIC IN CONTROLLER
-                Set<String> stockNames = model.getPortfolioStocks(name).keySet();
-                Map<String, Double> percentages = new HashMap<>();
-                String percentage;
-                for (String stockName : stockNames) {
-                  view.print(stockName + " percentage: ");
-                  percentage = scan.next();
-                  // TODO CHECK PERCENTAGE IS A NUMBER
-                  percentages.put(stockName, Double.parseDouble(percentage));
-                }
-                // TODO CHECKS IF PERCENTAGE 100%
-                model.balance(date, name, percentages);
-                view.balanceSuccess();
+              // get net growth of stock
+              case "value":
+                view.startDate();
+                startDate = getDatePeriodPart();
+                view.endDate();
+                endDate = getDatePeriodPart();
+                checkEvaluationDate();
+                view.printNetGain(
+                        model.evaluateStock(ticker, startDate, endDate),
+                        startDate,
+                        endDate
+                );
                 view.emptyLine();
                 break;
-              // [display ticker name]: prompts percentage
-              // checks if percentage adds up to 100%
+
+              case "moving-avg":
+                if (dateAndDaysAfter()) {
+                  break;
+                }
+                view.movingAvg(
+                        model.movingAverage(ticker, startDate, Double.parseDouble(daysAfter)));
+                view.emptyLine();
+                break;
+
+              case "crossover":
+                if (dateAndDaysAfter()) {
+                  break;
+                }
+                view.printCrossover(
+                        model.getCrossoverDays(ticker, startDate, Double.parseDouble(daysAfter)));
+                view.emptyLine();
+                break;
+
+              case "bar-chart":
+// TODO CINDY PLEASE DO THIS PART
+                view.startDate();
+                String startDate = getDatePeriodPart();
+                if (checkDate(startDate)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
+                  break;
+                }
+                view.endDate();
+                String endDate = getDatePeriodPart();
+                if (checkDate(endDate)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
+                  break;
+                }
+                //////////////////////////
+                view.emptyLine();
+                break;
+
 
               default:
                 view.invalidCommand();
             }
           }
-          view.terminating();
-          view.emptyLine();
+
           break;
 
-        // view existing portfolios
-        //TODO composition
-        case "port-list":
-          // TODO CAN DEFINITELY REFACTOR THIS SECTION UP TO (BEFORE) VIEW.PRINT
-          view.getNameOfFile(model.getPortfolioNames());
-          view.namePort();
-          name = scan.next(); // needs catcher for invalid names
-          if (checkFile(name, "StocksCindy/UserPortfolio")) {
-            break;
-          }
-          view.print(model.getPortfolio(name));
-          break;
 
-        //TODO new command port-list does port-view
-        case "port-view":
-          view.getNameOfFile(model.getPortfolioNames());
-          view.namePort();
-          name = scan.next(); // needs catcher for invalid names
-          if (checkFile(name, "StocksCindy/UserPortfolio")) {
-            break;
-          }
-          finish = false;
-          while (!finish) {
-            view.printPortfolioViewMenu();
-            view.userInput();
-            userInput = scan.next();
+        //====================================
 
-            switch (userInput) {
-              case "finish":
-                finish = true;
-                break;
-
-              case "composition":
-                // process dates // TODO CAN DEFINITELY REFACTOR
-                view.getDay();
-                day = scan.next();
-                view.getMonth();
-                month = scan.next();
-                view.getYear();
-                year = scan.next();
-                date = String.format("%s-%s-%s", day, month, year);
-                if (checkDate(date)) {
-                  break;
-                }
-                view.print(model.getPortfolioComposition(name, date));
-                view.emptyLine();
-                break;
-
-              case "distribution":
-                view.getDay();
-                day = scan.next();
-                view.getMonth();
-                month = scan.next();
-                view.getYear();
-                year = scan.next();
-                date = String.format("%s-%s-%s", day, month, year);
-                if (checkDate(date)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
-                  break;
-                }
-                view.print(model.getPortfolioDistribution(name, date));
-                view.emptyLine();
-                break;
-
-              case "value":
-                view.getDay();
-                day = scan.next();
-                view.getMonth();
-                month = scan.next();
-                view.getYear();
-                year = scan.next();
-                date = String.format("%s-%s-%s", day, month, year);
-                if (checkDate(date)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
-                  break;
-                }
-                view.print(model.getVa(name, date));
-                view.emptyLine();
-                break;
-            }
-
-          }
-
-          //TODO have the command port-view prompt user to get composition or distribution
-          // overtime and get value in place of port-eval and put bar chart in
-
-          //TODO put this into another case ? port-manage
-        case "port-eval":
-          view.getNameOfFile(model.getPortfolioNames());
-          view.namePort();
-          name = scan.next(); // needs catcher for invalid names
-          if (checkFile(name, "StocksCindy/UserPortfolio")) {
-            break;
-          }
-
-          view.getDateUser1();
-          String date = scan.next();
-          if (checkDate(date)) {
-            break;
-          }
-
-          view.printPortValue(model.evaluatePortfolio(name, date));
-          view.emptyLine();
-          break;
 
         //TODO bar chart, examine gain/loss, stock-avg and cross
         // TODO put under stock-view in place of stock-eval
@@ -483,12 +317,274 @@ public class StocksController implements Controller {
     view.goodbye();
   }
 
+  private boolean dateAndDaysAfter() {
+    view.startDate();
+    startDate = getDatePeriodPart();
+    if (checkDate(startDate)) {
+      return true;
+    }
+    view.getDays();
+    daysAfter = scan.next();
+    if (!model.checkIfWholeNumber(daysAfter)) {
+      view.invalidNumber();
+      return true;
+    }
+    return false;
+  }
+
+  private void portView() {
+    if (selectPortfolio()) {
+      return;
+    }
+    finish = false;
+    while (!finish) {
+      view.printPortfolioViewMenu();
+      view.userInput();
+      userInput = scan.next();
+
+      switch (userInput) {
+        case "finish":
+          finish = true;
+          break;
+        // get portfolio composition
+        case "composition":
+          portfolioComposition();
+          break;
+        // get portfolio distribution
+        case "distribution":
+          portfolioDistribution();
+          break;
+        // get portfolio value
+        case "value":
+          portfolioValue();
+          break;
+        case "bar-chart": // TODO CINDY PLEASE DO THIS PART
+          view.startDate();
+          String startDate = getDatePeriodPart();
+          if (checkDate(startDate)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
+            break;
+          }
+          view.endDate();
+          String endDate = getDatePeriodPart();
+          if (checkDate(endDate)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
+            break;
+          }
+          //////////////////////////
+          break;
+
+        default:
+          view.invalidCommand();
+      }
+    }
+  }
+
+  private String getDatePeriodPart() {
+    view.getDay();
+    day = scan.next();
+    view.getMonth();
+    month = scan.next();
+    view.getYear();
+    year = scan.next();
+    String startDate = String.format("%s-%s-%s", day, month, year);
+    return startDate;
+  }
+
+  private void portfolioValue() {
+    if (checkEvaluationDate()) {
+      return;
+    }
+    view.print(model.evaluatePortfolio(name, date));
+    view.emptyLine();
+  }
+
+  private void portfolioDistribution() {
+    if (checkEvaluationDate()) {
+      return;
+    }
+    view.print(model.getPortfolioDistribution(name, date));
+    view.emptyLine();
+  }
+
+  private void portfolioComposition() {
+    if (checkEvaluationDate()) {
+      return;
+    }
+    view.print(model.getPortfolioComposition(name, date));
+    view.emptyLine();
+  }
+
+  private boolean checkEvaluationDate() {
+    view.getDay();
+    day = scan.next();
+    view.getMonth();
+    month = scan.next();
+    view.getYear();
+    year = scan.next();
+    date = String.format("%s-%s-%s", day, month, year);
+    if (checkDate(date)) { // TODO CHECK THAT DATA ALSO EXISTA
+      return true;
+    }
+    return false;
+  }
+
+  private boolean selectPortfolio() {
+    view.getNameOfFile(model.getPortfolioNames());
+    view.namePort();
+    name = scan.next(); // needs catcher for invalid names
+    if (checkFile(name, "StocksCindy/UserPortfolio")) {
+      return true;
+    }
+    return false;
+  }
+
+  private void portManage() {
+
+    view.getNameOfFile(model.getPortfolioNames());
+    name = getName();
+
+    // checks if file exist
+    if (checkFile(name, "StocksCindy/UserPortfolio")) {
+      return;
+    }
+
+    boolean finish = false;
+    while (!finish) {
+      view.printEditPortfolioMenu();
+      view.userInput();
+      userInput = scan.next();
+      switch (userInput) {
+        case "finish":
+          finish = true;
+          break;
+
+        case "buy":
+          // process ticker TODO CAN DEFINITELY REFACTOR THIS SECTION
+          view.getTicker();
+          ticker = scan.next();
+          if (!model.checkIfFileExist(stockDirectory + "/" + ticker + ".csv")) {
+            view.invalidStock();
+            view.emptyLine();
+            break;
+          }
+
+          // process shares // TODO CAN DEFINITELY REFACTOR
+          view.getShares();
+          shares = scan.next();
+          if (!model.checkIfWholeNumber(shares)) {
+            view.invalidShares();
+            view.emptyLine();
+            break;
+          }
+
+          // process dates // TODO CAN DEFINITELY REFACTOR
+          view.getDay();
+          day = scan.next();
+          view.getMonth();
+          month = scan.next();
+          view.getYear();
+          year = scan.next();
+          date = String.format("%s-%s-%s", day, month, year);
+
+          // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
+
+          model.buyStock(name, ticker, shares, date);
+          view.emptyLine();
+          // promts ticker
+          // primpts shares
+          // checks that shares not fractional
+          // prompts date of transaction
+          // checks date of transaction
+          break;
+
+        case "sell":
+          // process ticker TODO CAN DEFINITELY REFACTOR THIS SECTION
+          view.getTicker();
+          ticker = scan.next();
+          if (!model.checkIfFileExist(stockDirectory + "/" + ticker + ".csv")) {
+            view.invalidStock();
+            view.emptyLine();
+            break;
+          }
+
+          // process shares // TODO CAN DEFINITELY REFACTOR
+          view.getShares();
+          shares = scan.next();
+          if (!model.checkIfWholeNumber(shares)) {
+            view.invalidShares();
+            view.emptyLine();
+            break;
+          } // TODO check if there's enough shares?
+
+          // process dates // TODO CAN DEFINITELY REFACTOR
+          view.getDay();
+          day = scan.next();
+          view.getMonth();
+          month = scan.next();
+          view.getYear();
+          year = scan.next();
+          date = String.format("%s-%s-%s", day, month, year);
+
+          // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
+
+          model.sellStock(name, ticker, shares, date);
+          view.emptyLine();
+          // promts ticker
+          // primpts shares
+          // checks that shares not fractional
+          // checks that there's enough shares for transaction
+          // prompts date of transaction
+          // checks date of transaction
+          break;
+
+        case "balance":
+          view.balanceFormat();
+
+          // process dates // TODO CAN DEFINITELY REFACTOR
+          view.getDay();
+          day = scan.next();
+          view.getMonth();
+          month = scan.next();
+          view.getYear();
+          year = scan.next();
+          date = String.format("%s-%s-%s", day, month, year);
+          // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
+
+          // TODO IS THIS AN ALRIGHT AMOUNT OF LOGIC IN CONTROLLER
+          Set<String> stockNames = model.getPortfolioStocks(name).keySet();
+          Map<String, Double> percentages = new HashMap<>();
+          String percentage;
+          for (String stockName : stockNames) {
+            view.print(stockName + " percentage: ");
+            percentage = scan.next();
+            // TODO CHECK PERCENTAGE IS A NUMBER
+            percentages.put(stockName, Double.parseDouble(percentage));
+          }
+          // TODO CHECKS IF PERCENTAGE 100%
+          model.balance(date, name, percentages);
+          view.balanceSuccess();
+          view.emptyLine();
+          break;
+        // [display ticker name]: prompts percentage
+        // checks if percentage adds up to 100%
+
+        default:
+          view.invalidCommand();
+      }
+    }
+    view.terminating();
+    view.emptyLine();
+  }
+
   private void portfolioCreate() {
     String name;
     name = getName();
     model.createPortfolio(name);
     view.success();
     view.emptyLine();
+  }
+
+  private void portfolioList() {
+    view.print(model.getPortfolioNames());
   }
 
   private String getName() {

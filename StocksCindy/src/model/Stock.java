@@ -22,22 +22,6 @@ public class Stock implements Stocks {
   public Stock(String ticker, String directory) {
     this.ticker = ticker;
     this.data = new DataFrameWithImpl(directory + "/" + ticker + ".csv");
-    this.result = result;
-    // still have to figure out how to get it to automatically get new tickers and stuff
-
-    // if statement before assigning Data, have it check if the csv file exists or not, then
-    // either write a new file or just send it the csv filepath
-
-    // idea is to have this checked in the Model that receives an input from the controller.
-    // it will say, if it can't find the stock file, get one from the API
-  }
-
-  /**
-   * empty contructor.
-   */
-  public Stock() {
-    this.ticker = null;
-    this.data = null;
   }
 
   /**
@@ -194,8 +178,7 @@ public class Stock implements Stocks {
     if (!checkDateChronology(date, time)) {
       int next = getClosestDateIndex(date, false);
       result = Double.parseDouble(tempData.get(next));
-    }
-    else {
+    } else {
       result = Double.parseDouble(tempData.get(time.indexOf(date)));
     }
     return result;
@@ -203,6 +186,7 @@ public class Stock implements Stocks {
 
 
   //
+
   /**
    * gets the list of ticker.
    *
@@ -234,7 +218,7 @@ public class Stock implements Stocks {
   /**
    * gets the list of open price.
    *
-   * @return  list.
+   * @return list.
    */
   @Override
   public List<Double> getOpen() {

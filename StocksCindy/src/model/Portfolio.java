@@ -8,7 +8,7 @@ import java.util.Map;
  * the methods in portfolio is used to call in the model which is
  * called in the controller.
  */
-public interface Portfolio {
+public interface Portfolio extends Analyzable {
 
   /**
    * gets the map of tickers and shares that the
@@ -31,10 +31,9 @@ public interface Portfolio {
    * is called when the user wants to get the value of a portfolio.
    *
    * @param date        the date they input in the format (YYYY-MM-DD)
-   * @param pathToStock the directory of located file
    * @return the value of the portfolio
    */
-  double getValue(String date, String pathToStock);
+  double getValue(String date);
 
   /**
    * gets the name of the portfolio.
@@ -123,6 +122,6 @@ public interface Portfolio {
    * @param startDate the starting date that the user input to get the value.
    * @param endDate the ending date that the user input to get the value.
    */
-  String getChart(String name, String startDate, String endDate);
+//  String getChart(String name, String startDate, String endDate);
 
 }

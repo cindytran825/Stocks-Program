@@ -36,26 +36,20 @@ public class StockProgramView implements View {
   @Override
   public void printMenu() {
 
-    writeMessage("Create new portfolio [port-create]" + System.lineSeparator());
-    writeMessage("Manage portfolio [port-manage]" + System.lineSeparator());
-    writeMessage("View existing portfolios [port-view]" + System.lineSeparator());
-    writeMessage("Evaluate existing portfolios [port-eval]" + System.lineSeparator());
-    writeMessage("Examine gain/loss [stock-eval]" + System.lineSeparator());
-    writeMessage("Examine x-day move average [stock-avg]" + System.lineSeparator());
-    writeMessage("Determine which days are x-day crossover "
-            +
-            "[stock-cross]" + System.lineSeparator());
-    writeMessage("View what stock datas are on file [stock-list]"
-            + System.lineSeparator());
-    writeMessage("Download stock data from an API " +
-            "[stock-download]" + System.lineSeparator());
-    writeMessage("Upload your own stock data in a csv file"
-            +
-            " [stock-upload]" + System.lineSeparator());
-    writeMessage("Quit [quit]" + System.lineSeparator());
-    writeMessage("Menu [menu]" + System.lineSeparator());
-    writeMessage("Enter instruction to the action you'd like to take!"
-            + System.lineSeparator());
+    // TODO CHANGE (UPDATE IT TO BE UP TO DATE)
+    writeMessage("Create new portfolio [port-create]\n");
+    writeMessage("Manage portfolio [port-manage]\n");
+    writeMessage("View existing portfolios [port-view]\n");
+    writeMessage("Evaluate existing portfolios [port-eval]\n");
+    writeMessage("Examine gain/loss [stock-eval]\n");
+    writeMessage("Examine x-day move average [stock-avg]\n");
+    writeMessage("Determine which days are x-day crossover [stock-cross]\n");
+    writeMessage("View what stock datas are on file [stock-list]\n");
+    writeMessage("Download stock data from an API [stock-download]\n");
+    writeMessage("Upload your own stock data in a csv file [stock-upload]\n");
+    writeMessage("Quit [quit]\n");
+    writeMessage("Menu [menu]\n");
+    writeMessage("Enter instruction to the action you'd like to take!\n");
 
   }
 
@@ -67,6 +61,21 @@ public class StockProgramView implements View {
   @Override
   public void getNameOfFile(String name) {
     writeMessage("Existing files are: \n" + name);
+  }
+
+  @Override
+  public void getDay() {
+    writeMessage("Enter in the day: ");
+  }
+
+  @Override
+  public void getMonth() {
+    writeMessage("Enter in the month: ");
+  }
+
+  @Override
+  public void getYear() {
+    writeMessage("Enter in the year: ");
   }
 
   @Override
@@ -85,14 +94,15 @@ public class StockProgramView implements View {
   }
 
   @Override
-  public void inputNumber() {
+  public void userInput() {
     writeMessage("Enter Command: ");
   }
 
   @Override
-  public void nameNew() {
-    writeMessage("Name of new portfolio: ");
-  }
+  public void getName(String object) {writeMessage("Enter in the name of " + object + ": ");}
+
+  @Override
+  public void getShares() {writeMessage("Enter in the number of shares: ");}
 
   @Override
   public void tickerType() {
@@ -116,18 +126,18 @@ public class StockProgramView implements View {
 
   @Override
   public void success() {
-    writeMessage("Successfully added a new portfolio." + System.lineSeparator());
+    writeMessage("Successfully added a new portfolio." + "\n");
   }
 
   @Override
   public void printPortValue(String value) {
-    writeMessage("The value of this portfolio is: $" + value + System.lineSeparator());
+    writeMessage("The value of this portfolio is: $" + value + "\n");
   }
 
   @Override
   public void printNetGain(String value, String date1, String date2) {
     writeMessage("Between " + date1 + " to " + date2 + " "
-            + "the stock had a net gain of: $" + value + System.lineSeparator());
+            + "the stock had a net gain of: $" + value + "\n");
   }
 
   @Override
@@ -137,7 +147,7 @@ public class StockProgramView implements View {
 
   @Override
   public void movingAvg(String value) {
-    writeMessage("The moving average is: " + value + System.lineSeparator());
+    writeMessage("The moving average is: " + value + "\n");
   }
 
   @Override
@@ -147,12 +157,12 @@ public class StockProgramView implements View {
 
   @Override
   public void terminating() {
-    writeMessage("Terminating command..." + System.lineSeparator());
+    writeMessage("Terminating command..." + "\n");
   }
 
   @Override
   public void emptyLine() {
-    writeMessage(System.lineSeparator());
+    writeMessage("\n");
   }
 
   @Override
@@ -196,17 +206,35 @@ public class StockProgramView implements View {
   }
 
   @Override
+  public void invalidShares() {
+    writeMessage("Cannot make transaction with fractional shares.");
+  }
+
+  @Override
   public void goodbye() {
     writeMessage("Thank you for using our program!" + System.lineSeparator());
 
   }
 
   @Override
-  public void returnBarChart(String chart) {
-    writeMessage(chart);
+  public void newName() {
+    writeMessage("Enter the name of the new portfolio: ");
   }
 
+  // TODO NEED THE INTERFACE FOR CHART
+  @Override
+  public void returnBarChart(DataChart chart) {
+    writeMessage(chart.getChart());
+  }
 
+  @Override
+  public void editPortfolioMenu() {
+    writeMessage("Actions you can perform on this portfolio: \n");
+    writeMessage("Buy stock [buy]\n");
+    writeMessage("Sell stock [sell]\n");
+    writeMessage("Balance each stock to a percentage [balance]\n");
+    writeMessage("To finish making changes to portfolio [finish]\n");
+  }
 
   @Override
   public void welcomeMessage() {

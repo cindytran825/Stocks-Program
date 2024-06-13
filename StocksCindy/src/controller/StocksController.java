@@ -14,12 +14,12 @@ import view.View;
  * and transmit outputs.
  */
 public class StocksController implements Controller {
-  private View view;
-  private Readable readable;
-  private Model model;
-
-  private Scanner scan;
-  private String name;
+  private final View view;
+  private final Readable readable;
+  private final Model model;
+  private final Scanner scan;
+  private final String stockDirectory;
+  private final String portfolioDirectory;
 
   /**
    * public constructor that takes in the model, view, and readable.
@@ -34,6 +34,9 @@ public class StocksController implements Controller {
     this.view = view;
     this.model = model;
     this.readable = readable;
+    this.scan = new Scanner(readable);
+    this.stockDirectory = "StocksCindy/CSVFiles";
+    this.portfolioDirectory = "StocksCindy/Portfolio";
   }
 
   /**
@@ -45,25 +48,27 @@ public class StocksController implements Controller {
    * @throws IllegalStateException is called when method isn't at an appropriate state.
    */
   public void goControl() throws IllegalStateException {
-    Scanner scan = new Scanner(readable);
     boolean quit = false;
     String name;
     String shares;
     String ticker;
-    //if there is an existing portfolio
-    boolean checkPortfolio = false;
+    String userInput;
+    String day;
+    String month;
+    String year;
+
     view.welcomeMessage(); //TODO take menu out of welcome message
+
     while (!quit) {
       view.printMenu(); //TODO clarify TA
-      view.inputNumber();
-      String userNumber = scan.next();
-      switch (userNumber) {
+//      view.inputNumber();
+      userInput = scan.next();
+
+      switch (userInput) {
         // create new portfolio
         case "port-create":
-          view.nameNew();
-          name = scan.next();
-          model.createPortfolio(name);
-          view.success();
+          portfolioCreate();
+          break;
 //          String shares;
 //          String ticker;
 //          while (true) {
@@ -87,19 +92,77 @@ public class StocksController implements Controller {
 //            }
 //          }
 //          view.terminating();
-          view.emptyLine();
-          break;
 
         // make changes to existing portfolio
         case "port-manage":
+          // TODO helper that gets buystock and sell
+          // TODO REBALANCE in here
           view.getNameOfFile(model.getPortfolioNames());
-          view.namePort();
-          name = scan.next(); // needs catcher for invalid names
+          name = getName();
+
+          // checks if file exist
           if (checkFile(name, "StocksCindy/UserPortfolio")) {
             break;
           }
+          
+          boolean finish = false;
+          while (!finish) {
+            view.editPortfolioMenu();
+            view.userInput();
+            userInput = scan.next();
+            switch (userInput) {
+              case "finish":
+                finish = true;
+                break;
 
-          while (true) {
+              case "buy":
+                // process ticker TODO CAN DEFINITELY REFACTOR THIS SECTION
+                view.getTicker();
+                ticker = scan.next();
+                if (!model.checkIfFileExist(stockDirectory + "/" + ticker + ".csv")) {
+                  view.invalidStock();
+                  view.emptyLine();
+                  break;
+                }
+
+                // process shares // TODO CAN DEFINITELY REFACTOR
+                view.getShares();
+                shares = scan.next();
+                if (!model.checkIfWholeNumber(shares)) {
+                  view.invalidShares();
+                  view.emptyLine();
+                  break;
+                }
+
+                // process dates // TODO CAN DEFINITELY REFACTOR
+                view.getDay();
+                day = scan.next();
+
+
+                // promts ticker
+                // primpts shares
+                // checks that shares not fractional
+                // prompts date of transaction
+                // checks date of transaction
+                break;
+
+              case "sell":
+                // promts ticker
+                // primpts shares
+                // checks that shares not fractional
+                // checks that there's enough shares for transaction
+                // prompts date of transaction
+                // checks date of transaction
+                break;
+              case "balance":
+                // [display ticker name]: prompts percentage
+                // checks if percentage adds up to 100%
+              default:
+                view.invalidCommand();
+            }
+            
+            
+            
             view.tickerType();
             ticker = scan.next();
             if (ticker.equals("f")) {
@@ -120,8 +183,6 @@ public class StocksController implements Controller {
             } else {
 //              model.managePortfolio(name, ticker, Double.parseDouble(shares));
 //              model.getBuyStock(name, ticker, Double.parseDouble(shares), date);
-              // TODO helper that gets buystock and sell
-              // TODO REBALANCE in here
 
               //String name, String ticker, double share, String date
             }
@@ -310,6 +371,21 @@ public class StocksController implements Controller {
       }
     }
     view.goodbye();
+  }
+
+  private void portfolioCreate() {
+    String name;
+    name = getName();
+    model.createPortfolio(name);
+    view.success();
+    view.emptyLine();
+  }
+
+  private String getName() {
+    String name;
+    view.newName();
+    name = scan.next();
+    return name;
   }
 
   private boolean checkDays(String lastDays) {

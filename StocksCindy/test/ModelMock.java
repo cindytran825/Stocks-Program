@@ -220,4 +220,9 @@ public class ModelMock implements Model {
 
   }
 
+  @Override
+  public boolean checkIfWholeNumber(String string) {
+    return false;
+  }
+
 }

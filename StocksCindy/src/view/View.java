@@ -37,14 +37,34 @@ public interface View {
   void tickerType();
 
   /**
-   * display input name.
+   * display a query for name of specified object.
    */
-  void nameNew();
+  void getName(String object);
+
+  /**
+   * display a prompt for shares.
+   */
+  void getShares();
 
   /**
    * display user input.
    */
-  void inputNumber();
+  void userInput();
+
+  /**
+   * display the query for a day.
+   */
+  void getDay();
+
+  /**
+   * displays the query for a month.
+   */
+  void getMonth();
+
+  /**
+   * displays the query for a year.
+   */
+  void getYear();
 
   /**
    * display message date.
@@ -147,6 +167,11 @@ public interface View {
   void invalidStock();
 
   /**
+   * display invalid stock shares message.
+   */
+  void invalidShares();
+
+  /**
    * this prints the goodbye message.
    */
   void goodbye();
@@ -162,5 +187,18 @@ public interface View {
   void invalidCommand();
 
 
-  void returnBarChart(String chart);
+  void newName();
+  /**
+   * displays the given bar chart.
+   *
+   * @param chart bar chart
+   *              TODO NEED THE INTERFACE OF THE DATACHART
+   */
+  void returnBarChart(DataChart chart);
+
+  /**
+   * displays the types of action the user can perform on the portfolio that will edit
+   * the portfolio (buy, sell, balance, etc.).
+   */
+  void editPortfolioMenu();
 }

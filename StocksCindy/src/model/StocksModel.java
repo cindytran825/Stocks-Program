@@ -28,23 +28,12 @@ public class StocksModel implements Model {
     this.api = new AlphaVantageApi(); // whichever api
   }
 
-
-  /**
-   * this checks if the file exists.
-   * @param path name of the csv file (excl
-   * @return a boolean.
-   */
   @Override
   public boolean checkIfFileExist(String path) {
     File file = new File(path);
     return file.exists();
   }
 
-  /**
-   * check if the date is in correct format.
-   * @param date string inputted.
-   * @return boolean.
-   */
   @Override
   public boolean checkIfDate(String date) {
     try {
@@ -60,16 +49,22 @@ public class StocksModel implements Model {
     }
   }
 
-  /**
-   * checks if the number can be a long.
-   * @param n string inputted.
-   * @return boolean.
-   */
+
   @Override
   public boolean checkIfNumber(String n) {
     try {
-      Long.parseLong(n);
+      Double.parseDouble(n);
       return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  @Override
+  public boolean checkIfWholeNumber(String n) {
+    try {
+      double num = Double.parseDouble(n);
+      return num % 1 == 0;
     } catch (NumberFormatException e) {
       return false;
     }
@@ -148,7 +143,7 @@ public class StocksModel implements Model {
   public String evaluatePortfolio(String name, String date) {
     Portfolio existingPortfolio = new PortfolioWithImpl(
             name, portfolioFolderPath, stockFolderPath, true);
-    return String.valueOf(existingPortfolio.getValue(date, stockFolderPath));
+    return String.valueOf(existingPortfolio.getValue(date));
   }
 
   @Override
@@ -163,11 +158,11 @@ public class StocksModel implements Model {
     return String.valueOf(stock.getMovingAverage(startDate, lastX));
   }
 
-
-  public String barChartInitialized(String name, String firstDate, String lastDate) {
-    Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, stockFolderPath,true);
-    return String.valueOf(existingPortfolio.getChart(stockFolderPath, firstDate, lastDate));
-  }
+//
+//  public String barChartInitialized(String name, String firstDate, String lastDate) {
+//    Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, stockFolderPath,true);
+//    return String.valueOf(existingPortfolio.getChart(stockFolderPath, firstDate, lastDate));
+//  }
 
   @Override
   public String getCrossoverDays(String ticker, String startDate, double lastX) {
@@ -214,11 +209,21 @@ public class StocksModel implements Model {
     return sb.toString();
   }
 
+  @Override
+  public String barChartInitialized(String name, String firstDate, String lastDate) {
+    return "";
+  }
+
 
   public void getBuyStock(String name, String ticker, double share, String date) {
     Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, stockFolderPath,
             true);
     existingPortfolio.buyStock(ticker, share, date);
   }
+
+
+
+
+
 
 }

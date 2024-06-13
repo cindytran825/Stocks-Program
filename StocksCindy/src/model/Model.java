@@ -136,9 +136,16 @@ public interface Model {
    * @param lastDate
    * @return
    */
+  // TODO DOCUMENTATION
   String barChartInitialized(String name, String firstDate, String lastDate);
 
   void getBuyStock(String name, String ticker, double share, String date);
 
-
+  /**
+   * Checks if the provided string is a whole number.
+   *
+   * @param string any string
+   * @return true if it is an integer, false if otherwise
+    */
+  boolean checkIfWholeNumber(String string);
 }

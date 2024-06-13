@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * This class represents all data associated with a stock.
  */
-public interface Stocks {
+public interface Stocks extends Analyzable {
 
   /**
    * calculates the total net gain (or the difference) between a specified time period.
@@ -44,6 +44,17 @@ public interface Stocks {
    * @return a list of all the crossover days
    */
   List<String> getCrossOver(String startDate, double lastX);
+
+//  /**
+//   * This gets the value of a column given a valid, specific date and an existing column.
+//   *
+//   * @param date date in the format YYYY-MM-DD
+//   * @param column column name
+//   * @return the value in the specified column at the specified date
+//   * @throws IllegalArgumentException when the specified date or column doesn't exist as a data
+//   * point
+//   */
+//  double getColumnValue(String date, String column) throws IllegalArgumentException;
 
   /**
    * returns the ticker.

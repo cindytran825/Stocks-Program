@@ -1,4 +1,6 @@
 
+import model.Analyzable;
+import model.DataChart;
 import view.View;
 
 /**
@@ -53,6 +55,21 @@ public class ViewMock implements View {
   @Override
   public void tickerType() throws IllegalStateException {
     log.append("");
+  }
+
+  @Override
+  public void getName(String object) {
+
+  }
+
+  @Override
+  public void getShares() {
+
+  }
+
+  @Override
+  public void userInput() {
+
   }
 
   @Override
@@ -173,6 +190,21 @@ public class ViewMock implements View {
   @Override
   public void invalidCommand() throws IllegalStateException {
     log.append("");
+  }
+
+  @Override
+  public void newName() {
+
+  }
+
+  @Override
+  public void returnBarChart(DataChart chart) {
+    return new DataChart("", "", chart);
+  }
+
+  @Override
+  public void editPortfolioMenu() {
+
   }
 
   @Override

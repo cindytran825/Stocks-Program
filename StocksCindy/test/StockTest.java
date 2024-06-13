@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import model.MyDateWithImpl;
 import model.Stock;
@@ -155,12 +156,17 @@ public class StockTest {
   }
 
 //  /**
-//   * tests for the bar chart method.
+//   * when the first date given is before the second (month).
 //   */
-//  @Test
-//  public void testBarChart() {
-////    MyDate mydate1 = new MyDateWithImpl(2020-01-02)
-//    getBarChart("portfolio", "2020-01-02", "2020-01-05");
+//  @Test(expected = NoSuchElementException.class)
+//  public void testWrongMonth() {
+//    assertEquals("Performance of Portfolio cindy from 2014-04-15 to 2014-07-18\n" +
+//            "MAR 2014: \n" +
+//            "APR 2014: ***********************\n" +
+//            "MAY 2014: ************************\n" +
+//            "JUN 2014: *************************\n" +
+//            "JUL 2014: *************************\n" +
+//            "Scale: * = 10000", goog.getChart("cindy", "2014-09-15", "2014-07-18"));
 //  }
 
 }

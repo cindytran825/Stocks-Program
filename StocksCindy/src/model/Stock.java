@@ -121,7 +121,6 @@ public class Stock implements Stocks {
    */
   @Override
   public double getMovingAverage(String startDate, double lastX) throws IllegalArgumentException {
-
     List<String> tempDataClose = data.getColumn("close");
 
     double totalValue = 0;
@@ -171,6 +170,26 @@ public class Stock implements Stocks {
     }
     return crossDays;
   }
+
+  private boolean checkDateChronology(
+          String date,
+          List<String> dateList
+  ) {
+    MyDate inputDate = new MyDateWithImpl(date);
+    // check if the date is an available data point
+    return dateList.contains(inputDate.toString());
+  }
+
+  @Override
+  public double getValue(String date) throws IllegalArgumentException {
+    List<String> time = this.getTimestamp();
+    if (!data.getColumnNames().contains("closed") || !checkDateChronology(date, time)) {
+      throw new IllegalArgumentException("Invalid input.");
+    }
+    List<String> tempData = data.getColumn("closed");
+    return Double.parseDouble(tempData.get(time.indexOf(date)));
+  }
+
 
   //
   /**

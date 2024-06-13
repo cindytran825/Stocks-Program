@@ -17,7 +17,7 @@ public class PortfolioWithImpl implements Portfolio {
 
   private final String portfolioName;
   private final Map<String, Double> listInventories;
-  private final String reference;
+  private final String storageLocation;
   private final String stockDirectory;
   private final MutableDataFrame log;
 
@@ -44,11 +44,11 @@ public class PortfolioWithImpl implements Portfolio {
           boolean loadPrevious) {
     this.portfolioName = portfolioName;
     this.listInventories = new HashMap<>();
-    this.reference = storageLocation + "/" + portfolioName + ".csv";
+    this.storageLocation = storageLocation + "/" + portfolioName + ".csv";
     this.stockDirectory = stockDirectory;
     // adding csv file
     // "StocksCindy/UserPortfolio/
-    File portFile = new File(reference);
+    File portFile = new File(storageLocation);
     if (loadPrevious && portFile.exists()) {
       try {
         Scanner scan = new Scanner(portFile);
@@ -80,7 +80,7 @@ public class PortfolioWithImpl implements Portfolio {
         // doesn't matter
       }
     }
-    this.log = new MutableDataFrameWithImpl(reference);
+    this.log = new MutableDataFrameWithImpl(storageLocation);
   }
 
   /**
@@ -106,7 +106,7 @@ public class PortfolioWithImpl implements Portfolio {
 
 
   @Override
-  public double getValue(String date, String pathToStock) {
+  public double getValue(String date) {
     double totalValue = 0.0;
     Stock stock;
     List<Double> closePrices;
@@ -114,7 +114,7 @@ public class PortfolioWithImpl implements Portfolio {
     int dateIndex;
     Map<String, Double> composition = getComposition(date);
     for (String ticker : composition.keySet()) {
-      stock = new Stock(ticker, pathToStock);
+      stock = new Stock(ticker, stockDirectory);
       closePrices = stock.getClose();
       dateIndex = stock.getClosestDateIndex(date, false);
       closePrice = closePrices.get(dateIndex);
@@ -122,6 +122,8 @@ public class PortfolioWithImpl implements Portfolio {
     }
     return totalValue;
   }
+
+
 
   @Override
   public String getPortfolioName() {
@@ -191,7 +193,7 @@ public class PortfolioWithImpl implements Portfolio {
     }
 
     // applying the percentages
-    double totalValue = getValue(date, stockDirectory);
+    double totalValue = getValue(date);
     double closedPrice;
     double target;
     double currentValue;
@@ -312,7 +314,7 @@ public class PortfolioWithImpl implements Portfolio {
     // add to log and also write to file
     this.log.addLastRow(newTransaction);
 
-    File portFile = new File(reference);
+    File portFile = new File(storageLocation);
     try {
       List<List<String>> columns = new ArrayList<>();
       // write the column titles
@@ -371,143 +373,6 @@ public class PortfolioWithImpl implements Portfolio {
   }
 
 
-
-  /**
-   * this takes the startDate and endDate and uses the compareTo method.
-   * from the MyDateWithImpl class to get the difference between the two dates.
-   * Based on the difference, it decides the timespan and calls the method getBarChart.
-   * in the DataChart class to create the bar chart.
-   * @param name the name of the portfolio that the user input.
-   * @param startDate the starting date that the user input to get the value.
-   * @param endDate the ending date that the user input to get the value.
-   */
-  public String getChart(String name, String startDate, String endDate) {
-    String[] dateInfo = startDate.split("-");
-    MyDate firstDate = new MyDateWithImpl(
-            Integer.parseInt(dateInfo[2]),
-            Integer.parseInt(dateInfo[1]),
-            Integer.parseInt(dateInfo[0]));
-    String[] dateInfoOther = endDate.split("-");
-    MyDate secondDate = new MyDateWithImpl(
-            Integer.parseInt(dateInfoOther[2]),
-            Integer.parseInt(dateInfoOther[1]),
-            Integer.parseInt(dateInfoOther[0]));
-
-    List<String> listOfDates = new ArrayList<>();
-
-    int result = secondDate.compareTo(firstDate);
-    String decide = decideTimespan(result);
-    List<Double> listOfValues = timeValue(firstDate, secondDate, result, decide, listOfDates);
-    DataChart dataChart = new DataChart(name, startDate, endDate, listOfValues, result);
-    return dataChart.getBarChart(firstDate, decide, listOfDates, listOfValues);
-  }
-
-  /**
-   *
-   * @param result
-   * @return
-   */
-  private String decideTimespan(int result) {
-    StringBuilder builder = new StringBuilder();
-    String decide = "";
-    //greater than 5 years
-    if (result > 1825 ) {
-      decide = "year";
-      //call method that gets the value of last day of year
-    }
-    else if (result < 1825 && result > 365) {
-      //less than 5 years, time span every three months
-      decide = "3month";
-    }
-    else if (result > 30 && result < 365) {
-      //between 5 - 12 months, time span is every month
-      decide = "month";
-    }
-    else if (result < 30) {
-      //month timespan, time span is in days.
-      decide = "day";
-    }
-    else if (result < 0) {
-      throw new IllegalArgumentException("Start date cannot be after end date.");
-    }
-    return decide;
-  }
-
-  /**
-   *
-   * @param firstDate
-   * @param secondDate
-   * @param result
-   * @param decide
-   * @param listOfDates
-   * @return
-   */
-  private List<Double> timeValue(MyDate firstDate, MyDate secondDate, int result, String decide, List<String> listOfDates) {
-    List<Double> listOfValues = new ArrayList<>();
-//    Portfolio existingPortfolio = new PortfolioWithImpl(portfolioName, stockDirectory, reference, true);
-    if (decide == "year") {
-      int endYearAmount = firstDate.getEndYear(firstDate);
-      firstDate.advance(endYearAmount);
-      for (int i = 0; i <= result / 365; i++) {
-        double value = this.getValue(firstDate.toString(), stockDirectory);
-        String date = firstDate.toString();
-        listOfDates.add(date);
-        listOfValues.add(value);
-        firstDate.advance(365);
-      }
-
-      double value = this.getValue(secondDate.toString(), stockDirectory);
-      String date = secondDate.toString();
-      listOfDates.set(listOfDates.size() - 1, date);
-      listOfValues.set(listOfValues.size() - 1, value);
-
-    }
-    else if (decide == "3month") {
-      int addAmount = firstDate.getLastDate(firstDate);
-      firstDate.advance(addAmount);
-      for(int i = 0; i <= result / 90; i++) {
-        double value = this.getValue(firstDate.toString(), stockDirectory);
-        String date = firstDate.toString();
-        listOfDates.add(date);
-        listOfValues.add(value);
-        int length = firstDate.getMonthLength(firstDate.getMonth(), firstDate.getYear());
-        int length2 = firstDate.getMonthLength(firstDate.getMonth() + 1, firstDate.getYear());
-        int length3 = firstDate.getMonthLength(firstDate.getMonth() + 2, firstDate.getYear());
-        firstDate.advance(length + length2 + length3);
-      }
-      double value = this.getValue(secondDate.toString(), stockDirectory);
-      String date = secondDate.toString();
-      listOfDates.set(listOfDates.size() - 1, date);
-      listOfValues.set(listOfValues.size() - 1, value);
-
-    }
-    else if (decide == "month") {
-      int addAmount = firstDate.getLastDate(firstDate);
-      firstDate.advance(addAmount);
-      for(int i = 0; i <= result / 30; i++) {
-        double value = this.getValue(firstDate.toString(), stockDirectory);
-        String date = firstDate.toString();
-        listOfDates.add(date);
-        listOfValues.add(value);
-        int length = firstDate.getMonthLength(firstDate.getMonth(), firstDate.getYear());
-        firstDate.advance(length);
-      }
-
-    }
-    else if (decide == "day") {
-      for(int i = 0; i <= result; i++) {
-        double value = this.getValue(firstDate.toString(), stockDirectory);
-        String date = firstDate.toString();
-        listOfDates.add(date);
-        listOfValues.add(value);
-        firstDate.advance(1);
-      }
-    }
-
-
-
-    return listOfValues;
-  }
 
 
 

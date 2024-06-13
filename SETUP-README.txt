@@ -7,7 +7,19 @@ as StocksCindy)
 
 there is also a weird bug (I've went to office hours for this and figured out that the problem
 was not in the code, but the software), where if you run it, sometimes you get an error saying that
-StockApi cannot be found.
+StockApi cannot be found. To fix that (if the error shows up) you need to just delete and recreate
+it (full on copy-paste).
+
+To note, as the project is dependent on the csv files available for the stocks, if you want to try
+out a stock of your own, you have to DOWNLOAD the stock from the api by running stock-download or
+stock-upload. If you're uploading your own file, however, it must be correctly formatted as per the
+requirements of the Stocks interface. if you do run stock-download, beware that the API takes a while
+to pull all of the information. The controller will say that it's been downloaded (which is true that
+the file is created instantly), but you will have to wait until the file actually finishes writing
+itself all the data from the API (when it appears on your local folder). Until then, it will just
+fail because it can't read the file that hasn't finished writing yet. This time complexity isn't
+something we can change because it comes directly from the API and we used the starter code.
+
 
 How to create portfolio with three different stocks:
 You would write 'port-create' into the terminal.

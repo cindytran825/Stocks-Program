@@ -444,23 +444,29 @@ public class PortfolioWithImpl implements Portfolio {
    */
   private List<Double> timeValue(MyDate firstDate, MyDate secondDate, int result, String decide, List<String> listOfDates) {
     List<Double> listOfValues = new ArrayList<>();
-    Portfolio existingPortfolio = new PortfolioWithImpl(portfolioName, stockDirectory, reference, true);
+//    Portfolio existingPortfolio = new PortfolioWithImpl(portfolioName, stockDirectory, reference, true);
     if (decide == "year") {
       int endYearAmount = firstDate.getEndYear(firstDate);
       firstDate.advance(endYearAmount);
       for (int i = 0; i <= result / 365; i++) {
-        double value = existingPortfolio.getValue(firstDate.toString(), stockDirectory);
+        double value = this.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
         firstDate.advance(365);
       }
+
+      double value = this.getValue(secondDate.toString(), stockDirectory);
+      String date = secondDate.toString();
+      listOfDates.set(listOfDates.size() - 1, date);
+      listOfValues.set(listOfValues.size() - 1, value);
+
     }
     else if (decide == "3month") {
       int addAmount = firstDate.getLastDate(firstDate);
       firstDate.advance(addAmount);
       for(int i = 0; i <= result / 90; i++) {
-        double value = existingPortfolio.getValue(firstDate.toString(), stockDirectory);
+        double value = this.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
@@ -469,13 +475,17 @@ public class PortfolioWithImpl implements Portfolio {
         int length3 = firstDate.getMonthLength(firstDate.getMonth() + 2, firstDate.getYear());
         firstDate.advance(length + length2 + length3);
       }
+      double value = this.getValue(secondDate.toString(), stockDirectory);
+      String date = secondDate.toString();
+      listOfDates.set(listOfDates.size() - 1, date);
+      listOfValues.set(listOfValues.size() - 1, value);
 
     }
     else if (decide == "month") {
       int addAmount = firstDate.getLastDate(firstDate);
       firstDate.advance(addAmount);
       for(int i = 0; i <= result / 30; i++) {
-        double value = existingPortfolio.getValue(firstDate.toString(), stockDirectory);
+        double value = this.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
@@ -486,7 +496,7 @@ public class PortfolioWithImpl implements Portfolio {
     }
     else if (decide == "day") {
       for(int i = 0; i <= result; i++) {
-        double value = existingPortfolio.getValue(firstDate.toString(), stockDirectory);
+        double value = this.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
@@ -494,10 +504,7 @@ public class PortfolioWithImpl implements Portfolio {
       }
     }
 
-    double value = existingPortfolio.getValue(secondDate.toString(), stockDirectory);
-    String date = secondDate.toString();
-    listOfDates.set(listOfDates.size() - 1, date);
-    listOfValues.set(listOfValues.size() - 1, value);
+
 
     return listOfValues;
   }

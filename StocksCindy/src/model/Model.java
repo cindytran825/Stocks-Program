@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 /**
  * represents the model. It does the implementations.
  * and it is called in the controller when it picks up the user inputs.
@@ -114,13 +116,13 @@ public interface Model {
    */
   String getPortfolioNames();
 
-  /**
-   * gets the portfolio used in the controller.
-   *
-   * @param name the user inputs for the portfolio.
-   * @return a string.
-   */
-  String getPortfolio(String name);
+//  /**
+//   * gets the portfolio used in the controller.
+//   *
+//   * @param name the user inputs for the portfolio.
+//   * @return a string.
+//   */
+//  String getPortfolio(String name);
 
   /**
    * the names of the stocks.
@@ -139,13 +141,23 @@ public interface Model {
   // TODO DOCUMENTATION
   String barChartInitialized(String name, String firstDate, String lastDate);
 
-  void getBuyStock(String name, String ticker, double share, String date);
+  void buyStock(String name, String ticker, String share, String date);
+
+  void sellStock(String name, String ticker, String share, String date);
+
+  Map<String, Double> getPortfolioStocks(String name);
+
+  void balance(String date, String name, Map<String, Double> percentages);
+
+  String getPortfolioComposition(String name, String date);
+
+  String getPortfolioDistribution(String name, String date)
 
   /**
    * Checks if the provided string is a whole number.
    *
    * @param string any string
    * @return true if it is an integer, false if otherwise
-    */
+   */
   boolean checkIfWholeNumber(String string);
 }

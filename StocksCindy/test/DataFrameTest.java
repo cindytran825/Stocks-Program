@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,10 +15,16 @@ import static org.junit.Assert.assertEquals;
  */
 public class DataFrameTest {
 
+  DataFrameWithImpl stock;
+
+  @Before
+  public void setUp() {
+    String path = "StocksCindy/test/testingCSV/testStockFormat.csv";
+    stock = new DataFrameWithImpl(path);
+  }
+
   @Test
   public void initializeTest() {
-    String path = "StocksCindy/test/testingCSV/testStockFormat.csv";
-    DataFrameWithImpl stock = new DataFrameWithImpl(path);
 
     Set<String> expectedKeys = new HashSet<String>();
     expectedKeys.add("timestamp");
@@ -54,5 +61,18 @@ public class DataFrameTest {
     assertEquals(expectedVolume, stock.getColumn("volume"));
   }
 
+  @Test
+  public void testColumnSize() {
+    assertEquals(3, stock.getColumnSize());
+  }
+
+  @Test
+  public void testToString() {
+    String expected = "timestamp,open,high,low,close,volume\n"
+            + "2024-06-03,173.8800,175.8600,172.4500,174.4200,18376370\n"
+            + "2024-05-31,173.4000,174.4200,170.9700,173.9600,28085151\n"
+            + "2024-05-30,176.6900,176.6900,173.2300,173.5600,18844036";
+    assertEquals(expected, stock.toString());
+  }
 
 }

@@ -49,13 +49,4 @@ public class MutableDataFrameWithImpl extends DataFrameWithImpl implements Mutab
     map.put(columnName, columnElements);
   }
 
-  @Override
-  public int getColumnSize() {
-    int size = 0;
-    for (String key : map.keySet()) {
-      size = map.get(key).size();
-    }
-    return size;
-  }
-
 }

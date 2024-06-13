@@ -132,6 +132,16 @@ public interface View {
   void printStockNames(String list);
 
   /**
+   * display instruction for balance command.
+   */
+  void balanceFormat();
+
+  /**
+   * display success message when portfolio balance worked.
+   */
+  void balanceSuccess();
+
+  /**
    * display sucess.
    */
   void printSuccessAddStock(String ticker);
@@ -186,7 +196,9 @@ public interface View {
    */
   void invalidCommand();
 
-
+  /**
+   * display the query for a portfolio's new name upon creation.
+   */
   void newName();
   /**
    * displays the given bar chart.
@@ -201,4 +213,10 @@ public interface View {
    * the portfolio (buy, sell, balance, etc.).
    */
   void editPortfolioMenu();
+
+  /**
+   * displays the types of action the user can perform on the portfolio that will analyze
+   * the portfolio (value, composition, distribution, chart, etc.)
+   */
+  void printPortfolioViewMenu();
 }

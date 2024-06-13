@@ -230,12 +230,33 @@ public class StockProgramView implements View {
 //  }
 
   @Override
+  public void balanceFormat() {
+    writeMessage("For each printed stock in the portfolio, enter in the percentage "
+            + "breakdown (in decimal point)\n");
+  }
+
+  @Override
+  public void balanceSuccess() {
+    writeMessage("Portfolio has been successfully rebalanced.\n");
+  }
+
+  @Override
   public void editPortfolioMenu() {
     writeMessage("Actions you can perform on this portfolio: \n");
     writeMessage("Buy stock [buy]\n");
     writeMessage("Sell stock [sell]\n");
     writeMessage("Balance each stock to a percentage [balance]\n");
     writeMessage("To finish making changes to portfolio [finish]\n");
+  }
+
+  @Override
+  public void printPortfolioViewMenu() {
+    writeMessage("Actions you can perform on this portfolio: \n");
+    writeMessage("View the portfolio's stock composition [composition]\n");
+    writeMessage("View the portfolio's stock value distribution [distribution]\n");
+    writeMessage("View the portfolio's total value [value]\n");
+    writeMessage("View a bar chart of the portfolio's value over time [bar-chart]\n");
+    writeMessage("To finish viewing the portfolio [finish]\n");
   }
 
   @Override

@@ -25,4 +25,11 @@ public interface DataFrame {
    * @return a list of column elements.
    */
   List<String> getColumn(String key);
+
+  /**
+   * This gets the length of the column (not including the column names).
+   *
+   * @return size of column
+   */
+  int getColumnSize();
 }

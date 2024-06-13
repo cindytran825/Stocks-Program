@@ -87,6 +87,25 @@ public class MyDateWithImpl implements MyDate {
     }
   }
 
+  /**
+   * this gets the next month and makes sure that when it advances to.
+   * december, it goes to the next year.
+   * this is called in the timeValue method in DataChart.
+   *
+   * @param month is the current month that is getting advanced.
+   * @param year  is the year that its currently at.
+   * @return the amount of days till the next month.
+   */
+  public int getNextMonth(int month, int year) {
+    month = month + 1;
+    if (month > 12) {
+      month = 1;
+      year = year + 1;
+    }
+    int monthLength = getMonthLength(month, year);
+    return monthLength;
+  }
+
   private boolean checkIfLeapYear(int year) {
     return (year % 4 == 0) && ((year % 100 != 0) || (year % 100 == 0 && year % 400 == 0));
   }
@@ -191,6 +210,7 @@ public class MyDateWithImpl implements MyDate {
   /**
    * this is used to call to advance to the end of the month.
    * used for the bar chart to get the value when there is a timespan.
+   *
    * @param startDate is the startDate that the user input.
    * @return the difference between the start date and the last day of the month.
    */
@@ -210,6 +230,7 @@ public class MyDateWithImpl implements MyDate {
    * this is used ot help advance to the last day of the year.
    * this calculates the difference between the date.
    * the user input to the days of the year.
+   *
    * @param startDate date user input for the start of timespan.
    *                  to get value for the bar chart.
    * @return the difference to get to the last day of the year.

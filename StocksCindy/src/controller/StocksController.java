@@ -1,7 +1,9 @@
 package controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.function.DoublePredicate;
+import java.util.Set;
 
 import model.Model;
 import view.View;
@@ -56,6 +58,7 @@ public class StocksController implements Controller {
     String day;
     String month;
     String year;
+    String date;
 
     view.welcomeMessage(); //TODO take menu out of welcome message
 
@@ -94,7 +97,7 @@ public class StocksController implements Controller {
 //          view.terminating();
 
         // make changes to existing portfolio
-        case "port-manage":
+        case "port-manage": // TODO REFACTOR THIS METHODDDDD AND THE SWTICH CASE IN THE REFACTOR ALSO
           // TODO helper that gets buystock and sell
           // TODO REBALANCE in here
           view.getNameOfFile(model.getPortfolioNames());
@@ -104,7 +107,7 @@ public class StocksController implements Controller {
           if (checkFile(name, "StocksCindy/UserPortfolio")) {
             break;
           }
-          
+
           boolean finish = false;
           while (!finish) {
             view.editPortfolioMenu();
@@ -137,8 +140,16 @@ public class StocksController implements Controller {
                 // process dates // TODO CAN DEFINITELY REFACTOR
                 view.getDay();
                 day = scan.next();
+                view.getMonth();
+                month = scan.next();
+                view.getYear();
+                year = scan.next();
+                date = String.format("%s-%s-%s", day, month, year);
 
+                // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
 
+                model.buyStock(name, ticker, shares, date);
+                view.emptyLine();
                 // promts ticker
                 // primpts shares
                 // checks that shares not fractional
@@ -147,6 +158,37 @@ public class StocksController implements Controller {
                 break;
 
               case "sell":
+                // process ticker TODO CAN DEFINITELY REFACTOR THIS SECTION
+                view.getTicker();
+                ticker = scan.next();
+                if (!model.checkIfFileExist(stockDirectory + "/" + ticker + ".csv")) {
+                  view.invalidStock();
+                  view.emptyLine();
+                  break;
+                }
+
+                // process shares // TODO CAN DEFINITELY REFACTOR
+                view.getShares();
+                shares = scan.next();
+                if (!model.checkIfWholeNumber(shares)) {
+                  view.invalidShares();
+                  view.emptyLine();
+                  break;
+                } // TODO check if there's enough shares?
+
+                // process dates // TODO CAN DEFINITELY REFACTOR
+                view.getDay();
+                day = scan.next();
+                view.getMonth();
+                month = scan.next();
+                view.getYear();
+                year = scan.next();
+                date = String.format("%s-%s-%s", day, month, year);
+
+                // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
+
+                model.sellStock(name, ticker, shares, date);
+                view.emptyLine();
                 // promts ticker
                 // primpts shares
                 // checks that shares not fractional
@@ -154,37 +196,40 @@ public class StocksController implements Controller {
                 // prompts date of transaction
                 // checks date of transaction
                 break;
+
               case "balance":
-                // [display ticker name]: prompts percentage
-                // checks if percentage adds up to 100%
+                view.balanceFormat();
+
+                // process dates // TODO CAN DEFINITELY REFACTOR
+                view.getDay();
+                day = scan.next();
+                view.getMonth();
+                month = scan.next();
+                view.getYear();
+                year = scan.next();
+                date = String.format("%s-%s-%s", day, month, year);
+                // TODO CHECK FOR DATE VALIDITY (chronological AND available data point)
+
+                // TODO IS THIS AN ALRIGHT AMOUNT OF LOGIC IN CONTROLLER
+                Set<String> stockNames = model.getPortfolioStocks(name).keySet();
+                Map<String, Double> percentages = new HashMap<>();
+                String percentage;
+                for (String stockName : stockNames) {
+                  view.print(stockName + " percentage: ");
+                  percentage = scan.next();
+                  // TODO CHECK PERCENTAGE IS A NUMBER
+                  percentages.put(stockName, Double.parseDouble(percentage));
+                }
+                // TODO CHECKS IF PERCENTAGE 100%
+                model.balance(date, name, percentages);
+                view.balanceSuccess();
+                view.emptyLine();
+                break;
+              // [display ticker name]: prompts percentage
+              // checks if percentage adds up to 100%
+
               default:
                 view.invalidCommand();
-            }
-            
-            
-            
-            view.tickerType();
-            ticker = scan.next();
-            if (ticker.equals("f")) {
-              break;
-            }
-            if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
-              view.invalidStock();
-              break;
-            }
-            view.stockAdd();
-            shares = scan.next();
-            view.getDateUser1();
-            String date = scan.next();
-            //adds to the list in portfolio
-            if (!model.checkIfNumber(shares)) {
-              view.invalidNumber();
-              break;
-            } else {
-//              model.managePortfolio(name, ticker, Double.parseDouble(shares));
-//              model.getBuyStock(name, ticker, Double.parseDouble(shares), date);
-
-              //String name, String ticker, double share, String date
             }
           }
           view.terminating();
@@ -193,7 +238,8 @@ public class StocksController implements Controller {
 
         // view existing portfolios
         //TODO composition
-        case "port-view":
+        case "port-list":
+          // TODO CAN DEFINITELY REFACTOR THIS SECTION UP TO (BEFORE) VIEW.PRINT
           view.getNameOfFile(model.getPortfolioNames());
           view.namePort();
           name = scan.next(); // needs catcher for invalid names
@@ -204,13 +250,77 @@ public class StocksController implements Controller {
           break;
 
         //TODO new command port-list does port-view
+        case "port-view":
+          view.getNameOfFile(model.getPortfolioNames());
+          view.namePort();
+          name = scan.next(); // needs catcher for invalid names
+          if (checkFile(name, "StocksCindy/UserPortfolio")) {
+            break;
+          }
+          finish = false;
+          while (!finish) {
+            view.printPortfolioViewMenu();
+            view.userInput();
+            userInput = scan.next();
 
-          // case"port-list"
+            switch (userInput) {
+              case "finish":
+                finish = true;
+                break;
 
-        //TODO have the command port-view prompt user to get composition or distribution
-        // overtime and get value in place of port-eval and put bar chart in
+              case "composition":
+                // process dates // TODO CAN DEFINITELY REFACTOR
+                view.getDay();
+                day = scan.next();
+                view.getMonth();
+                month = scan.next();
+                view.getYear();
+                year = scan.next();
+                date = String.format("%s-%s-%s", day, month, year);
+                if (checkDate(date)) {
+                  break;
+                }
+                view.print(model.getPortfolioComposition(name, date));
+                view.emptyLine();
+                break;
 
-        //TODO put this into another case ? port-manage
+              case "distribution":
+                view.getDay();
+                day = scan.next();
+                view.getMonth();
+                month = scan.next();
+                view.getYear();
+                year = scan.next();
+                date = String.format("%s-%s-%s", day, month, year);
+                if (checkDate(date)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
+                  break;
+                }
+                view.print(model.getPortfolioDistribution(name, date));
+                view.emptyLine();
+                break;
+
+              case "value":
+                view.getDay();
+                day = scan.next();
+                view.getMonth();
+                month = scan.next();
+                view.getYear();
+                year = scan.next();
+                date = String.format("%s-%s-%s", day, month, year);
+                if (checkDate(date)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
+                  break;
+                }
+                view.print(model.getVa(name, date));
+                view.emptyLine();
+                break;
+            }
+
+          }
+
+          //TODO have the command port-view prompt user to get composition or distribution
+          // overtime and get value in place of port-eval and put bar chart in
+
+          //TODO put this into another case ? port-manage
         case "port-eval":
           view.getNameOfFile(model.getPortfolioNames());
           view.namePort();
@@ -229,7 +339,7 @@ public class StocksController implements Controller {
           view.emptyLine();
           break;
 
-          //TODO bar chart, examine gain/loss, stock-avg and cross
+        //TODO bar chart, examine gain/loss, stock-avg and cross
         // TODO put under stock-view in place of stock-eval
         // examine gain/ loss
         case "stock-eval":
@@ -319,7 +429,7 @@ public class StocksController implements Controller {
           view.emptyLine();
           break;
 
-          // to download / update stock information
+        // to download / update stock information
         case "stock-download":
           view.getTicker();
           ticker = scan.next();
@@ -328,7 +438,7 @@ public class StocksController implements Controller {
           view.emptyLine();
           break;
 
-          // upload stock csv file to add
+        // upload stock csv file to add
         case "stock-upload":
           view.getPath();
           String path = scan.next();
@@ -357,7 +467,7 @@ public class StocksController implements Controller {
 //          view.returnBarChart(model.barChartInitialized(name, startDate, endDate));
 //          view.emptyLine();
 //          break;
-          //view.movingAvg(model.movingAverage(ticker, date, Double.parseDouble(lastDays)));
+        //view.movingAvg(model.movingAverage(ticker, date, Double.parseDouble(lastDays)));
 
         case "quit":
           quit = true;
@@ -397,6 +507,8 @@ public class StocksController implements Controller {
     }
     return false;
   }
+
+  //
 
   private boolean checkDate(String date1) {
     if (!model.checkIfDate(date1)) {

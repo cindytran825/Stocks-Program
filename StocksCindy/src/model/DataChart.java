@@ -24,7 +24,7 @@ public class DataChart {
     this.startDate = startDate;
     this.endDate = endDate;
     this.name = name;
-    this.scale = "Scale: * = 1000";
+    this.scale = "Scale: * = 10";
     this.analyzable = analyzable;
     this.stockDirectory = stockDirectory;
   }
@@ -74,7 +74,7 @@ public class DataChart {
 
     for (int i = 0; i < listOfValues.size(); i++) {
       double numberOfAstrisks = listOfValues.get(i);
-      numberOfAstrisks = Math.ceil(numberOfAstrisks / 1000);
+      numberOfAstrisks = Math.ceil(numberOfAstrisks / 10);
       listOfValues.set(i, numberOfAstrisks);
     }
     double maxValue = listOfValues.stream().max(Double::compareTo).get();
@@ -88,7 +88,7 @@ public class DataChart {
         checkMaxValue(maxValue);
       }
       sbScale.append("0"); //10000
-      scale = "Scale: * = 1000" + sbScale;
+      scale = "Scale: * = 10" + sbScale;
     }
     return scale;
   }
@@ -136,7 +136,7 @@ public class DataChart {
     if (decide == "year") {
       int endYearAmount = firstDate.getEndYear(firstDate);
       firstDate.advance(endYearAmount);
-      for (int i = 0; i <= result / 365; i++) {
+      for (int i = 0; i <= ((result / 365) - 1); i++) {
         double value = analyzable.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
@@ -146,8 +146,10 @@ public class DataChart {
 
       double value = analyzable.getValue(secondDate.toString(), stockDirectory);
       String date = secondDate.toString();
-      listOfDates.set(listOfDates.size() - 1, date);
-      listOfValues.set(listOfValues.size() - 1, value);
+      listOfDates.add(date);
+      listOfValues.add(value);
+//      listOfDates.set(listOfDates.size() - 1, date);
+//      listOfValues.set(listOfValues.size() - 1, value);
 
     }
     else if (decide == "3month") {
@@ -158,10 +160,12 @@ public class DataChart {
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
-        int length = firstDate.getMonthLength(firstDate.getMonth(), firstDate.getYear());
-        int length2 = firstDate.getMonthLength(firstDate.getMonth() + 1, firstDate.getYear());
-        int length3 = firstDate.getMonthLength(firstDate.getMonth() + 2, firstDate.getYear());
-        firstDate.advance(length + length2 + length3);
+        int length = firstDate.getNextMonth(firstDate.getMonth(), firstDate.getYear());
+        firstDate.advance(length);
+        int length2 = firstDate.getNextMonth(firstDate.getMonth(), firstDate.getYear());
+        firstDate.advance(length2);
+        int length3 = firstDate.getNextMonth(firstDate.getMonth(), firstDate.getYear());
+        firstDate.advance(length3);
       }
       double value = analyzable.getValue(secondDate.toString(), stockDirectory);
       String date = secondDate.toString();
@@ -208,15 +212,16 @@ public class DataChart {
     scale = scaleList(listOfValues);
     sb.append("Performance of Stock/Portfolio " + name + " from " + startDate + " to " + endDate + "\n");
 
-//    if (listOfDates.size() < 5 && decide != "day") {
-//      int month = Integer.parseInt(firstDate.toString().substring(5, 7));
-//      int year = Integer.parseInt(firstDate.toString().substring(0, 4));
-//      for (int i = 0; i < listOfDates.size(); i++) {
-////        String curr = listOfDates.get(i);
-//        String fakeMonth = firstDate.getStringMonth(month - 1);
-//        sb.append(fakeMonth + " " + year + ": \n");
-//      }
-//    }
+    if (listOfDates.size() < 5 && decide != "day") {
+      for (int i = 0;  i < 5 - listOfDates.size(); i++) {
+        String currentDate = listOfDates.get(i);
+        int month = Integer.parseInt(currentDate.substring(5, 7));
+        int year = Integer.parseInt(currentDate.substring(0, 4));
+
+        String fakeMonth = firstDate.getStringMonth(month - 1);
+        sb.append(fakeMonth + " " + year + ": \n");
+      }
+    }
 
     for (int i = 0; i < listOfDates.size(); i++) {
       String curr = listOfDates.get(i);

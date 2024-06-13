@@ -36,11 +36,4 @@ public interface MutableDataFrame extends DataFrame {
           String columnName,
           List<String> columnElements
   ) throws IllegalArgumentException;
-
-  /**
-   * This gets the length of the column (not including the column names).
-   *
-   * @return size of column
-   */
-  int getColumnSize();
 }

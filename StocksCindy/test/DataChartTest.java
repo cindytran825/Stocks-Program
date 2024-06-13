@@ -1,24 +1,18 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import model.Analyzable;
 import model.DataChart;
 import model.MyDate;
 import model.MyDateWithImpl;
 import model.Portfolio;
 import model.PortfolioWithImpl;
 import model.Stock;
-import model.Stocks;
-import model.StocksModel;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class DataChartTest {
 
@@ -145,19 +139,37 @@ public class DataChartTest {
             "Scale: * = 10000", data.getChart("cindy", "2014-04-15", "2016-01-11", cindy));
   }
 
-//  /**
-//   * this is for the case where the timespan is less than 5 months more than a month.
-//   */
-//  @Test
-//  public void testChartMonthLess() {
-//    assertEquals("Performance of Portfolio cindy from 2014-04-15 to 2014-07-18\n" +
-//            "MAR 2014: \n" +
-//            "APR 2014: ***********************\n" +
-//            "MAY 2014: ************************\n" +
-//            "JUN 2014: *************************\n" +
-//            "JUL 2014: *************************\n" +
-//            "Scale: * = 10000", cindy.getChart("cindy", "2014-04-15", "2014-07-18"));
-//  }
+  /**
+   * this is for the case where the timespan is less than 5 months more than a month.
+   */
+  @Test
+  public void testChartMonthLess() {
+    DataChart data = new DataChart("cindy", "2014-04-15",  "2014-07-18", cindy, testFolderPath);
+    assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2014-07-18\n" +
+            "MAR 2014: \n" +
+            "APR 2014: ***********************\n" +
+            "MAY 2014: ************************\n" +
+            "JUN 2014: *************************\n" +
+            "JUL 2014: *************************\n" +
+            "Scale: * = 10000", data.getChart("cindy", "2014-04-15", "2014-07-18", cindy));
+  }
+
+  /**
+   * this is for the case where the timespan is less than 5 months more than a month.
+   */
+  @Test
+  public void testChartMonthLess2() {
+    DataChart data = new DataChart("cindy", "2014-04-15",  "2014-06-18", cindy, testFolderPath);
+    assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2014-06-18\n" +
+            "MAR 2014: \n" +
+            "APR 2014: \n" +
+            "APR 2014: ***********************\n" +
+            "MAY 2014: ************************\n" +
+            "JUN 2014: *************************\n" +
+            "Scale: * = 10000", data.getChart("cindy", "2014-04-15", "2014-06-18", cindy));
+  }
+
+
 
 
   /**
@@ -249,15 +261,67 @@ public class DataChartTest {
   @Test
   public void testGetBarStock() {
     DataChart data = new DataChart("cindy", "2014-04-15", "2024-05-16",  goog, testFolderPath);
-    assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2014-07-18\n" +
-            "MAR 2014: \n" +
-            "APR 2014: ***********************\n" +
-            "MAY 2014: ************************\n" +
-            "JUN 2014: *************************\n" +
-            "JUL 2014: *************************\n" +
-            "Scale: * = 10000", data.getChart("cindy", "2014-04-15", "2024-05-16", goog));
+    assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2024-05-16\n" +
+            "DEC 2014: ******\n" +
+            "DEC 2015: ********\n" +
+            "DEC 2016: ********\n" +
+            "DEC 2017: ***********\n" +
+            "DEC 2018: ***********\n" +
+            "DEC 2019: **************\n" +
+            "DEC 2020: ******************\n" +
+            "DEC 2021: ******************************\n" +
+            "DEC 2022: *\n" +
+            "DEC 2023: **\n" +
+            "MAY 2024: **\n" +
+            "Scale: * = 100", data.getChart("cindy", "2014-04-15", "2024-05-16", goog));
+  }
+
+  @Test
+  public void testGetBarStockDay() {
+    DataChart data = new DataChart("cindy", "2024-05-16", "2024-05-20",  goog, testFolderPath);
+    assertEquals("Performance of Stock/Portfolio cindy from 2024-05-16 to 2024-05-20\n" +
+            "MAY 16 2024: ******************\n" +
+            "MAY 17 2024: ******************\n" +
+            "MAY 18 2024: ******************\n" +
+            "MAY 19 2024: ******************\n" +
+            "MAY 20 2024: ******************\n" +
+            "Scale: * = 10", data.getChart("cindy", "2024-05-16", "2024-05-20", goog));
   }
 
 
+  /**
+   * gets the value chart for a stock that advances 3 months.
+   */
+  @Test
+  public void testGetBarStockMonth3() {
+    DataChart data = new DataChart("cindy", "2014-05-16", "2016-05-20",  goog, testFolderPath);
+    assertEquals("Performance of Stock/Portfolio cindy from 2014-05-16 to 2016-05-20\n" +
+            "MAY 2014: ******\n" +
+            "AUG 2014: ******\n" +
+            "NOV 2014: ******\n" +
+            "FEB 2015: ******\n" +
+            "MAY 2015: ******\n" +
+            "AUG 2015: *******\n" +
+            "NOV 2015: ********\n" +
+            "FEB 2016: *******\n" +
+            "MAY 2016: ********\n" +
+            "Scale: * = 100", data.getChart("cindy", "2014-05-16", "2016-05-20", goog));
+    //TODO design : get length of next month and add to get the end but can't do december, or just advance 90
+  }
+
+  /**
+   * gets the value chart for a stock that advances 2 months.
+   */
+  @Test
+  public void testGetBarStock2Months() {
+    DataChart data = new DataChart("cindy", "2014-05-16", "2014-07-20",  goog, testFolderPath);
+    assertEquals("Performance of Stock/Portfolio cindy from 2014-05-16 to 2014-07-20\n" +
+            "APR 2014: \n" +
+            "JUN 2014: \n" +
+            "MAY 2014: ******\n" +
+            "JUL 2014: ******\n" +
+            "AUG 2014: ******\n" +
+            "Scale: * = 100", data.getChart("cindy", "2014-05-16", "2014-07-20", goog));
+  }
 
 }

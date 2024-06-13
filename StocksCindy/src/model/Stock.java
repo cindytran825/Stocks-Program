@@ -184,20 +184,20 @@ public class Stock implements Stocks {
 
   @Override
   public double getValue(String date, String stockDirectory) throws IllegalArgumentException {
-    List<String> tempData = data.getColumn("close");
     Double result = this.result;
-    List<String> time = this.getTimestamp();
+    List<String> time = this.getTimestamp(); //|| !checkDateChronology(date, time)
+
+    List<String> tempData = data.getColumn("close");
     if (!data.getColumnNames().contains("close")) {
       throw new IllegalArgumentException("Invalid input.");
     }
     if (!checkDateChronology(date, time)) {
       int next = getClosestDateIndex(date, false);
-      result = Double.parseDouble(tempData.get(time.indexOf(next)));
+      result = Double.parseDouble(tempData.get(next));
     }
     else {
       result = Double.parseDouble(tempData.get(time.indexOf(date)));
-      }
-
+    }
     return result;
   }
 

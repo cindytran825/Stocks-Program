@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -187,14 +188,64 @@ public class StocksModel implements Model {
     return sb.toString();
   }
 
+//  @Override
+//  public String getPortfolio(String name) {
+//    Portfolio existingPortfolio = new PortfolioWithImpl(
+//            name,
+//            portfolioFolderPath,
+//            stockFolderPath,
+//            true);
+//    return existingPortfolio.toString();
+//  }
+
   @Override
-  public String getPortfolio(String name) {
+  public Map<String, Double> getPortfolioStocks(String name) {
     Portfolio existingPortfolio = new PortfolioWithImpl(
             name,
             portfolioFolderPath,
             stockFolderPath,
             true);
-    return existingPortfolio.toString();
+    return existingPortfolio.getListInventories();
+  }
+
+  @Override
+  public String getPortfolioDistribution(String name, String date) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            name,
+            portfolioFolderPath,
+            stockFolderPath,
+            true);
+    StringBuilder string = new StringBuilder();
+    Map<String, Double> composition = existingPortfolio.getDistribution(date);
+    for (String key : composition.keySet()) {
+      string.append(String.format("%s : %.4f\n", key, composition.get(key)));
+    }
+    return string.toString().strip();
+  }
+
+  @Override
+  public String getPortfolioComposition(String name, String date) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            name,
+            portfolioFolderPath,
+            stockFolderPath,
+            true);
+    StringBuilder string = new StringBuilder();
+    Map<String, Double> composition = existingPortfolio.getComposition(date);
+    for (String key : composition.keySet()) {
+      string.append(String.format("%s : %.4f\n", key, composition.get(key)));
+    }
+    return string.toString().strip();
+  }
+
+  @Override
+  public void balance(String date, String name, Map<String, Double> percentages) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            name,
+            portfolioFolderPath,
+            stockFolderPath,
+            true);
+    existingPortfolio.rebalance(percentages, date);
   }
 
   @Override
@@ -214,11 +265,18 @@ public class StocksModel implements Model {
     return "";
   }
 
-
-  public void getBuyStock(String name, String ticker, double share, String date) {
+  @Override
+  public void buyStock(String name, String ticker, String share, String date) {
     Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, stockFolderPath,
             true);
-    existingPortfolio.buyStock(ticker, share, date);
+    existingPortfolio.buyStock(ticker, Double.parseDouble(share), date);
+  }
+
+  @Override
+  public void sellStock(String name, String ticker, String share, String date) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, stockFolderPath,
+            true);
+    existingPortfolio.sellStock(ticker, Double.parseDouble(share), date);
   }
 
 

@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class DataFrameWithImpl implements DataFrame {
   protected final Map<String, List<String>> map;
-
+  protected final List<String> keyOrder;
   /**
    * constructor that reads the information from the csv file and registers it to a map.
    * with the keys being decided by the top row, and all the following elements are added into.
@@ -26,7 +26,7 @@ public class DataFrameWithImpl implements DataFrame {
    */
   public DataFrameWithImpl(String csv) {
     this.map = new HashMap<>();
-
+    this.keyOrder = new ArrayList<>();
     try {
       File csvFile = new File(csv);
       Scanner csvRead = new Scanner(csvFile);
@@ -36,6 +36,7 @@ public class DataFrameWithImpl implements DataFrame {
       // creates columns
       for (String name : columnNames) {
         map.put(name, new ArrayList<>());
+        keyOrder.add(name);
       }
 
       String[] columnElements;
@@ -74,5 +75,31 @@ public class DataFrameWithImpl implements DataFrame {
   @Override
   public List<String> getColumn(String key) {
     return deepCopy(map.get(key));
+  }
+
+  @Override
+  public int getColumnSize() {
+    int size = 0;
+    for (String key : map.keySet()) {
+      size = map.get(key).size();
+    }
+    return size;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder string = new StringBuilder();
+    List<List<String>> columns = new ArrayList<>();
+    for (String key : keyOrder) {
+      string.append(key).append("\n");
+    }
+    string.append("\n");
+    for (int i = 0; i < getColumnSize(); i++) {
+      for (List<String> column : columns) {
+        string.append(column.get(i)).append(",");
+      }
+      string.append("\n");
+    }
+    return string.toString().strip();
   }
 }

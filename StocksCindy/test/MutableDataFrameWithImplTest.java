@@ -20,18 +20,12 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
 
   MutableDataFrame stock;
 
-  /**
-   * set up for testing.
-   */
   @Before
   public void setUp() {
     String path = "StocksCindy/test/testingCSV/testStockFormat.csv";
     stock = new MutableDataFrameWithImpl(path);
   }
 
-  /**
-   * tests the getters.
-   */
   @Test
   public void addRowTest() {
     Map<String, List<String>> input = new HashMap<>();
@@ -270,14 +264,6 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
             List.of("1", "2", "3", "4"),
             stock.getColumn("Bobby")
     );
-  }
-
-  /**
-   * test getter that gets column size.
-   */
-  @Test
-  public void testColumnSize() {
-    assertEquals(3, stock.getColumnSize());
   }
 
 }

@@ -48,10 +48,13 @@ public class StocksController implements Controller {
     Scanner scan = new Scanner(readable);
     boolean quit = false;
     String name;
+    String shares;
+    String ticker;
     //if there is an existing portfolio
     boolean checkPortfolio = false;
-    view.welcomeMessage();
+    view.welcomeMessage(); //TODO take menu out of welcome message
     while (!quit) {
+      view.printMenu(); //TODO clarify TA
       view.inputNumber();
       String userNumber = scan.next();
       switch (userNumber) {
@@ -61,28 +64,29 @@ public class StocksController implements Controller {
           name = scan.next();
           model.createPortfolio(name);
           view.success();
-          String shares;
-          String ticker;
-          while (true) {
-            view.tickerType();
-            ticker = scan.next();
-            if (ticker.equals("f")) {
-              break;
-            }
-            if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
-              view.invalidStock();
-              break;
-            }
-            view.stockAdd();
-            shares = scan.next();
-            if (!model.checkIfNumber(shares)) {
-              view.invalidNumber();
-              break;
-            } else {
-              model.managePortfolio(name, ticker, Integer.parseInt(shares));
-            }
-          }
-          view.terminating();
+//          String shares;
+//          String ticker;
+//          while (true) {
+//            view.tickerType();
+//            ticker = scan.next();
+//            if (ticker.equals("f")) {
+//              break;
+//            }
+//            if (!model.checkIfFileExist("StocksCindy/CSVFiles/" + ticker + ".csv")) {
+//              view.invalidStock();
+//              break;
+//            }
+//            view.stockAdd();
+//            shares = scan.next();
+//            if (!model.checkIfNumber(shares)) {
+//              view.invalidNumber();
+//              break;
+//            } else {
+//              //TODO helper method for buy/sell fix in view
+////              model.managePortfolio(name, ticker, Integer.parseInt(shares));
+//            }
+//          }
+//          view.terminating();
           view.emptyLine();
           break;
 
@@ -115,7 +119,10 @@ public class StocksController implements Controller {
               break;
             } else {
 //              model.managePortfolio(name, ticker, Double.parseDouble(shares));
-              model.getBuyStock(name, ticker, Double.parseDouble(shares), date);
+//              model.getBuyStock(name, ticker, Double.parseDouble(shares), date);
+              // TODO helper that gets buystock and sell
+              // TODO REBALANCE in here
+
               //String name, String ticker, double share, String date
             }
           }
@@ -124,6 +131,7 @@ public class StocksController implements Controller {
           break;
 
         // view existing portfolios
+        //TODO composition
         case "port-view":
           view.getNameOfFile(model.getPortfolioNames());
           view.namePort();
@@ -134,7 +142,14 @@ public class StocksController implements Controller {
           view.print(model.getPortfolio(name));
           break;
 
+        //TODO new command port-list does port-view
 
+          // case"port-list"
+
+        //TODO have the command port-view prompt user to get composition or distribution
+        // overtime and get value in place of port-eval and put bar chart in
+
+        //TODO put this into another case ? port-manage
         case "port-eval":
           view.getNameOfFile(model.getPortfolioNames());
           view.namePort();
@@ -153,7 +168,8 @@ public class StocksController implements Controller {
           view.emptyLine();
           break;
 
-
+          //TODO bar chart, examine gain/loss, stock-avg and cross
+        // TODO put under stock-view in place of stock-eval
         // examine gain/ loss
         case "stock-eval":
           //call method that returns the files
@@ -269,17 +285,17 @@ public class StocksController implements Controller {
           view.emptyLine();
           break;
 
-        case "eval-chart":
-          view.namePort();
-          name = scan.next();
-          view.getDateUser2();
-          String startDate = scan.next();
-          view.getDateUser3();
-          String endDate = scan.next();
-
-          view.returnBarChart(model.barChartInitialized(name, startDate, endDate));
-          view.emptyLine();
-          break;
+//        case "eval-chart":
+//          view.namePort();
+//          name = scan.next();
+//          view.getDateUser2();
+//          String startDate = scan.next();
+//          view.getDateUser3();
+//          String endDate = scan.next();
+//
+//          view.returnBarChart(model.barChartInitialized(name, startDate, endDate));
+//          view.emptyLine();
+//          break;
           //view.movingAvg(model.movingAverage(ticker, date, Double.parseDouble(lastDays)));
 
         case "quit":

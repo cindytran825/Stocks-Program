@@ -80,3 +80,5 @@ will cost you points! A good implementation of MVC allows us to substitute one p
 minimal changes to the others.": WHAT DOES THIS MEAN? IT'S OKAY FOR US TO ADD NEW METHODS TO THE VIEW
 TO PRINT NEW LINES, RIGHT? IS IT SAYING WE NEED TO MAKE A NEW VIEW THAT EXTENDS IT
 
+-clarify about the menu points in view
+

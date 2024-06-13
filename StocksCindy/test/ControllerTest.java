@@ -42,7 +42,7 @@ public class ControllerTest {
   @Test
   public void testPortManage() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("port-manage wow TSLA 2 f quit");
+    Readable rd = new StringReader("port-manage f quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);
@@ -61,7 +61,7 @@ public class ControllerTest {
   @Test
   public void testCorrectPortManage() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("port-manage cindy TSLA 2 f quit");
+    Readable rd = new StringReader("port-manage bart TSLA 2 f quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);
@@ -80,7 +80,7 @@ public class ControllerTest {
   @Test
   public void testPortView() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("port-view Bob finish quit");
+    Readable rd = new StringReader("port-view cindy finish quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);
@@ -89,8 +89,7 @@ public class ControllerTest {
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
-            "check file StocksCindy/UserPortfolio/wow.csv\n" +
-            "get portfolio", log.toString());
+            "check file StocksCindy/UserPortfolio/cindy.csv\n", log.toString());
   }
 
   /**
@@ -100,7 +99,24 @@ public class ControllerTest {
   @Test
   public void testPortEval() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("port-eval wow 2020-01-14 quit");
+    Readable rd = new StringReader("port-eval stock-list quit");
+    Scanner scan = new Scanner(rd);
+
+    View view = new ViewMock(log);
+    Model mockModel = new ModelMock(log);
+    Controller controller = new StocksController(mockModel, view, rd);
+    controller.goControl();
+
+    assertEquals("get stock", log.toString());
+  }
+  /**
+   * tests if the controller is reading the inputs
+   * when a user wants to see get the value.
+   */
+  @Test
+  public void testPortEval2() {
+    StringBuilder log = new StringBuilder();
+    Readable rd = new StringReader("port-manage cindy buy GOOG 10 finish quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);
@@ -109,8 +125,9 @@ public class ControllerTest {
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
-            "check file StocksCindy/UserPortfolio/wow.csv\n" +
-            "Evaluating portfolio 2020-01-14", log.toString());
+            "check file StocksCindy/UserPortfolio/cindy.csv\n" +
+            "check file StocksCindy/CSVFiles/GOOG.csv\n" +
+            "check whole number", log.toString());
   }
 
   /**
@@ -120,7 +137,7 @@ public class ControllerTest {
   @Test
   public void testStockEval() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("stock-eval AMZN 2020-01-01 2020-01-06 quit");
+    Readable rd = new StringReader("stock-view AMZN value 06 01 2020 10 01 2020 finish quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);
@@ -128,8 +145,8 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n" +
-            "Evaluating stock AMZN 2020-01-01 2020-01-06", log.toString());
+    assertEquals("get stockcheck file StocksCindy/CSVFiles/AMZN.csv\n" +
+            "Evaluating stock AMZN 2020-01-06 2020-01-10", log.toString());
   }
 
   /**
@@ -139,7 +156,7 @@ public class ControllerTest {
   @Test
   public void testStockAVG() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("stock-avg AMZN 2020-01-01 2020-01-06 quit");
+    Readable rd = new StringReader("stock-view GOOG moving-avg 01 01 2020 20 finish quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);
@@ -147,8 +164,8 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n"
-            + "check number 2020-01-06\n", log.toString());
+    assertEquals("get stockcheck file StocksCindy/CSVFiles/GOOG.csv\n" +
+            "check whole number", log.toString());
   }
 
   /**
@@ -158,7 +175,7 @@ public class ControllerTest {
   @Test
   public void testStockCross() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("stock-cross AMZN 2020-01-01 6 quit");
+    Readable rd = new StringReader("stock-view AMZN crossover 01 01 2020 10 finish quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);
@@ -166,8 +183,8 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n" +
-            "check number 6\n", log.toString());
+    assertEquals("get stockcheck file StocksCindy/CSVFiles/AMZN.csv\n" +
+            "check whole number", log.toString());
   }
 
   /**
@@ -176,13 +193,13 @@ public class ControllerTest {
   @Test
   public void testInvalidTicker() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("stock-cross RDDT 2020-01-01 6 quit");
+    Readable rd = new StringReader("stock-view RDDT crossover 01 01 2020 10 finish quit");
     Scanner scan = new Scanner(rd);
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
-    assertEquals("Cannot find stock on file. ", log.toString());
+    assertEquals("get stockCannot find stock on file. ", log.toString());
   }
 
   /**
@@ -192,13 +209,14 @@ public class ControllerTest {
   //(expected = IllegalArgumentException.class)
   public void testInvalidDate() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("stock-avg AMZN 1880-100-10 6.0 quit");
+    Readable rd = new StringReader("stock-view AMZN crossover 01 0100 2020 10 finish quit");
     Scanner scan = new Scanner(rd);
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
-    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\nInvalid date. ", log.toString());
+    assertEquals("get stockcheck file StocksCindy/CSVFiles/AMZN.csv\n" +
+            "Invalid date. ", log.toString());
   }
 
 }

@@ -22,25 +22,21 @@ public class ViewTest {
     controller.goControl();
 
     String expectedWelcome =
-            "Welcome to the stocks program!\n"
-                    +
-                    "Create new portfolio [port-create]\n"
-                    + "Manage portfolio [port-manage]\n"
-                    + "View existing portfolios [port-view]\n"
-                    + "Evaluate existing portfolios [port-eval]\n"
-                    + "Examine gain/loss [stock-eval]\n"
-                    + "Examine x-day move average [stock-avg]\n"
-                    + "Determine which days are x-day crossover [stock-cross]\n"
-                    + "View what stock datas are on file [stock-list]\n"
-                    + "Download stock data from an API [stock-download]\n"
-                    + "Upload your own stock data in a csv file [stock-upload]\n"
-                    + "Quit [quit]\n"
-                    + "Menu [menu]\n"
-                    + "Enter instruction to the action you'd like to take!\n";
+            "Welcome to the stocks program!\n" +
+                    "Create new portfolio [port-create]\n" +
+                    "Manage portfolio and make changes to it [port-manage]\n" +
+                    "View existing portfolios and analyze data [port-view]\n" +
+                    "View what stock datas are on file [stock-list]\n" +
+                    "View existing stocks and analyze data [stock-view]\n" +
+                    "Download stock data from an API [stock-download]\n" +
+                    "Upload your own stock data in a csv file [stock-upload]\n" +
+                    "Quit [quit]\n" +
+                    "Menu [menu]\n" +
+                    "Enter instruction to the action you'd like to take!";
 
-    String[] output = ap.toString().split("This is an");
-    String getOutput = output[0];
-    assertEquals(expectedWelcome, getOutput);
+//    String[] output = ap.toString().split("This is an");
+//    String getOutput = output[0];
+    assertEquals(expectedWelcome, ap.toString());
   }
 
   /**

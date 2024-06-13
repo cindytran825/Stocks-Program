@@ -154,9 +154,9 @@ public class ModelMock implements Model {
   @Override
   public String movingAverage(String ticker, String startDate, double lastX) {
     log.append("Moving average " + ticker + " " + startDate + " " + lastX);
-    Stock stock = new Stock(ticker, "StocksCindy/CSVFiles");
-    return String.valueOf(stock.getMovingAverage(startDate, lastX));
-//    return "";
+//    Stock stock = new Stock(ticker, "StocksCindy/CSVFiles");
+    return "";
+
   }
 
   /**
@@ -168,16 +168,16 @@ public class ModelMock implements Model {
    */
   @Override
   public String getCrossoverDays(String ticker, String startDate, double lastX) {
-    log.append("Stock crossover " + ticker + " " + startDate + " " + lastX);
-    Stock stock = new Stock(ticker, "StocksCindy/CSVFiles");
-    List<String> days = stock.getCrossOver(startDate, lastX);
-    StringBuilder sb = new StringBuilder();
-    for (String day : days) {
-      sb.append(day + "\n");
-    }
+    log.append("Stock crossover " + ticker);
+//    Stock stock = new Stock(ticker, "StocksCindy/CSVFiles");
+//    List<String> days = stock.getCrossOver(startDate, lastX);
+//    StringBuilder sb = new StringBuilder();
+//    for (String day : days) {
+//      sb.append(day + "\n");
+//    }
 
-    return sb.toString();
-//    return "";
+//    return sb.toString();
+    return "";
   }
 
   /**
@@ -202,41 +202,46 @@ public class ModelMock implements Model {
 
   @Override
   public void buyStock(String name, String ticker, String share, String date) {
-
+    log.append("buy stock "+ ticker + " " + share);
   }
 
   @Override
   public void sellStock(String name, String ticker, String share, String date) {
-
+    log.append("sell stock "+ ticker + " " + share);
   }
 
   @Override
   public Map<String, Double> getPortfolioStocks(String name) {
+    log.append("get portfolio " + name);
     return null;
   }
 
   @Override
   public void balance(String date, String name, Map<String, Double> percentages) {
-
+    log.append("balance " + date + " " + name);
   }
 
   @Override
   public String getPortfolioComposition(String name, String date) {
+    log.append("get composition " + date + " " + name);
     return null;
   }
 
   @Override
   public String getPortfolioDistribution(String name, String date) {
+    log.append("get distribution " + date + " " + name);
     return null;
   }
 
   @Override
   public boolean checkIfChronologicalPortfolio(String name, String inputDate) {
+    log.append("check if chronological portfolio " + name + " " + inputDate);
     return false;
   }
 
   @Override
   public boolean checkIfStockDataExist(String ticker, String inputDate) {
+    log.append("check data exists");
     return false;
   }
 
@@ -247,11 +252,13 @@ public class ModelMock implements Model {
 
   @Override
   public boolean checkIfWholeNumber(String string) {
+    log.append("check whole number");
     return false;
   }
 
   @Override
   public boolean checkSharesNotEnough(String portName, String ticker, double shares) {
+    log.append("check if shares not enough");
     return false;
   }
 

@@ -32,9 +32,9 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
     //just to show that the controller does go to the mock model
-    assertEquals("Creating portfolio wow\n"
-            +
-            "check file StocksCindy/CSVFiles/AMZN.csv\n", log.toString());
+    assertEquals("Creating portfolio wow\n" +
+            "check file StocksCindy/CSVFiles/AMZN.csv\n" +
+            "check number 32\n", log.toString());
   }
 
   /**
@@ -53,7 +53,9 @@ public class ControllerTest {
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
-            "check file StocksCindy/UserPortfolio/wow.csv\n", log.toString());
+            "check file StocksCindy/UserPortfolio/wow.csv\n" +
+            "check file StocksCindy/CSVFiles/TSLA.csv\n" +
+            "check number 2\n", log.toString());
   }
 
   /**
@@ -72,7 +74,8 @@ public class ControllerTest {
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
-            "check file StocksCindy/UserPortfolio/wow.csv\n", log.toString());
+            "check file StocksCindy/UserPortfolio/wow.csv\n" +
+            "get portfolio", log.toString());
   }
 
   /**
@@ -91,7 +94,8 @@ public class ControllerTest {
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
-            "check file StocksCindy/UserPortfolio/wow.csv\n", log.toString());
+            "check file StocksCindy/UserPortfolio/wow.csv\n" +
+            "Evaluating portfolio 2020-01-14", log.toString());
   }
 
   /**
@@ -109,7 +113,8 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n", log.toString());
+    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n" +
+            "Evaluating stock AMZN 2020-01-01 2020-01-06", log.toString());
   }
 
   /**
@@ -127,7 +132,8 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
-    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n", log.toString());
+    assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n"
+            + "check number 2020-01-06\n", log.toString());
   }
 
   /**
@@ -146,7 +152,7 @@ public class ControllerTest {
     controller.goControl();
 
     assertEquals("check file StocksCindy/CSVFiles/AMZN.csv\n" +
-            "check date 2020-01-01\n", log.toString());
+            "check number 6\n", log.toString());
   }
 
   /**

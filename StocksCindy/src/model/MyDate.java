@@ -50,4 +50,9 @@ public interface MyDate extends Comparable<MyDate> {
    */
   String getStringMonth(int num) throws IllegalArgumentException;
 
+  int getLastDate(MyDate startDate);
+
+  int getMonthLength(int month, int year);
+
+  int getEndYear(MyDate startDate);
 }

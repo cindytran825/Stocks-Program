@@ -64,7 +64,8 @@ public class MyDateWithImpl implements MyDate {
             && (year >= 0);
   }
 
-  private int getMonthLength(int month, int year) {
+  @Override
+  public int getMonthLength(int month, int year) {
     switch (month) {
       case 1:
       case 3:
@@ -186,6 +187,42 @@ public class MyDateWithImpl implements MyDate {
             && this.month == other.getMonth()
             && this.year == other.getYear();
   }
+
+  /**
+   * this is used to call to advance to the end of the month.
+   * used for the bar chart to get the value when there is a timespan.
+   * @param startDate is the startDate that the user input.
+   * @return the difference between the start date and the last day of the month.
+   */
+  @Override
+  public int getLastDate(MyDate startDate) {
+    int addAmount = 0;
+    int year = startDate.getYear();
+    int month = startDate.getMonth();
+    int day = startDate.getDay();
+    int length = getMonthLength(month, year);
+    addAmount = length - day;
+
+    return addAmount;
+  }
+
+  /**
+   * this is used ot help advance to the last day of the year.
+   * this calculates the difference between the date.
+   * the user input to the days of the year.
+   * @param startDate date user input for the start of timespan.
+   *                  to get value for the bar chart.
+   * @return the difference to get to the last day of the year.
+   */
+  @Override
+  public int getEndYear(MyDate startDate) {
+    int year = startDate.getYear();
+    MyDate one = new MyDateWithImpl(1, 1, year);
+    int result = startDate.compareTo(one);
+    return 364 - result;
+
+  }
+
 
   @Override
   public String getStringMonth() throws IllegalArgumentException {

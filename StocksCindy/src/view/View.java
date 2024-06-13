@@ -160,4 +160,7 @@ public interface View {
    * display invalid command message.
    */
   void invalidCommand();
+
+
+  void returnBarChart(String chart);
 }

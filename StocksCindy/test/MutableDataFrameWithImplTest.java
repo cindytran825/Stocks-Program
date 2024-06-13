@@ -20,12 +20,18 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
 
   MutableDataFrame stock;
 
+  /**
+   * set up for testing.
+   */
   @Before
   public void setUp() {
     String path = "StocksCindy/test/testingCSV/testStockFormat.csv";
     stock = new MutableDataFrameWithImpl(path);
   }
 
+  /**
+   * tests the getters.
+   */
   @Test
   public void addRowTest() {
     Map<String, List<String>> input = new HashMap<>();
@@ -71,6 +77,9 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
     assertEquals(expectedVolume, stock.getColumn("volume"));
   }
 
+  /**
+   * tests for exceptions.
+   */
   @Test(expected = IllegalArgumentException.class)
   public void addRowFail1() {
     Map<String, List<String>> input = new HashMap<>();
@@ -116,6 +125,9 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
     assertEquals(expectedVolume, stock.getColumn("volume"));
   }
 
+  /**
+   * test for exceptions.
+   */
   @Test(expected = IllegalArgumentException.class)
   public void addRowFail2() {
     Map<String, List<String>> input = new HashMap<>();
@@ -164,6 +176,9 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
     assertEquals(List.of(), stock.getColumn("extra column"));
   }
 
+  /**
+   * test for adding columns.
+   */
   @Test
   public void addColumnTest() {
 
@@ -209,6 +224,9 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
     );
   }
 
+  /**
+   * tests for exception.
+   */
   @Test(expected = IllegalArgumentException.class)
   public void addColumnTestFail() {
 
@@ -254,6 +272,9 @@ public class MutableDataFrameWithImplTest extends DataFrameTest {
     );
   }
 
+  /**
+   * test getter that gets column size.
+   */
   @Test
   public void testColumnSize() {
     assertEquals(3, stock.getColumnSize());

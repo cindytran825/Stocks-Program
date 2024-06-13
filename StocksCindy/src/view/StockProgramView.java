@@ -202,6 +202,13 @@ public class StockProgramView implements View {
   }
 
   @Override
+  public void returnBarChart(String chart) {
+    writeMessage(chart);
+  }
+
+
+
+  @Override
   public void welcomeMessage() {
     writeMessage("Welcome to the stocks program!" + System.lineSeparator());
     printMenu();

@@ -29,6 +29,10 @@ The Alphvantage class was given to us and we used to save the stock files.
 We had the portfolio class read from csv files because it doesn't make that much sense to us for
 the user having to recreate a new portfolio every time they run the program.
 
+The DataChart class is used to create the bar chart when a user wants a representation of the value
+of their portfolio through a timespan. Its in charge of building the charting, scaling it and
+formatting  it correctly. It extends the StocksModel class because __________________
+
 ==================================================================================
 CHANGES:
 - change the data type of anything that has to do with shares from int to double. Initially
@@ -54,3 +58,11 @@ method private and broke it up into buy and sell. The controller and model had t
 change. I do think that this change is justified as there were no directions saying that changing
 the portfolio had to incorporate a buying and selling method. It is possible to infer that
 it could've been refactored into one method based on the given directions in part I.
+- Made a new class called DataChart to make the barchart.
+- getMonthLength() in the MyDateWithImpl was a private method and I changed that to public because
+I needed to call that method in the portfolio class. I thought this decision was reasonable because
+I needed to get the length of the month to get the value or each month in the bar chart (needed to
+call the method multiple times) and it didn't make sense for me to have duplicate code when I could
+just call a method that was already made.
+- added getChart() method along with two private helpers in the portfolio class. These methods are
+called to get the chart and the new DataChart class has methods that would build the chart.

@@ -176,6 +176,11 @@ public class ViewMock implements View {
   }
 
   @Override
+  public void returnBarChart(String chart) {
+    log.append("");
+  }
+
+  @Override
   public void invalidStock() {
     log.append("");
   }

@@ -329,6 +329,7 @@ public class ViewTest {
 
   /**
    * tests for the stocklist case.
+   * it would return a list of stocks.
    */
   @Test
   public void testForStockList() {
@@ -339,13 +340,12 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "\n\nEnter the ticker: " +
-                    "\n";
+            "\n\n";
     String[] output = ap.toString().split("Enter instruction to "
             +
             "the action you'd like to take!");
     String getOutput = output[1];
-    String[] wow = getOutput.split("Enter in the reference path to the CSV file: ");
+    String[] wow = getOutput.split("Thank ");
     String result = wow[0];
     assertEquals(expectedMenu, result);
   }
@@ -362,14 +362,14 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "\nEnter in the reference path to the CSV file: ";
+            "\nEnter the ticker: \n";
 
     String[] output = ap.toString().split("tion you'd like to take!");
     String getOutput = output[1];
     String[] wow = getOutput.split("Enter the ticker this file represents: ");
     String result = wow[0];
-    String[] hello = result.split("ticker: ");
-    String there = hello[1];
+    String[] hello = result.split("Thank you ");
+    String there = hello[0];
     assertEquals(expectedMenu, there);
 
   }

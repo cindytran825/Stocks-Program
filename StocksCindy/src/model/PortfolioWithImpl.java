@@ -104,25 +104,7 @@ public class PortfolioWithImpl implements Portfolio {
     return deepCopy(this.listInventories);
   }
 
-//  @Override
-//  public double getValue(String date, String pathToStock) {
-//    double totalValue = 0.0;
-//    Stock stock;
-//    List<Double> closePrices;
-//    double closePrice;
-//    int dateIndex;
-//    for (String ticker : listInventories.keySet()) {
-//      stock = new Stock(ticker, pathToStock);
-//      closePrices = stock.getClose();
-//      dateIndex = stock.getClosestDateIndex(date, false);
-//      closePrice = closePrices.get(dateIndex);
-//      totalValue += closePrice * listInventories.get(ticker);
-//    }
-//    return totalValue;
-//  }
 
-
-  // this had to change previous implementation in the comment above
   @Override
   public double getValue(String date, String pathToStock) {
     double totalValue = 0.0;
@@ -147,10 +129,7 @@ public class PortfolioWithImpl implements Portfolio {
   }
 
   @Override
-  public void buyStock(
-          String ticker,
-          double shares,
-          String date
+  public void buyStock(String ticker, double shares, String date
   ) throws IllegalArgumentException {
     // assuming that the model / controller will check if it's a valid ticker
     // and a valid date (YYYY-MM-DD, doesn't have to be a date in the data)
@@ -170,10 +149,7 @@ public class PortfolioWithImpl implements Portfolio {
   // TODO MENTION IN DESIGN README THAT THE EDITPORTFOLIO FUNCTION WILL BE MADE PRIVATE
   // TODO ALSO NEED TO CHANGE PORTFOLIO SO THAT IT IS TRACKING / UPDATING THE AMOUNT OF STOCKS CORRECTLY
   @Override
-  public void sellStock(
-          String ticker,
-          double shares,
-          String date
+  public void sellStock(String ticker, double shares, String date
   ) throws IllegalArgumentException {
     // assuming that the model / controller will check if it's a valid ticker
     // and a valid date (YYYY-MM-DD format, doesn't have to be a date in the data)
@@ -368,7 +344,7 @@ public class PortfolioWithImpl implements Portfolio {
     List<String> dateList = stock.getTimestamp();
     List<String> transactionDates = this.log.getColumn("timestamp");
     String latestTransactionDate =
-            !transactionDates.isEmpty() ? transactionDates.getLast() : "0000-01-01";
+            !transactionDates.isEmpty() ? transactionDates.get(transactionDates.size() - 1)  : "0000-01-01";
     if (!checkDateChronology(latestTransactionDate, date, dateList)) {
       throw new IllegalArgumentException("Invalid date.");
     }
@@ -382,10 +358,8 @@ public class PortfolioWithImpl implements Portfolio {
     return copy;
   }
 
-// TODO CAN REMOVE EDIT PORTFOLIO
-  private Map<String, Double> editPortfolio(
-          String companyName,
-          double share
+  // TODO CAN REMOVE EDIT PORTFOLIO
+  private Map<String, Double> editPortfolio(String companyName, double share
   ) throws IllegalArgumentException {
     if (share < 0) {
       throw new IllegalArgumentException();
@@ -395,5 +369,139 @@ public class PortfolioWithImpl implements Portfolio {
     listInventories.put(companyName, share);
     return deepCopy(listInventories);
   }
+
+
+
+  /**
+   * this takes the startDate and endDate and uses the compareTo method.
+   * from the MyDateWithImpl class to get the difference between the two dates.
+   * Based on the difference, it decides the timespan and calls the method getBarChart.
+   * in the DataChart class to create the bar chart.
+   * @param name the name of the portfolio that the user input.
+   * @param startDate the starting date that the user input to get the value.
+   * @param endDate the ending date that the user input to get the value.
+   */
+  public String getChart(String name, String startDate, String endDate) {
+    String[] dateInfo = startDate.split("-");
+    MyDate firstDate = new MyDateWithImpl(
+            Integer.parseInt(dateInfo[2]),
+            Integer.parseInt(dateInfo[1]),
+            Integer.parseInt(dateInfo[0]));
+    String[] dateInfoOther = endDate.split("-");
+    MyDate secondDate = new MyDateWithImpl(
+            Integer.parseInt(dateInfoOther[2]),
+            Integer.parseInt(dateInfoOther[1]),
+            Integer.parseInt(dateInfoOther[0]));
+
+    List<String> listOfDates = new ArrayList<>();
+
+    int result = secondDate.compareTo(firstDate);
+    String decide = decideTimespan(result);
+    List<Double> listOfValues = timeValue(firstDate, secondDate, result, decide, listOfDates);
+    DataChart dataChart = new DataChart(name, startDate, endDate, listOfValues, result);
+    return dataChart.getBarChart(firstDate, decide, listOfDates, listOfValues);
+  }
+
+  /**
+   *
+   * @param result
+   * @return
+   */
+  private String decideTimespan(int result) {
+    StringBuilder builder = new StringBuilder();
+    String decide = "";
+    //greater than 5 years
+    if (result > 1825 ) {
+      decide = "year";
+      //call method that gets the value of last day of year
+    }
+    else if (result < 1825 && result > 365) {
+      //less than 5 years, time span every three months
+      decide = "3month";
+    }
+    else if (result > 30 && result < 365) {
+      //between 5 - 12 months, time span is every month
+      decide = "month";
+    }
+    else if (result < 30) {
+      //month timespan, time span is in days.
+      decide = "day";
+    }
+    else if (result < 0) {
+      throw new IllegalArgumentException("Start date cannot be after end date.");
+    }
+    return decide;
+  }
+
+  /**
+   *
+   * @param firstDate
+   * @param secondDate
+   * @param result
+   * @param decide
+   * @param listOfDates
+   * @return
+   */
+  private List<Double> timeValue(MyDate firstDate, MyDate secondDate, int result, String decide, List<String> listOfDates) {
+    List<Double> listOfValues = new ArrayList<>();
+    Portfolio existingPortfolio = new PortfolioWithImpl(portfolioName, stockDirectory, reference, true);
+    if (decide == "year") {
+      int endYearAmount = firstDate.getEndYear(firstDate);
+      firstDate.advance(endYearAmount);
+      for (int i = 0; i <= result / 365; i++) {
+        double value = existingPortfolio.getValue(firstDate.toString(), stockDirectory);
+        String date = firstDate.toString();
+        listOfDates.add(date);
+        listOfValues.add(value);
+        firstDate.advance(365);
+      }
+    }
+    else if (decide == "3month") {
+      int addAmount = firstDate.getLastDate(firstDate);
+      firstDate.advance(addAmount);
+      for(int i = 0; i <= result / 90; i++) {
+        double value = existingPortfolio.getValue(firstDate.toString(), stockDirectory);
+        String date = firstDate.toString();
+        listOfDates.add(date);
+        listOfValues.add(value);
+        int length = firstDate.getMonthLength(firstDate.getMonth(), firstDate.getYear());
+        int length2 = firstDate.getMonthLength(firstDate.getMonth() + 1, firstDate.getYear());
+        int length3 = firstDate.getMonthLength(firstDate.getMonth() + 2, firstDate.getYear());
+        firstDate.advance(length + length2 + length3);
+      }
+
+    }
+    else if (decide == "month") {
+      int addAmount = firstDate.getLastDate(firstDate);
+      firstDate.advance(addAmount);
+      for(int i = 0; i <= result / 30; i++) {
+        double value = existingPortfolio.getValue(firstDate.toString(), stockDirectory);
+        String date = firstDate.toString();
+        listOfDates.add(date);
+        listOfValues.add(value);
+        int length = firstDate.getMonthLength(firstDate.getMonth(), firstDate.getYear());
+        firstDate.advance(length);
+      }
+
+    }
+    else if (decide == "day") {
+      for(int i = 0; i <= result; i++) {
+        double value = existingPortfolio.getValue(firstDate.toString(), stockDirectory);
+        String date = firstDate.toString();
+        listOfDates.add(date);
+        listOfValues.add(value);
+        firstDate.advance(1);
+      }
+    }
+
+    double value = existingPortfolio.getValue(secondDate.toString(), stockDirectory);
+    String date = secondDate.toString();
+    listOfDates.set(listOfDates.size() - 1, date);
+    listOfValues.set(listOfValues.size() - 1, value);
+
+    return listOfValues;
+  }
+
+
 
 }

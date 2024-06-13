@@ -129,4 +129,16 @@ public interface Model {
    */
   String getStockNames();
 
+  /**
+   *
+   * @param name
+   * @param firstDate
+   * @param lastDate
+   * @return
+   */
+  String barChartInitialized(String name, String firstDate, String lastDate);
+
+  void getBuyStock(String name, String ticker, double share, String date);
+
+
 }

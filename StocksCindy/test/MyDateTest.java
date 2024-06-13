@@ -165,6 +165,9 @@ public class MyDateTest {
     assertEquals(0, day1.compareTo(day1));
   }
 
+  /**
+   * test getDay method.
+   */
   @Test
   public void testGetDay() {
     assertEquals(1, day1.getDay());
@@ -175,6 +178,9 @@ public class MyDateTest {
     assertEquals(5, day2.getDay());
   }
 
+  /**
+   * test get month method.
+   */
   @Test
   public void testGetMonth() {
     assertEquals(1, day1.getMonth());
@@ -185,6 +191,9 @@ public class MyDateTest {
     assertEquals(4, day2.getMonth());
   }
 
+  /**
+   * test get year method.
+   */
   @Test
   public void testGetYear() {
     assertEquals(0, day1.getYear());
@@ -195,10 +204,51 @@ public class MyDateTest {
     assertEquals(2023, day2.getYear());
   }
 
+  /**
+   * test the method that returns the month into string.
+   */
   @Test
   public void testGetMonthString() {
     assertEquals("JAN", day1.getStringMonth());
     assertEquals("MAY", day1.getStringMonth(5));
   }
+
+  /**
+   * test the getLastDate method.
+   * gets the difference of days to the end of month.
+   */
+  @Test
+  public void testGetLastDate() {
+    MyDate date = new MyDateWithImpl(1, 1, 2020);
+    assertEquals(30, date.getLastDate(date));
+
+    MyDate date2 = new MyDateWithImpl(12, 2, 2023);
+    assertEquals(16, date2.getLastDate(date2));
+
+    MyDate date3 = new MyDateWithImpl(31, 12, 2010);
+    assertEquals(0, date3.getLastDate(date3));
+
+  }
+  /**
+   * test the getLastDate method.
+   * gets the difference of days to the end of year.
+   */
+  @Test
+  public void testGetEndYear() {
+    MyDate date = new MyDateWithImpl(1, 1, 2020);
+    assertEquals(364, date.getEndYear(date));
+
+    MyDate date2 = new MyDateWithImpl(12, 2, 2023);
+    assertEquals(322, date2.getEndYear(date2));
+
+    MyDate date3 = new MyDateWithImpl(31, 12, 2010);
+    assertEquals(0, date3.getEndYear(date3));
+
+    MyDate date4 = new MyDateWithImpl(24, 10, 2015);
+    assertEquals(68, date4.getEndYear(date4));
+
+  }
+
+
 
 }

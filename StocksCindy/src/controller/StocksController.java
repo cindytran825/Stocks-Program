@@ -107,12 +107,16 @@ public class StocksController implements Controller {
             }
             view.stockAdd();
             shares = scan.next();
+            view.getDateUser1();
+            String date = scan.next();
             //adds to the list in portfolio
             if (!model.checkIfNumber(shares)) {
               view.invalidNumber();
               break;
             } else {
-              model.managePortfolio(name, ticker, Double.parseDouble(shares));
+//              model.managePortfolio(name, ticker, Double.parseDouble(shares));
+              model.getBuyStock(name, ticker, Double.parseDouble(shares), date);
+              //String name, String ticker, double share, String date
             }
           }
           view.terminating();
@@ -264,6 +268,19 @@ public class StocksController implements Controller {
           view.printSuccessAddStock(ticker);
           view.emptyLine();
           break;
+
+        case "eval-chart":
+          view.namePort();
+          name = scan.next();
+          view.getDateUser2();
+          String startDate = scan.next();
+          view.getDateUser3();
+          String endDate = scan.next();
+
+          view.returnBarChart(model.barChartInitialized(name, startDate, endDate));
+          view.emptyLine();
+          break;
+          //view.movingAvg(model.movingAverage(ticker, date, Double.parseDouble(lastDays)));
 
         case "quit":
           quit = true;

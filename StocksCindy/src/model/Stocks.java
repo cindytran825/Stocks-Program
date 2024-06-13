@@ -93,4 +93,6 @@ public interface Stocks {
    * @return a list of all volume data points.
    */
   List<Double> getVolume();
+
+
 }

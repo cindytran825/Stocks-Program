@@ -210,4 +210,14 @@ public class ModelMock implements Model {
     return "";
   }
 
+  @Override
+  public String barChartInitialized(String name, String firstDate, String lastDate) {
+    return "";
+  }
+
+  @Override
+  public void getBuyStock(String name, String ticker, double share, String date) {
+
+  }
+
 }

@@ -6,7 +6,7 @@ import java.util.Map;
  * represents the model. It does the implementations.
  * and it is called in the controller when it picks up the user inputs.
  */
-public interface  Model {
+public interface Model {
 
 
   /**
@@ -131,10 +131,29 @@ public interface  Model {
    */
   String getStockNames();
 
-
+  /**
+   * This method buys stocks for a portfolio.
+   *
+   * @param name   name of portfolio
+   * @param ticker stock ticker
+   * @param share  quantity of shares being bought (whole number only)
+   * @param date   the date the transaction is made (has to be chronological and on a day when the
+   *               market is open)
+   */
   void buyStock(String name, String ticker, String share, String date);
 
+  /**
+   * This method sells stocks from a portfolio.
+   *
+   * @param name   name of portfolio
+   * @param ticker stock ticker
+   * @param share  quantity of shares being sold (must have enough in portfolio and
+   *               whole number only)
+   * @param date   the date the transaction is made (has to be chronological and on a day when the
+   *               market is open)
+   */
   void sellStock(String name, String ticker, String share, String date);
+
 
   Map<String, Double> getPortfolioStocks(String name);
 
@@ -185,8 +204,8 @@ public interface  Model {
    * Check if there are sufficient shares for the action (selling).
    *
    * @param portName name of portfolio
-   * @param ticker name of stock involved in action
-   * @param shares quantity of shares for action
+   * @param ticker   name of stock involved in action
+   * @param shares   quantity of shares for action
    * @return true if there are not enough shares for the action
    */
   boolean checkSharesNotEnough(String portName, String ticker, double shares);

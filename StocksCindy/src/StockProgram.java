@@ -7,7 +7,7 @@ import view.StockProgramView;
 import view.View;
 
 /**
- * the stock program that displays the program in the console. 
+ * the stock program that displays the program in the console.
  */
 public class StockProgram {
 

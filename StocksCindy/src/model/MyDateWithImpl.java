@@ -110,12 +110,6 @@ public class MyDateWithImpl implements MyDate {
     return (year % 4 == 0) && ((year % 100 != 0) || (year % 100 == 0 && year % 400 == 0));
   }
 
-  /**
-   * advances the date if the date is on a weekend.
-   * or isn't a part of the data in the api.
-   *
-   * @param days number of days the date is to be advanced by.
-   */
   @Override
   public void advance(int days) {
     int monthLength;
@@ -201,19 +195,12 @@ public class MyDateWithImpl implements MyDate {
 
   @Override
   public boolean equals(Object otherDate) {
-    return (otherDate instanceof MyDate other)
-            && this.day == other.getDay()
-            && this.month == other.getMonth()
-            && this.year == other.getYear();
+    return (otherDate instanceof MyDate)
+            && this.day == ((MyDate) otherDate).getDay()
+            && this.month == ((MyDate) otherDate).getMonth()
+            && this.year == ((MyDate) otherDate).getYear();
   }
 
-  /**
-   * this is used to call to advance to the end of the month.
-   * used for the bar chart to get the value when there is a timespan.
-   *
-   * @param startDate is the startDate that the user input.
-   * @return the difference between the start date and the last day of the month.
-   */
   @Override
   public int getLastDate(MyDate startDate) {
     int addAmount = 0;
@@ -226,15 +213,6 @@ public class MyDateWithImpl implements MyDate {
     return addAmount;
   }
 
-  /**
-   * this is used ot help advance to the last day of the year.
-   * this calculates the difference between the date.
-   * the user input to the days of the year.
-   *
-   * @param startDate date user input for the start of timespan.
-   *                  to get value for the bar chart.
-   * @return the difference to get to the last day of the year.
-   */
   @Override
   public int getEndYear(MyDate startDate) {
     int year = startDate.getYear();
@@ -243,7 +221,6 @@ public class MyDateWithImpl implements MyDate {
     return 364 - result;
 
   }
-
 
   @Override
   public String getStringMonth() throws IllegalArgumentException {

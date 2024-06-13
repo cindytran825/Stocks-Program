@@ -1,6 +1,6 @@
 
 import model.Analyzable;
-import model.DataChart;
+import model.BarChart;
 import view.View;
 
 /**
@@ -219,62 +219,62 @@ public class ViewMock implements View {
 
   @Override
   public void newName() {
-
+    log.append("");
   }
 
   @Override
   public void printEditPortfolioMenu() {
-
+    log.append("");
   }
 
   @Override
   public void startDate() {
-
+    log.append("");
   }
 
   @Override
   public void endDate() {
-
+    log.append("");
   }
 
   @Override
   public void insufficientShares() {
-
+    log.append("");
   }
 
   @Override
   public void invalidPercentage() {
-
+    log.append("");
   }
 
   @Override
   public void notChronologicalOrDataInvalid() {
-
+    log.append("");
   }
 
   @Override
   public void printStockViewMenu() {
-
+    log.append("");
   }
 
   @Override
   public void printPortfolioViewMenu() {
-
+    log.append("");
   }
 
   @Override
   public void getWhichChart() {
-
+    log.append("");
   }
 
   @Override
-  public void returnBarChartPortfolio(DataChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio) {
-
+  public void returnBarChartPortfolio(BarChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio) {
+    log.append("");
   }
 
   @Override
-  public void returnBarChartStock(DataChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock) {
-
+  public void returnBarChartStock(BarChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock) {
+    log.append("");
   }
 
 //  @Override
@@ -295,6 +295,6 @@ public class ViewMock implements View {
 
   @Override
   public void invalidShares() {
-
+    log.append("");
   }
 }

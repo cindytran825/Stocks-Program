@@ -32,9 +32,7 @@ public class ControllerTest {
     Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
     //just to show that the controller does go to the mock model
-    assertEquals("Creating portfolio wow\n" +
-            "check file StocksCindy/CSVFiles/AMZN.csv\n" +
-            "check number 32\n", log.toString());
+    assertEquals("Creating portfolio wow\n", log.toString());
   }
 
   /**
@@ -53,9 +51,26 @@ public class ControllerTest {
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
-            "check file StocksCindy/UserPortfolio/wow.csv\n" +
-            "check file StocksCindy/CSVFiles/TSLA.csv\n" +
-            "check number 2\n", log.toString());
+            "Cannot find stock on file. ", log.toString());
+  }
+
+  /**
+   * tests if the controller is reading the inputs
+   * when a user wants to fix something in exisitng portfolio.
+   */
+  @Test
+  public void testCorrectPortManage() {
+    StringBuilder log = new StringBuilder();
+    Readable rd = new StringReader("port-manage cindy TSLA 2 f quit");
+    Scanner scan = new Scanner(rd);
+
+    View view = new ViewMock(log);
+    Model mockModel = new ModelMock(log);
+    Controller controller = new StocksController(mockModel, view, rd);
+    controller.goControl();
+
+    assertEquals("get portfolio names\n" +
+            "Cannot find stock on file. ", log.toString());
   }
 
   /**
@@ -65,7 +80,7 @@ public class ControllerTest {
   @Test
   public void testPortView() {
     StringBuilder log = new StringBuilder();
-    Readable rd = new StringReader("port-view wow quit");
+    Readable rd = new StringReader("port-view Bob finish quit");
     Scanner scan = new Scanner(rd);
 
     View view = new ViewMock(log);

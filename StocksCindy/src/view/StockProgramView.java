@@ -3,7 +3,7 @@ package view;
 import java.io.IOException;
 
 import model.Analyzable;
-import model.DataChart;
+import model.BarChart;
 
 /**
  * View of the program, it should connect to the controller.
@@ -38,22 +38,16 @@ public class StockProgramView implements View {
 
   @Override
   public void printMenu() {
-
-    // TODO CHANGE (UPDATE IT TO BE UP TO DATE)
     writeMessage("Create new portfolio [port-create]\n");
-    writeMessage("Manage portfolio [port-manage]\n");
-    writeMessage("View existing portfolios [port-view]\n");
-    writeMessage("Evaluate existing portfolios [port-eval]\n");
-    writeMessage("Examine gain/loss [stock-eval]\n");
-    writeMessage("Examine x-day move average [stock-avg]\n");
-    writeMessage("Determine which days are x-day crossover [stock-cross]\n");
+    writeMessage("Manage portfolio and make changes to it [port-manage]\n");
+    writeMessage("View existing portfolios and analyze data [port-view]\n");
     writeMessage("View what stock datas are on file [stock-list]\n");
+    writeMessage("View existing stocks and analyze data [stock-view]\n");
     writeMessage("Download stock data from an API [stock-download]\n");
     writeMessage("Upload your own stock data in a csv file [stock-upload]\n");
     writeMessage("Quit [quit]\n");
     writeMessage("Menu [menu]\n");
     writeMessage("Enter instruction to the action you'd like to take!\n");
-
   }
 
   @Override
@@ -134,12 +128,12 @@ public class StockProgramView implements View {
 
 
   @Override
-  public void returnBarChartPortfolio(DataChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio) {
+  public void returnBarChartPortfolio(BarChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio) {
     writeMessage(chart.getChart(name, startDate, endDate, existingPortfolio));
   }
 
   @Override
-  public void returnBarChartStock(DataChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock) {
+  public void returnBarChartStock(BarChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock) {
     writeMessage(chart.getChart(name, startDate, endDate, stock));
   }
 
@@ -299,7 +293,7 @@ public class StockProgramView implements View {
 
   @Override
   public void printStockViewMenu() {
-    writeMessage("Actions you can perform on this portfolio: \n");
+    writeMessage("Actions you can perform on this stock: \n");
     writeMessage("View the stock's value growth over a time period [value]\n");
     writeMessage("View the stock moving average [move-avg]\n");
     writeMessage("View the stock crossover dates [crossover]\n");
@@ -322,10 +316,4 @@ public class StockProgramView implements View {
   public void invalidCommand() throws IllegalStateException {
     writeMessage("This is an invalid command!" + System.lineSeparator());
   }
-
-
-
-
-
-
 }

@@ -3,20 +3,12 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import model.DataChart;
-import model.MyDate;
-import model.MyDateWithImpl;
 import model.Portfolio;
 import model.PortfolioWithImpl;
-import model.StocksModel;
 
 import static org.junit.Assert.assertEquals;
 

@@ -17,7 +17,6 @@ import view.View;
  */
 public class StocksController implements Controller {
   private final View view;
-  private final Readable readable;
   private final Model model;
   private final Scanner scan;
   private final String stockDirectory;
@@ -45,10 +44,8 @@ public class StocksController implements Controller {
    * @param readable reads the user inputs.
    */
   public StocksController(Model model, View view, Readable readable) {
-    //null exception?
     this.view = view;
     this.model = model;
-    this.readable = readable;
     this.scan = new Scanner(readable);
     this.stockDirectory = "StocksCindy/CSVFiles";
     this.portfolioDirectory = "StocksCindy/Portfolio";
@@ -63,9 +60,17 @@ public class StocksController implements Controller {
    * @throws IllegalStateException is called when method isn't at an appropriate state.
    */
   public void goControl() throws IllegalStateException {
+    mainMenu();
+  }
+
+  private void mainMenu() {
     boolean quit = false;
     view.welcomeMessage();
+    mainMenuLoop(quit);
+    view.goodbye();
+  }
 
+  private void mainMenuLoop(boolean quit) {
     while (!quit) {
       view.printMenu();
       view.userInput();
@@ -95,60 +100,7 @@ public class StocksController implements Controller {
 
         // initiates the analysis of stocks
         case "stock-view":
-          view.printStockNames(model.getStockNames());
-          view.getTicker();
-          ticker = scan.next();
-          if (checkFile(ticker, stockDirectory)) {
-            break;
-          }
-
-          finish = false;
-          while (!finish) {
-            view.printStockViewMenu();
-            view.userInput();
-            userInput = scan.next();
-
-            switch (userInput) {
-              case "finish":
-                finish = true;
-                view.terminating();
-                break;
-
-              // get net growth of stock
-              case "value":
-                stockValue();
-                break;
-
-              case "moving-avg":
-                stockMovingAverage();
-                break;
-
-              case "crossover":
-                stockCrossover();
-                break;
-
-              case "bar-chart":
-// TODO CINDY PLEASE DO THIS PART
-                view.startDate();
-                String startDate = getDatePeriodPart();
-                if (checkDate(startDate)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
-                  break;
-                }
-                view.endDate();
-                String endDate = getDatePeriodPart();
-                if (checkDate(endDate)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
-                  break;
-                }
-                //////////////////////////
-                view.emptyLine();
-                break;
-
-
-              default:
-                view.invalidCommand();
-            }
-          }
-
+          stockView();
           break;
 
         // view the list of stocks on file
@@ -169,6 +121,7 @@ public class StocksController implements Controller {
         case "quit":
           quit = true;
           break;
+
         case "menu":
           view.printMenu();
           view.emptyLine();
@@ -177,7 +130,71 @@ public class StocksController implements Controller {
           view.invalidCommand();
       }
     }
-    view.goodbye();
+  }
+
+  private void stockView() {
+    view.printStockNames(model.getStockNames());
+    view.getTicker();
+    ticker = scan.next();
+    if (checkFile(ticker, stockDirectory)) {
+      return;
+    }
+    finish = false;
+    stockViewMenu();
+  }
+
+  private void stockViewMenu() {
+    while (!finish) {
+      view.printStockViewMenu();
+      view.userInput();
+      userInput = scan.next();
+      view.emptyLine();
+
+      switch (userInput) {
+        case "finish":
+          finish = true;
+          view.terminating();
+          break;
+
+        // get net growth of stock
+        case "value":
+          stockValue();
+          break;
+
+        case "moving-avg":
+          stockMovingAverage();
+          break;
+
+        case "crossover":
+          stockCrossover();
+          break;
+
+        case "bar-chart":
+          stockBarChart();
+          break;
+
+        default:
+          view.invalidCommand();
+      }
+    }
+  }
+
+  private void stockBarChart() {
+    view.startDate();
+    String startDate = getDatePeriodPart();
+    if (checkDate(startDate)) {
+      return;
+    }
+    view.endDate();
+    String endDate = getDatePeriodPart();
+    if (checkDate(endDate)) {
+      return;
+    }
+
+    view.tickerType();
+    ticker = scan.next();
+    view.print(model.barChartStockInitialized(name, startDate, endDate, ticker));
+    view.emptyLine();
   }
 
   private void stockValue() {
@@ -291,40 +308,30 @@ public class StocksController implements Controller {
         case "value":
           portfolioValue();
           break;
-        case "bar-chart": // TODO CINDY PLEASE DO THIS PART
-          view.getWhichChart();
-          String which = scan.next();
-
-          view.startDate();
-          String startDate = getDatePeriodPart();
-          if (checkDate(startDate)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
-            break;
-          }
-          view.endDate();
-          String endDate = getDatePeriodPart();
-          if (checkDate(endDate)) { // TODO CHECK IF DATE IS VALID AND IF THERE'S DATA POINTS AVAILABLE
-            break;
-          }
-          switch (which) {
-            case "portfolio":
-              view.namePort();
-              name = scan.next();
-              view.print(model.barChartPortfolioInitialized(name, startDate, endDate));
-              break;
-            case "stock":
-              view.tickerType();
-              ticker = scan.next();
-              view.print(model.barChartStockInitialized(name, startDate, endDate, ticker));
-//              view.returnBarChartStock();
-          }
-
-          //////////////////////////
+        // get bar chart
+        case "bar-chart":
+          portfolioBarChart();
           break;
-
         default:
           view.invalidCommand();
       }
     }
+  }
+
+  private void portfolioBarChart() {
+    view.startDate();
+    String startDate = getDatePeriodPart();
+    if (checkDate(startDate)) {
+      return;
+    }
+    view.endDate();
+    String endDate = getDatePeriodPart();
+    if (checkDate(endDate)) {
+      return;
+    }
+
+    view.print(model.barChartPortfolioInitialized(name, startDate, endDate) + "\n");
+    view.emptyLine();
   }
 
   private String getDatePeriodPart() {
@@ -334,7 +341,7 @@ public class StocksController implements Controller {
     month = scan.next();
     view.getYear();
     year = scan.next();
-    String startDate = String.format("%s-%s-%s", day, month, year);
+    String startDate = String.format("%4s-%2s-%2s", year, month, day);
     return startDate;
   }
 
@@ -369,7 +376,7 @@ public class StocksController implements Controller {
     month = scan.next();
     view.getYear();
     year = scan.next();
-    date = String.format("%s-%s-%s", day, month, year);
+    date = String.format("%4s-%2s-%2s", year, month, day);
     if (checkDate(date)) {
       return true;
     } else if (!model.checkIfStockDataExist(ticker, date)) {
@@ -382,23 +389,28 @@ public class StocksController implements Controller {
     view.getNameOfFile(model.getPortfolioNames());
     view.namePort();
     name = scan.next(); // needs catcher for invalid names
-    if (checkFile(name, "StocksCindy/UserPortfolio")) {
+    if (checkFile(name, portfolioDirectory)) {
       return true;
     }
     return false;
   }
 
   private void portManage() {
-
     view.getNameOfFile(model.getPortfolioNames());
     name = getName();
 
     // checks if file exist
-    if (checkFile(name, "StocksCindy/UserPortfolio")) {
+    if (checkFile(name, portfolioDirectory)) {
       return;
     }
 
     boolean finish = false;
+    portManageMenu(finish);
+    view.terminating();
+    view.emptyLine();
+  }
+
+  private void portManageMenu(boolean finish) {
     while (!finish) {
       view.printEditPortfolioMenu();
       view.userInput();
@@ -408,25 +420,19 @@ public class StocksController implements Controller {
           finish = true;
           view.terminating();
           break;
-
         case "buy":
           portBuy();
           break;
-
         case "sell":
           portSell();
           break;
-
         case "balance":
           portBalance();
           break;
-
         default:
           view.invalidCommand();
       }
     }
-    view.terminating();
-    view.emptyLine();
   }
 
   private void portBuy() {
@@ -434,11 +440,9 @@ public class StocksController implements Controller {
     if (getAndCheckTicker()) {
       return;
     }
-
     if (checkSharesWholeNum()) {
       return;
     }
-
     // process dates
     if (checkChronologyAndData()) {
       return;
@@ -571,8 +575,6 @@ public class StocksController implements Controller {
     }
     return false;
   }
-
-  //
 
   private boolean checkDate(String date1) {
     if (!model.checkIfDate(date1)) {

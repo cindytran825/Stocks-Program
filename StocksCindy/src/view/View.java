@@ -1,7 +1,7 @@
 package view;
 
 import model.Analyzable;
-import model.DataChart;
+import model.BarChart;
 
 /**
  * the view which does the display.
@@ -261,7 +261,7 @@ public interface View {
 
   void getWhichChart();
 
-  void returnBarChartPortfolio(DataChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio);
-  void returnBarChartStock(DataChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock);
+  void returnBarChartPortfolio(BarChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio);
+  void returnBarChartStock(BarChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock);
 
 }

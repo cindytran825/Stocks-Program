@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-import model.DataChart;
+import model.BarChart;
 import model.MyDate;
 import model.MyDateWithImpl;
 import model.Portfolio;
@@ -14,7 +14,7 @@ import model.Stock;
 
 import static org.junit.Assert.assertEquals;
 
-public class DataChartTest {
+public class BarChartTest {
 
   String testFolderPath;
   Portfolio cindy;
@@ -45,7 +45,7 @@ public class DataChartTest {
   public void testChartMonth() {
     cindy = new PortfolioWithImpl("cindy", testFolderPath, testFolderPath, false);
     cindy.buyStock("GOOG", 423.0, "2014-04-15");
-    DataChart data = new DataChart("cindy", "2024-02-03", "2024-06-28", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2024-02-03", "2024-06-28", cindy, testFolderPath);
 
     assertEquals("Performance of Stock/Portfolio cindy from 2024-02-03 to 2024-06-28\n" +
             "FEB 2024: ******\n" +
@@ -61,7 +61,7 @@ public class DataChartTest {
    //   */
   @Test
   public void testChartDay() {
-    DataChart data = new DataChart("cindy", "2024-02-03", "2024-02-07", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2024-02-03", "2024-02-07", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2024-02-03 to 2024-02-07\n" +
             "FEB 03 2024: *******\n" +
             "FEB 04 2024: *******\n" +
@@ -76,7 +76,7 @@ public class DataChartTest {
    */
   @Test
   public void testChartDay2() {
-    DataChart data = new DataChart("cindy", "2024-02-03", "2024-02-04", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2024-02-03", "2024-02-04", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2024-02-03 to 2024-02-04\n" +
             "FEB 03 2024: *******\n" +
             "FEB 04 2024: *******\n" +
@@ -89,7 +89,7 @@ public class DataChartTest {
    */
   @Test
   public void testChartDoubleDay() {
-    DataChart data = new DataChart("cindy", "2024-02-03", "2024-02-13", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2024-02-03", "2024-02-13", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2024-02-03 to 2024-02-13\n" +
             "FEB 03 2024: *******\n" +
             "FEB 04 2024: *******\n" +
@@ -110,7 +110,7 @@ public class DataChartTest {
    */
   @Test
   public void testChartYear() {
-    DataChart data = new DataChart("cindy", "2014-04-15", "2020-01-11", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-04-15", "2020-01-11", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2020-01-11\n" +
             "DEC 2014: ***\n" +
             "DEC 2015: ****\n" +
@@ -126,7 +126,7 @@ public class DataChartTest {
    */
   @Test
   public void testChartMonthThree() {
-    DataChart data = new DataChart("cindy", "2014-04-15",  "2016-01-11", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-04-15",  "2016-01-11", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2016-01-11\n" +
             "APR 2014: ***********************\n" +
             "JUL 2014: *************************\n" +
@@ -144,7 +144,7 @@ public class DataChartTest {
    */
   @Test
   public void testChartMonthLess() {
-    DataChart data = new DataChart("cindy", "2014-04-15",  "2014-07-18", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-04-15",  "2014-07-18", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2014-07-18\n" +
             "MAR 2014: \n" +
             "APR 2014: ***********************\n" +
@@ -159,7 +159,7 @@ public class DataChartTest {
    */
   @Test
   public void testChartMonthLess2() {
-    DataChart data = new DataChart("cindy", "2014-04-15",  "2014-06-18", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-04-15",  "2014-06-18", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2014-06-18\n" +
             "MAR 2014: \n" +
             "APR 2014: \n" +
@@ -177,7 +177,7 @@ public class DataChartTest {
    */
   @Test(expected = NoSuchElementException.class)
   public void testWrongMonth() {
-    DataChart data = new DataChart("cindy", "2014-04-15",  "2014-03-11", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-04-15",  "2014-03-11", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2014-07-18\n" +
             "MAR 2014: \n" +
             "APR 2014: ***********************\n" +
@@ -192,7 +192,7 @@ public class DataChartTest {
    */
   @Test(expected = NoSuchElementException.class)
   public void testWrongYear() {
-    DataChart data = new DataChart("cindy", "2024-09-15",  "2014-07-18", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2024-09-15",  "2014-07-18", cindy, testFolderPath);
     assertEquals("Performance of Portfolio cindy from 2014-04-15 to 2014-07-18\n" +
             "MAR 2014: \n" +
             "APR 2014: ***********************\n" +
@@ -207,7 +207,7 @@ public class DataChartTest {
    */
   @Test(expected = NoSuchElementException.class)
   public void testWrongDay() {
-    DataChart data = new DataChart("cindy", "2014-09-15",  "2014-09-14", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-09-15",  "2014-09-14", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2014-07-18\n" +
             "MAR 2014: \n" +
             "APR 2014: ***********************\n" +
@@ -224,7 +224,7 @@ public class DataChartTest {
   public void testGetBarChart() {
     List<Double> listOfValues = new ArrayList<>(Arrays.asList(23000.0, 33000.0, 43000.0, 33000.0, 43000.0));
     List<String> listOfDates = new ArrayList<>(Arrays.asList("2014-04-30", "2014-05-31", "2014-06-30", "2014-07-30", "2014-08-15"));
-    DataChart data = new DataChart("cindy", "2014-09-15",  "2014-09-14", cindy, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-09-15",  "2014-09-14", cindy, testFolderPath);
 
     MyDate firstDate = new MyDateWithImpl(15, 04, 2014);
     //getBarChart(MyDate firstDate, String decide, List<String> listOfDates, List<Double> listOfValues)
@@ -245,7 +245,7 @@ public class DataChartTest {
     List<Double> listOfValues = new ArrayList<>(Arrays.asList(15000.0, 33000.0, 63000.0, 33000.0, 74000.0, 70000.0));
     List<String> listOfDates = new ArrayList<>(Arrays.asList("2014-12-31", "2015-12-31", "2016-12-31",
             "2017-12-31", "2018-12-31", "2019-08-15"));
-    DataChart dataChart = new DataChart("cindy", "2014-04-15", "2019-08-15",  cindy, testFolderPath);
+    BarChart barChart = new BarChart("cindy", "2014-04-15", "2019-08-15",  cindy, testFolderPath);
     MyDate firstDate = new MyDateWithImpl(15, 04, 2014);
     //getBarChart(MyDate firstDate, String decide, List<String> listOfDates, List<Double> listOfValues)
     assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2019-08-15\n" +
@@ -255,12 +255,12 @@ public class DataChartTest {
             "DEC 2017: ****\n" +
             "DEC 2018: ********\n" +
             "AUG 2019: *******\n" +
-            "Scale: * = 10000", dataChart.getBarChart(firstDate, "month", listOfDates, listOfValues));
+            "Scale: * = 10000", barChart.getBarChart(firstDate, "month", listOfDates, listOfValues));
   }
 
   @Test
   public void testGetBarStock() {
-    DataChart data = new DataChart("cindy", "2014-04-15", "2024-05-16",  goog, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-04-15", "2024-05-16",  goog, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-04-15 to 2024-05-16\n" +
             "DEC 2014: ******\n" +
             "DEC 2015: ********\n" +
@@ -278,7 +278,7 @@ public class DataChartTest {
 
   @Test
   public void testGetBarStockDay() {
-    DataChart data = new DataChart("cindy", "2024-05-16", "2024-05-20",  goog, testFolderPath);
+    BarChart data = new BarChart("cindy", "2024-05-16", "2024-05-20",  goog, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2024-05-16 to 2024-05-20\n" +
             "MAY 16 2024: ******************\n" +
             "MAY 17 2024: ******************\n" +
@@ -294,7 +294,7 @@ public class DataChartTest {
    */
   @Test
   public void testGetBarStockMonth3() {
-    DataChart data = new DataChart("cindy", "2014-05-16", "2016-05-20",  goog, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-05-16", "2016-05-20",  goog, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-05-16 to 2016-05-20\n" +
             "MAY 2014: ******\n" +
             "AUG 2014: ******\n" +
@@ -314,7 +314,7 @@ public class DataChartTest {
    */
   @Test
   public void testGetBarStock2Months() {
-    DataChart data = new DataChart("cindy", "2014-05-16", "2014-07-20",  goog, testFolderPath);
+    BarChart data = new BarChart("cindy", "2014-05-16", "2014-07-20",  goog, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy from 2014-05-16 to 2014-07-20\n" +
             "APR 2014: \n" +
             "JUN 2014: \n" +

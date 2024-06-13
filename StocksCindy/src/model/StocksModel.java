@@ -155,16 +155,6 @@ public class StocksModel implements Model {
             name, portfolioFolderPath, stockFolderPath, false);
   }
 
-  // changing structure of model?
-  /*
-  still keep create portfolio a separate method ->
-  manage portfolio -> list portfolios and have the user select one
-                   -> loop for action stock and quantity:
-                              What would you like to do in this portfolio?
-                              [buy TICKER SHARES date]
-                              [sell TICKER SHARES date]
-   */
-
   @Override
   public void managePortfolio(String name, String ticker, double shares) {
     Portfolio existingPortfolio = new PortfolioWithImpl(
@@ -201,7 +191,7 @@ public class StocksModel implements Model {
   ) {
     Analyzable existingPortfolio = new PortfolioWithImpl(
             name, portfolioFolderPath, stockFolderPath, true);
-    DataChart data = new DataChart(name, firstDate, lastDate, existingPortfolio, stockFolderPath);
+    BarChart data = new BarChart(name, firstDate, lastDate, existingPortfolio, stockFolderPath);
     return data.getChart(stockFolderPath, firstDate, lastDate, existingPortfolio);
   }
 
@@ -209,7 +199,7 @@ public class StocksModel implements Model {
   public String barChartStockInitialized(
           String name, String firstDate, String lastDate, String ticker) {
     Analyzable stock = new Stock(ticker, stockFolderPath);
-    DataChart data = new DataChart(name, firstDate, lastDate, stock, stockFolderPath);
+    BarChart data = new BarChart(name, firstDate, lastDate, stock, stockFolderPath);
     return data.getChart(stockFolderPath, firstDate, lastDate, stock);
   }
 
@@ -247,16 +237,6 @@ public class StocksModel implements Model {
     }
     return sb.toString();
   }
-
-//  @Override
-//  public String getPortfolio(String name) {
-//    Portfolio existingPortfolio = new PortfolioWithImpl(
-//            name,
-//            portfolioFolderPath,
-//            stockFolderPath,
-//            true);
-//    return existingPortfolio.toString();
-//  }
 
   @Override
   public Map<String, Double> getPortfolioStocks(String name) {
@@ -319,7 +299,6 @@ public class StocksModel implements Model {
     }
     return sb.toString();
   }
-
 
   @Override
   public void buyStock(String name, String ticker, String share, String date) {

@@ -75,6 +75,17 @@ public class ControllerMock implements Controller {
         mockView.getDateUser2();
         mockView.getDays();
         break;
+      case "stock-view" :
+        mockView.getTicker();
+        break;
+      case "finish":
+        mockView.terminating();
+        break;
+      case "bar-chart":
+        mockView.startDate();
+        mockView.endDate();
+        break;
+
       case "stock-cross":
         mockView.getTicker();
         mockView.getDateUser2();

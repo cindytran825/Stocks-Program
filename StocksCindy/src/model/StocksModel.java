@@ -143,7 +143,7 @@ public class StocksModel implements Model {
   public String evaluatePortfolio(String name, String date) {
     Portfolio existingPortfolio = new PortfolioWithImpl(
             name, portfolioFolderPath, stockFolderPath, true);
-    return String.valueOf(existingPortfolio.getValue(date));
+    return String.valueOf(existingPortfolio.getValue(date, portfolioFolderPath));
   }
 
   @Override

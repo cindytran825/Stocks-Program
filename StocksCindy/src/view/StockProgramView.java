@@ -2,6 +2,8 @@ package view;
 
 import java.io.IOException;
 
+import model.DataChart;
+
 /**
  * View of the program, it should connect to the controller.
  * which calls the methods in the model.
@@ -221,11 +223,11 @@ public class StockProgramView implements View {
     writeMessage("Enter the name of the new portfolio: ");
   }
 
-  // TODO NEED THE INTERFACE FOR CHART
-  @Override
-  public void returnBarChart(DataChart chart) {
-    writeMessage(chart.getChart());
-  }
+//  // TODO NEED THE INTERFACE FOR CHART
+//  @Override
+//  public void returnBarChart(DataChart chart) {
+//    writeMessage(chart.getChart());
+//  }
 
   @Override
   public void editPortfolioMenu() {

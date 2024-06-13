@@ -73,11 +73,26 @@ public class ViewMock implements View {
   }
 
   @Override
-  public void nameNew() throws IllegalStateException {
-    log.append("");
+  public void getDay() {
+
   }
 
   @Override
+  public void getMonth() {
+
+  }
+
+  @Override
+  public void getYear() {
+
+  }
+//
+//  @Override
+//  public void nameNew() throws IllegalStateException {
+//    log.append("");
+//  }
+
+//  @Override
   public void inputNumber() throws IllegalStateException {
     log.append("");
   }
@@ -197,17 +212,17 @@ public class ViewMock implements View {
 
   }
 
-  @Override
-  public void returnBarChart(DataChart chart) {
-    return new DataChart("", "", chart);
-  }
+//  @Override
+//  public void returnBarChart(DataChart chart) {
+//    return new DataChart("", "", chart);
+//  }
 
   @Override
   public void editPortfolioMenu() {
 
   }
 
-  @Override
+//  @Override
   public void returnBarChart(String chart) {
     log.append("");
   }
@@ -215,5 +230,10 @@ public class ViewMock implements View {
   @Override
   public void invalidStock() {
     log.append("");
+  }
+
+  @Override
+  public void invalidShares() {
+
   }
 }

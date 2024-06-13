@@ -194,7 +194,7 @@ public interface View {
    * @param chart bar chart
    *              TODO NEED THE INTERFACE OF THE DATACHART
    */
-  void returnBarChart(DataChart chart);
+//  void returnBarChart(DataChart chart);
 
   /**
    * displays the types of action the user can perform on the portfolio that will edit

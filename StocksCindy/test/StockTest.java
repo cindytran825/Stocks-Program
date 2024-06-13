@@ -24,9 +24,9 @@ public class StockTest {
   @Before
   public void setUp() {
 
-    goog = new Stock("GOOG", "StocksCindy/test/testingCSV/GOOG.csv");
+    goog = new Stock("GOOG", "StocksCindy/test/testingCSV/");
     testStock = new Stock("testStockFormat",
-            "StocksCindy/test/testingCSV/testSTockFormat.csv");
+            "StocksCindy/test/testingCSV/");
   }
 
   /**
@@ -35,7 +35,7 @@ public class StockTest {
   @Test
   public void initializationTestAndGetters() {
     Stock testStock = new Stock("testStockFormat",
-            "StocksCindy/test/testingCSV/testSTockFormat.csv");
+            "StocksCindy/test/testingCSV/");
     assertEquals("testStockFormat", testStock.getTicker());
 
     List<String> expectedTimestamp = List.of("2024-06-03", "2024-05-31", "2024-05-30");

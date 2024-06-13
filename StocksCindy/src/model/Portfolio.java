@@ -33,7 +33,7 @@ public interface Portfolio extends Analyzable {
    * @param date        the date they input in the format (YYYY-MM-DD)
    * @return the value of the portfolio
    */
-  double getValue(String date);
+  double getValue(String date, String stockDirectory);
 
   /**
    * gets the name of the portfolio.

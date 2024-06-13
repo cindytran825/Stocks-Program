@@ -40,7 +40,7 @@ public class ControllerMock implements Controller {
     mockView.welcomeMessage();
     switch (userInput) {
       case "port-create":
-        mockView.nameNew();
+//        mockView.nameNew();
         mockView.success();
         mockView.tickerType();
         mockView.stockAdd();

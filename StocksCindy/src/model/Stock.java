@@ -10,6 +10,7 @@ public class Stock implements Stocks {
 
   private final String ticker;
   private final DataFrameWithImpl data;
+  private Double result;
 
   /**
    * This constructor assigns a ticker to the stock and creates a data frame of all the available.
@@ -21,6 +22,7 @@ public class Stock implements Stocks {
   public Stock(String ticker, String directory) {
     this.ticker = ticker;
     this.data = new DataFrameWithImpl(directory + "/" + ticker + ".csv");
+    this.result = result;
     // still have to figure out how to get it to automatically get new tickers and stuff
 
     // if statement before assigning Data, have it check if the csv file exists or not, then
@@ -181,13 +183,22 @@ public class Stock implements Stocks {
   }
 
   @Override
-  public double getValue(String date) throws IllegalArgumentException {
+  public double getValue(String date, String stockDirectory) throws IllegalArgumentException {
+    List<String> tempData = data.getColumn("close");
+    Double result = this.result;
     List<String> time = this.getTimestamp();
-    if (!data.getColumnNames().contains("closed") || !checkDateChronology(date, time)) {
+    if (!data.getColumnNames().contains("close")) {
       throw new IllegalArgumentException("Invalid input.");
     }
-    List<String> tempData = data.getColumn("closed");
-    return Double.parseDouble(tempData.get(time.indexOf(date)));
+    if (!checkDateChronology(date, time)) {
+      int next = getClosestDateIndex(date, false);
+      result = Double.parseDouble(tempData.get(time.indexOf(next)));
+    }
+    else {
+      result = Double.parseDouble(tempData.get(time.indexOf(date)));
+      }
+
+    return result;
   }
 
 

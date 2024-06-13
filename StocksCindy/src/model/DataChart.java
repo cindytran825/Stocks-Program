@@ -12,6 +12,7 @@ public class DataChart {
   private String name;
   private String scale;
   private Analyzable analyzable;
+  private final String stockDirectory;
 
   //  /**
 //   * constructor that takes in the start and end date that the user.
@@ -19,17 +20,13 @@ public class DataChart {
 //   * @param startDate start date.
 //   * @param endDate end date.
 //   */
-  public DataChart(
-          String name,
-          String startDate,
-          String endDate,
-          Analyzable analyzable
-  ) {
+  public DataChart(String name, String startDate, String endDate, Analyzable analyzable, String stockDirectory) {
     this.startDate = startDate;
     this.endDate = endDate;
     this.name = name;
     this.scale = "Scale: * = 1000";
     this.analyzable = analyzable;
+    this.stockDirectory = stockDirectory;
   }
 
   /**
@@ -53,21 +50,17 @@ public class DataChart {
             Integer.parseInt(dateInfoOther[2]),
             Integer.parseInt(dateInfoOther[1]),
             Integer.parseInt(dateInfoOther[0]));
-    List<Double> listOfValues  = new ArrayList<>();
+//    List<Double> listOfValues  = new ArrayList<>();
     List<String> listOfDates = new ArrayList<>();
     int result = secondDate.compareTo(firstDate);
 
-    DataChart dataChart = new DataChart(name, startDate, endDate, analyzable);
+    DataChart dataChart = new DataChart(name, startDate, endDate, analyzable, stockDirectory);
     String decide = dataChart.decideTimespan(result);
-    dataChart.timeValue(firstDate, secondDate, result, decide, listOfDates);
+    List<Double> listOfValues = dataChart.timeValue(firstDate, secondDate, result, decide, listOfDates);
 
     return dataChart.getBarChart(firstDate, decide, listOfDates, listOfValues);
 
   }
-
-//  public String getScaledString(String startDate, String endDate) {
-//
-//  }
 
   /**
    * this scales the list of the values for the dates.
@@ -144,14 +137,14 @@ public class DataChart {
       int endYearAmount = firstDate.getEndYear(firstDate);
       firstDate.advance(endYearAmount);
       for (int i = 0; i <= result / 365; i++) {
-        double value = analyzable.getValue(firstDate.toString());
+        double value = analyzable.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
         firstDate.advance(365);
       }
 
-      double value = analyzable.getValue(secondDate.toString());
+      double value = analyzable.getValue(secondDate.toString(), stockDirectory);
       String date = secondDate.toString();
       listOfDates.set(listOfDates.size() - 1, date);
       listOfValues.set(listOfValues.size() - 1, value);
@@ -161,7 +154,7 @@ public class DataChart {
       int addAmount = firstDate.getLastDate(firstDate);
       firstDate.advance(addAmount);
       for(int i = 0; i <= result / 90; i++) {
-        double value = analyzable.getValue(firstDate.toString());
+        double value = analyzable.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
@@ -170,7 +163,7 @@ public class DataChart {
         int length3 = firstDate.getMonthLength(firstDate.getMonth() + 2, firstDate.getYear());
         firstDate.advance(length + length2 + length3);
       }
-      double value = analyzable.getValue(secondDate.toString());
+      double value = analyzable.getValue(secondDate.toString(), stockDirectory);
       String date = secondDate.toString();
       listOfDates.set(listOfDates.size() - 1, date);
       listOfValues.set(listOfValues.size() - 1, value);
@@ -180,7 +173,7 @@ public class DataChart {
       int addAmount = firstDate.getLastDate(firstDate);
       firstDate.advance(addAmount);
       for(int i = 0; i <= result / 30; i++) {
-        double value = analyzable.getValue(firstDate.toString());
+        double value = analyzable.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
@@ -191,7 +184,7 @@ public class DataChart {
     }
     else if (decide == "day") {
       for(int i = 0; i <= result; i++) {
-        double value = analyzable.getValue(firstDate.toString());
+        double value = analyzable.getValue(firstDate.toString(), stockDirectory);
         String date = firstDate.toString();
         listOfDates.add(date);
         listOfValues.add(value);
@@ -213,7 +206,7 @@ public class DataChart {
     StringBuilder sb = new StringBuilder();
 //    MyDate date = new MyDateWithImpl(firstDate);
     scale = scaleList(listOfValues);
-    sb.append("Performance of " + name + " from " + startDate + " to " + endDate + "\n");
+    sb.append("Performance of Stock/Portfolio " + name + " from " + startDate + " to " + endDate + "\n");
 
 //    if (listOfDates.size() < 5 && decide != "day") {
 //      int month = Integer.parseInt(firstDate.toString().substring(5, 7));

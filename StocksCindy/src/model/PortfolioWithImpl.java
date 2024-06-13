@@ -17,7 +17,7 @@ public class PortfolioWithImpl implements Portfolio {
 
   private final String portfolioName;
   private final Map<String, Double> listInventories;
-  private final String storageLocation;
+  private final String reference;
   private final String stockDirectory;
   private final MutableDataFrame log;
 
@@ -38,17 +38,14 @@ public class PortfolioWithImpl implements Portfolio {
    * @param loadPrevious    whether the file exists.
    */
   public PortfolioWithImpl(
-          String portfolioName,
-          String storageLocation,
-          String stockDirectory,
-          boolean loadPrevious) {
+          String portfolioName, String storageLocation, String stockDirectory, boolean loadPrevious) {
     this.portfolioName = portfolioName;
     this.listInventories = new HashMap<>();
-    this.storageLocation = storageLocation + "/" + portfolioName + ".csv";
+    this.reference = storageLocation + "/" + portfolioName + ".csv";
     this.stockDirectory = stockDirectory;
     // adding csv file
     // "StocksCindy/UserPortfolio/
-    File portFile = new File(storageLocation);
+    File portFile = new File(reference);
     if (loadPrevious && portFile.exists()) {
       try {
         Scanner scan = new Scanner(portFile);
@@ -80,7 +77,7 @@ public class PortfolioWithImpl implements Portfolio {
         // doesn't matter
       }
     }
-    this.log = new MutableDataFrameWithImpl(storageLocation);
+    this.log = new MutableDataFrameWithImpl(reference);
   }
 
   /**
@@ -106,7 +103,7 @@ public class PortfolioWithImpl implements Portfolio {
 
 
   @Override
-  public double getValue(String date) {
+  public double getValue(String date, String stockDirectory) {
     double totalValue = 0.0;
     Stock stock;
     List<Double> closePrices;
@@ -193,7 +190,7 @@ public class PortfolioWithImpl implements Portfolio {
     }
 
     // applying the percentages
-    double totalValue = getValue(date);
+    double totalValue = getValue(date, stockDirectory);
     double closedPrice;
     double target;
     double currentValue;
@@ -314,7 +311,7 @@ public class PortfolioWithImpl implements Portfolio {
     // add to log and also write to file
     this.log.addLastRow(newTransaction);
 
-    File portFile = new File(storageLocation);
+    File portFile = new File(reference);
     try {
       List<List<String>> columns = new ArrayList<>();
       // write the column titles

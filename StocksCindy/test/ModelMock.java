@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import model.Model;
@@ -190,17 +191,6 @@ public class ModelMock implements Model {
   }
 
   /**
-   * get portfolio mock.
-   * @param name the user inputs for the portfolio.
-   * @return String.
-   */
-  @Override
-  public String getPortfolio(String name) {
-    log.append("get portfolio");
-    return "";
-  }
-
-  /**
    * stock mock.
    * @return string.
    */
@@ -211,18 +201,68 @@ public class ModelMock implements Model {
   }
 
   @Override
-  public String barChartInitialized(String name, String firstDate, String lastDate) {
-    return "";
+  public void buyStock(String name, String ticker, String share, String date) {
+
   }
 
   @Override
-  public void getBuyStock(String name, String ticker, double share, String date) {
+  public void sellStock(String name, String ticker, String share, String date) {
 
+  }
+
+  @Override
+  public Map<String, Double> getPortfolioStocks(String name) {
+    return null;
+  }
+
+  @Override
+  public void balance(String date, String name, Map<String, Double> percentages) {
+
+  }
+
+  @Override
+  public String getPortfolioComposition(String name, String date) {
+    return null;
+  }
+
+  @Override
+  public String getPortfolioDistribution(String name, String date) {
+    return null;
+  }
+
+  @Override
+  public boolean checkIfChronologicalPortfolio(String name, String inputDate) {
+    return false;
+  }
+
+  @Override
+  public boolean checkIfStockDataExist(String ticker, String inputDate) {
+    return false;
+  }
+
+  @Override
+  public boolean checkIfPortfolioChronologicalAndDataExist(String portfolioName, String inputDate) {
+    return false;
   }
 
   @Override
   public boolean checkIfWholeNumber(String string) {
     return false;
+  }
+
+  @Override
+  public boolean checkSharesNotEnough(String portName, String ticker, double shares) {
+    return false;
+  }
+
+  @Override
+  public String barChartStockInitialized(String name, String firstDate, String lastDate, String ticker) {
+    return null;
+  }
+
+  @Override
+  public String barChartPortfolioInitialized(String name, String firstDate, String lastDate) {
+    return null;
   }
 
 }

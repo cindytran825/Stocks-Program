@@ -163,6 +163,16 @@ public class ViewMock implements View {
   }
 
   @Override
+  public void balanceFormat() {
+
+  }
+
+  @Override
+  public void balanceSuccess() {
+
+  }
+
+  @Override
   public void printSuccessAddStock(String ticker) throws IllegalStateException {
     log.append("");
   }
@@ -212,15 +222,66 @@ public class ViewMock implements View {
 
   }
 
+  @Override
+  public void printEditPortfolioMenu() {
+
+  }
+
+  @Override
+  public void startDate() {
+
+  }
+
+  @Override
+  public void endDate() {
+
+  }
+
+  @Override
+  public void insufficientShares() {
+
+  }
+
+  @Override
+  public void invalidPercentage() {
+
+  }
+
+  @Override
+  public void notChronologicalOrDataInvalid() {
+
+  }
+
+  @Override
+  public void printStockViewMenu() {
+
+  }
+
+  @Override
+  public void printPortfolioViewMenu() {
+
+  }
+
+  @Override
+  public void getWhichChart() {
+
+  }
+
+  @Override
+  public void returnBarChartPortfolio(DataChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio) {
+
+  }
+
+  @Override
+  public void returnBarChartStock(DataChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock) {
+
+  }
+
 //  @Override
 //  public void returnBarChart(DataChart chart) {
 //    return new DataChart("", "", chart);
 //  }
 
-  @Override
-  public void editPortfolioMenu() {
-
-  }
 
 //  @Override
   public void returnBarChart(String chart) {

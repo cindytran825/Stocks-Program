@@ -64,10 +64,10 @@ public class StocksController implements Controller {
    */
   public void goControl() throws IllegalStateException {
     boolean quit = false;
-    view.welcomeMessage(); //TODO take menu out of welcome message
+    view.welcomeMessage();
 
     while (!quit) {
-      view.printMenu(); //TODO clarify TA
+      view.printMenu();
       view.userInput();
       userInput = scan.next();
 
@@ -181,7 +181,6 @@ public class StocksController implements Controller {
   }
 
   private void stockValue() {
-    // TODO ADD DATE CHECKER
     view.startDate();
     startDate = getDatePeriodPart();
     if (checkDate(startDate)) {

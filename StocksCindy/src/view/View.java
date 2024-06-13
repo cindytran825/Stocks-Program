@@ -1,5 +1,8 @@
 package view;
 
+import model.Analyzable;
+import model.DataChart;
+
 /**
  * the view which does the display.
  * is called in the controller.
@@ -228,6 +231,22 @@ public interface View {
   void endDate();
 
   /**
+   * display that there are not enough shares for the transaction.
+   */
+  void insufficientShares();
+
+  /**
+   * display that the percentages provided do not equate to 100% exactly.
+   */
+  void invalidPercentage();
+
+  /**
+   * displays a message to let the user know that the logging activity they tried to do
+   * was not entered in chronological time or that the stock data does not exist for that day.
+   */
+  void notChronologicalOrDataInvalid();
+
+  /**
    * displays the types of action the user can perform on the stock that will analyze the stock
    * (growth, moving average, crossover days, bar chart, etc.).
    */
@@ -238,4 +257,11 @@ public interface View {
    * the portfolio (value, composition, distribution, chart, etc.)
    */
   void printPortfolioViewMenu();
+
+
+  void getWhichChart();
+
+  void returnBarChartPortfolio(DataChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio);
+  void returnBarChartStock(DataChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock);
+
 }

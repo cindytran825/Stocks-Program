@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 
+import model.Analyzable;
 import model.DataChart;
 
 /**
@@ -131,6 +132,17 @@ public class StockProgramView implements View {
     writeMessage("Successfully added a new portfolio." + "\n");
   }
 
+
+  @Override
+  public void returnBarChartPortfolio(DataChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio) {
+    writeMessage(chart.getChart(name, startDate, endDate, existingPortfolio));
+  }
+
+  @Override
+  public void returnBarChartStock(DataChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock) {
+    writeMessage(chart.getChart(name, startDate, endDate, stock));
+  }
+
   @Override
   public void printPortValue(String value) {
     writeMessage("The value of this portfolio is: $" + value + "\n");
@@ -150,6 +162,22 @@ public class StockProgramView implements View {
   @Override
   public void endDate() {
     writeMessage("Enter in the ending date below:\n");
+  }
+
+  @Override
+  public void notChronologicalOrDataInvalid() {
+    writeMessage("Entered date was not chronological to the latest transaction or the stock data"
+            + " for that day is invalid.\n");
+  }
+
+  @Override
+  public void insufficientShares() {
+    writeMessage("There are insufficient shares for the transaction.\n");
+  }
+
+  @Override
+  public void invalidPercentage() {
+    writeMessage("The inputted percentages do equal to exactly 100%.\n");
   }
 
   @Override
@@ -233,11 +261,11 @@ public class StockProgramView implements View {
     writeMessage("Enter the name of the new portfolio: ");
   }
 
-//  // TODO NEED THE INTERFACE FOR CHART
-//  @Override
-//  public void returnBarChart(DataChart chart) {
-//    writeMessage(chart.getChart());
-//  }
+
+
+  public void getWhichChart() {
+    writeMessage("Would you like to get the chart for portfolio or stock? \nEnter Command:");
+  }
 
   @Override
   public void balanceFormat() {
@@ -294,4 +322,10 @@ public class StockProgramView implements View {
   public void invalidCommand() throws IllegalStateException {
     writeMessage("This is an invalid command!" + System.lineSeparator());
   }
+
+
+
+
+
+
 }

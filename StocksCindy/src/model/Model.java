@@ -6,7 +6,7 @@ import java.util.Map;
  * represents the model. It does the implementations.
  * and it is called in the controller when it picks up the user inputs.
  */
-public interface Model {
+public interface  Model {
 
 
   /**
@@ -132,7 +132,6 @@ public interface Model {
   String getStockNames();
 
   /**
-   *
    * @param name
    * @param firstDate
    * @param lastDate
@@ -154,10 +153,73 @@ public interface Model {
   String getPortfolioDistribution(String name, String date);
 
   /**
+   * Checks if the user's input date is entered in chronological order based on the latest
+   * transaction date in the log.
+   *
+   * @param name      name of portfolio
+   * @param inputDate the checked date
+   * @return true if the input date is chronological to the latest transaction in the log
+   */
+  boolean checkIfChronologicalPortfolio(String name, String inputDate);
+
+  /**
+   * Checks if the stock data exist for given date.
+   *
+   * @param ticker    stock ticker
+   * @param inputDate date that is to be checked
+   * @return true if there is data available for that input date
+   */
+  boolean checkIfStockDataExist(String ticker, String inputDate);
+
+  /**
+   * Checks if the action is the latest action and there's stock data available for that day.
+   *
+   * @param portfolioName name of portfolio
+   * @param inputDate     date to be checked
+   * @return true if the input date is the latest date and there's stock data available for that
+   * date
+   */
+  boolean checkIfPortfolioChronologicalAndDataExist(String portfolioName, String inputDate);
+
+  /**
    * Checks if the provided string is a whole number.
    *
    * @param string any string
    * @return true if it is an integer, false if otherwise
    */
   boolean checkIfWholeNumber(String string);
+
+  /**
+   * Check if there are sufficient shares for the action (selling).
+   *
+   * @param portName name of portfolio
+   * @param ticker name of stock involved in action
+   * @param shares quantity of shares for action
+   * @return true if there are not enough shares for the action
+   */
+  boolean checkSharesNotEnough(String portName, String ticker, double shares);
+
+  /**
+   * this is called when the user wants to get the bar chart for a stock.
+   * calling the method getChart in DataChart class.
+   *
+   * @param name      the name the user inputs.
+   * @param firstDate the first date of the range they input.
+   * @param lastDate  the last date of the range they input.
+   * @param ticker    the ticker of the stock.
+   * @return a string of the bar chart.
+   */
+  String barChartStockInitialized(String name, String firstDate, String lastDate, String ticker);
+
+  /**
+   * this is called when the user wants to get the bar chart for a portfolio.
+   * it calls the methods getChart method in DataChart class.
+   *
+   * @param name      the name of the portfolio.
+   * @param firstDate the first date of the range they input.
+   * @param lastDate  the last date of the range they input.
+   * @return a string of the bar chart that is called later in the view.
+   */
+  String barChartPortfolioInitialized(String name, String firstDate, String lastDate);
+
 }

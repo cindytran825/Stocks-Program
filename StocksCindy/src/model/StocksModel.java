@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 
 /**
@@ -71,13 +71,56 @@ public class StocksModel implements Model {
     }
   }
 
-  /**
-   * allows the user to upload the file.
-   *
-   * @param ticker gets the ticker user input.
-   * @param path   a path of the file.
-   * @return a string.
-   */
+  private String getLatestPortfolioTransactionDate(Portfolio portfolio) {
+    String log = portfolio.getLog();
+    String[] lines = log.split("\n");
+    if (lines.length <= 1) {
+      return "";
+    }
+    String[] lastLine = lines[lines.length - 1].split(",");
+    return lastLine[0];
+  }
+
+  @Override
+  public boolean checkIfChronologicalPortfolio(String name, String inputDate) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            name, portfolioFolderPath, stockFolderPath, true);
+    String latest = this.getLatestPortfolioTransactionDate(existingPortfolio);
+    if (latest.isEmpty()) {
+      return true;
+    }
+    MyDate input = new MyDateWithImpl(inputDate);
+    MyDate last = new MyDateWithImpl(latest);
+    return input.compareTo(last) >= 0;
+  }
+
+  @Override
+  public boolean checkIfStockDataExist(String ticker, String inputDate) {
+    Stock stock = new Stock(ticker, stockFolderPath);
+    List<String> timestamps = stock.getTimestamp();
+    return timestamps.contains(inputDate);
+  }
+
+  @Override
+  public boolean checkIfPortfolioChronologicalAndDataExist(
+          String portfolioName,
+          String inputDate
+  ) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            portfolioName, portfolioFolderPath, stockFolderPath, true);
+    if (!checkIfChronologicalPortfolio(portfolioName, inputDate)) {
+      return false;
+    }
+    Map<String, Double> inventory = existingPortfolio.getListInventories();
+    Set<String> stockTickers = inventory.keySet();
+    for (String ticker : stockTickers) {
+      if (!checkIfStockDataExist(ticker, inputDate)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @Override
   public String uploadStock(String ticker, String path) {
     File original = new File(path);
@@ -98,10 +141,6 @@ public class StocksModel implements Model {
     }
   }
 
-  /**
-   * generates the stock.
-   * @param ticker the company user inputs.
-   */
   @Override
   public void generateStock(String ticker) {
     if (!checkIfFileExist(stockFolderPath + "/" + ticker + ".csv")) {
@@ -110,12 +149,6 @@ public class StocksModel implements Model {
     Stock stock = new Stock(ticker, stockFolderPath);
   }
 
-
-  /**
-   * this creates a new portfolio and is called in the controller.
-   *
-   * @param name is the name of the portfolio the user inputs.
-   */
   @Override
   public void createPortfolio(String name) {
     Portfolio newPortfolio = new PortfolioWithImpl(
@@ -159,11 +192,38 @@ public class StocksModel implements Model {
     return String.valueOf(stock.getMovingAverage(startDate, lastX));
   }
 
-//
-//  public String barChartInitialized(String name, String firstDate, String lastDate) {
-//    Portfolio existingPortfolio = new PortfolioWithImpl(name, portfolioFolderPath, stockFolderPath,true);
-//    return String.valueOf(existingPortfolio.getChart(stockFolderPath, firstDate, lastDate));
-//  }
+  @Override
+  public String barChartPortfolioInitialized(
+          String name,
+          String firstDate,
+          String lastDate
+
+  ) {
+    Analyzable existingPortfolio = new PortfolioWithImpl(
+            name, portfolioFolderPath, stockFolderPath, true);
+    DataChart data = new DataChart(name, firstDate, lastDate, existingPortfolio, stockFolderPath);
+    return data.getChart(stockFolderPath, firstDate, lastDate, existingPortfolio);
+  }
+
+  @Override
+  public String barChartStockInitialized(
+          String name, String firstDate, String lastDate, String ticker) {
+    Analyzable stock = new Stock(ticker, stockFolderPath);
+    DataChart data = new DataChart(name, firstDate, lastDate, stock, stockFolderPath);
+    return data.getChart(stockFolderPath, firstDate, lastDate, stock);
+  }
+
+  @Override
+  public boolean checkSharesNotEnough(String portName, String ticker, double shares) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            portName,
+            portfolioFolderPath,
+            stockFolderPath,
+            true);
+    Map<String, Double> inventory = existingPortfolio.getListInventories();
+    return inventory.get(ticker) < shares;
+  }
+
 
   @Override
   public String getCrossoverDays(String ticker, String startDate, double lastX) {
@@ -260,10 +320,6 @@ public class StocksModel implements Model {
     return sb.toString();
   }
 
-  @Override
-  public String barChartInitialized(String name, String firstDate, String lastDate) {
-    return "";
-  }
 
   @Override
   public void buyStock(String name, String ticker, String share, String date) {
@@ -278,10 +334,6 @@ public class StocksModel implements Model {
             true);
     existingPortfolio.sellStock(ticker, Double.parseDouble(share), date);
   }
-
-
-
-
 
 
 }

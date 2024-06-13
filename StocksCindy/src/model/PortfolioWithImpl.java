@@ -280,17 +280,9 @@ public class PortfolioWithImpl implements Portfolio {
     return inventory;
   }
 
-  private boolean checkDateChronology(
-          String lastDate,
-          String date,
-          List<String> dateList
-  ) {
-
-    MyDate latestDate = new MyDateWithImpl(lastDate);
-    MyDate inputDate = new MyDateWithImpl(date);
-    // check if the date is an available data point
-    return dateList.contains(inputDate.toString())
-            && inputDate.compareTo(latestDate) >= 0;
+  @Override
+  public String getLog() {
+    return this.log.toString();
   }
 
   /**
@@ -338,7 +330,20 @@ public class PortfolioWithImpl implements Portfolio {
     }
   }
 
-  private void checkDateValidity(String date, String ticker) {
+  private boolean checkDateChronology(
+          String lastDate,
+          String date,
+          List<String> dateList
+  ) {
+
+    MyDate latestDate = new MyDateWithImpl(lastDate);
+    MyDate inputDate = new MyDateWithImpl(date);
+    // check if the date is an available data point
+    return dateList.contains(inputDate.toString())
+            && inputDate.compareTo(latestDate) >= 0;
+  }
+
+  private void checkDateValidity(String date, String ticker) throws IllegalArgumentException {
     Stock stock = new Stock(ticker, stockDirectory);
     List<String> dateList = stock.getTimestamp();
     List<String> transactionDates = this.log.getColumn("timestamp");
@@ -356,21 +361,6 @@ public class PortfolioWithImpl implements Portfolio {
     }
     return copy;
   }
-
-  // TODO CAN REMOVE EDIT PORTFOLIO
-  private Map<String, Double> editPortfolio(String companyName, double share
-  ) throws IllegalArgumentException {
-    if (share < 0) {
-      throw new IllegalArgumentException();
-    }
-    // will eventually implement checker for budget and volume to ensure shares don't exceed
-    // once buying gets implemented
-    listInventories.put(companyName, share);
-    return deepCopy(listInventories);
-  }
-
-
-
 
 
 }

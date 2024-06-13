@@ -30,7 +30,7 @@ public interface Portfolio extends Analyzable {
   /**
    * is called when the user wants to get the value of a portfolio.
    *
-   * @param date        the date they input in the format (YYYY-MM-DD)
+   * @param date the date they input in the format (YYYY-MM-DD)
    * @return the value of the portfolio
    */
   double getValue(String date, String stockDirectory);
@@ -112,6 +112,13 @@ public interface Portfolio extends Analyzable {
    * @return the values associated with each stock
    */
   Map<String, Double> getDistribution(String date);
+
+  /**
+   * This gets the transaction log.
+   *
+   * @return transaction log
+   */
+  String getLog();
 
 
 }

@@ -32,11 +32,11 @@ public class ViewTest {
                     "Upload your own stock data in a csv file [stock-upload]\n" +
                     "Quit [quit]\n" +
                     "Menu [menu]\n" +
-                    "Enter instruction to the action you'd like to take!";
+                    "Enter instruction to the action you'd like to take!\n";
 
-//    String[] output = ap.toString().split("This is an");
-//    String getOutput = output[0];
-    assertEquals(expectedWelcome, ap.toString());
+    String[] output = ap.toString().split("This is an");
+    String getOutput = output[0];
+    assertEquals(expectedWelcome, getOutput);
   }
 
   /**
@@ -53,19 +53,18 @@ public class ViewTest {
     controller.goControl();
 
     String expectedWelcome =
-            "Welcome to the stocks program!\n"
-                    +
-                    "Create new portfolio [port-create]\n"
-                    + "Manage portfolio [port-manage]\n"
-                    + "View existing portfolios [port-view]\n"
-                    + "Evaluate existing portfolios [port-eval]\n"
-                    + "Examine gain/loss [stock-eval]\n"
-                    + "Examine x-day move average [stock-avg]\n"
-                    + "Determine which days are x-day crossover [stock-cross]\n"
-                    + "View what stock datas are on file [stock-list]\n"
-                    + "Download stock data from an API [stock-download]\n"
-                    + "Upload your own stock data in a csv file [stock-upload]\n"
-                    + "Quit [quit]";
+            "Welcome to the stocks program!\n" +
+                    "Create new portfolio [port-create]\n" +
+                    "Manage portfolio and make changes to it [port-manage]\n" +
+                    "View existing portfolios and analyze data [port-view]\n" +
+                    "View what stock datas are on file [stock-list]\n" +
+                    "View existing stocks and analyze data [stock-view]\n" +
+                    "Download stock data from an API [stock-download]\n" +
+                    "Upload your own stock data in a csv file [stock-upload]\n" +
+                    "Quit [quit]\n" +
+                    "Menu [menu]\n" +
+                    "Enter instruction to the action you'd like to take!\n" +
+                    "Thank you for using our program!";
 
     StringBuilder testString = new StringBuilder();
     String[] output1 = ap.toString().split("\n");
@@ -90,18 +89,17 @@ public class ViewTest {
     controller.goControl();
 
     String expectedMenu =
-            "Welcome to the stocks program!\n"
-                    +
-                    "Create new portfolio [port-create]\n"
-                    + "Manage portfolio [port-manage]\n"
-                    + "View existing portfolios [port-view]\n"
-                    + "Evaluate existing portfolios [port-eval]\n"
-                    + "Examine gain/loss [stock-eval]\n"
-                    + "Examine x-day move average [stock-avg]\n"
-                    + "Determine which days are x-day crossover [stock-cross]\n"
-                    + "View what stock datas are on file [stock-list]\n"
-                    + "Download stock data from an API [stock-download]\n"
-                    + "Upload your own stock data in a csv file [stock-upload]";
+            "Welcome to the stocks program!\n" +
+                    "Create new portfolio [port-create]\n" +
+                    "Manage portfolio and make changes to it [port-manage]\n" +
+                    "View existing portfolios and analyze data [port-view]\n" +
+                    "View what stock datas are on file [stock-list]\n" +
+                    "View existing stocks and analyze data [stock-view]\n" +
+                    "Download stock data from an API [stock-download]\n" +
+                    "Upload your own stock data in a csv file [stock-upload]\n" +
+                    "Quit [quit]\n" +
+                    "Menu [menu]\n" +
+                    "Enter instruction to the action you'd like to take!";
 
     StringBuilder testString = new StringBuilder();
     String[] output1 = ap.toString().split("\n");
@@ -114,28 +112,25 @@ public class ViewTest {
 
 
   /**
-   * For the first case on the menu.
-   * where they create a portfolio.
+   * When there is in invalid input.
    */
   @Test
-  public void testForCreatePortfolio() {
+  public void testForInvalidPortfolio() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
     View view = new StockProgramView(ap);
-    String userInput = "port-create";
+    String userInput = "port";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "\nName of new portfolio: ";
+            "\nThis is an invalid command!\n" +
+                    "Thank you for using our program!\n";
 
-    String[] output = ap.toString().split("Enter instruction to"
-            +
-            " the action you'd like to take!");
+    String[] output = ap.toString().split(" to take!");
     String getOutput = output[1];
-    String[] output2 = getOutput.split("Successfully added a new portfolio.");
-    String now = output2[0];
-    assertEquals(expectedMenu, now);
+    assertEquals(expectedMenu, getOutput);
   }
+
 
   /**
    * For the second case on the menu.

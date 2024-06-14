@@ -207,7 +207,7 @@ public interface Model {
    * @param portfolioName name of portfolio
    * @param inputDate     date to be checked
    * @return true if the input date is the latest date and there's stock data available for that
-   * date
+   *         date
    */
   boolean checkIfPortfolioChronologicalAndDataExist(String portfolioName, String inputDate);
 

@@ -93,10 +93,12 @@ public class ControllerTest {
 
     assertEquals("get stock", log.toString());
   }
+
   /**
    * tests if the controller is reading the inputs
    * when a user wants to see get the value.
    */
+
   @Test
   public void testPortEval2() {
     StringBuilder log = new StringBuilder();

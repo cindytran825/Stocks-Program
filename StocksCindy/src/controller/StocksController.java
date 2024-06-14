@@ -15,7 +15,7 @@ import view.View;
  * It uses Scanner and Readable to read inputs.
  * and transmit outputs.
  */
-public class StocksController implements Controller{
+public class StocksController implements Controller {
   private final View view;
   private final Model model;
   private final Scanner scan;
@@ -26,7 +26,6 @@ public class StocksController implements Controller{
   private String userInput;
   private String date;
   private String startDate;
-  private String endDate;
   private String ticker;
   private String name;
   private String month;
@@ -198,7 +197,7 @@ public class StocksController implements Controller{
       return;
     }
     view.endDate();
-    endDate = getDatePeriodPart();
+    String endDate = getDatePeriodPart();
     if (checkDate(startDate)) {
       view.invalidDate();
       return;
@@ -382,10 +381,7 @@ public class StocksController implements Controller{
     view.getNameOfFile(model.getPortfolioNames());
     view.namePort();
     name = scan.next(); // needs catcher for invalid names
-    if (checkFile(name, portfolioDirectory)) {
-      return true;
-    }
-    return false;
+    return checkFile(name, portfolioDirectory);
   }
 
   private void portManage() {
@@ -469,8 +465,9 @@ public class StocksController implements Controller{
     view.balanceFormat();
 
     // process dates
-    if (checkChronologyAndData()) return;
-
+    if (checkChronologyAndData()) {
+      return;
+    }
     Set<String> stockNames = model.getPortfolioStocks(name).keySet();
     Map<String, Double> percentages = new HashMap<>();
     String percentage;
@@ -532,7 +529,7 @@ public class StocksController implements Controller{
     month = scan.next();
     view.getYear();
     year = scan.next();
-    date = String.format("%s-%s-%s", day, month, year);
+    date = String.format("%4s-%2s-%2s", year, month, day);
 
     if (!model.checkIfPortfolioChronologicalAndDataExist(name, date)) {
       view.notChronologicalOrDataInvalid();

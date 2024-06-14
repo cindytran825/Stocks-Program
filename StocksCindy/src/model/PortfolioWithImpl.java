@@ -36,7 +36,8 @@ public class PortfolioWithImpl implements Portfolio {
    * @param loadPrevious    whether the file exists.
    */
   public PortfolioWithImpl(
-          String portfolioName, String storageLocation, String stockDirectory, boolean loadPrevious) {
+          String portfolioName, String storageLocation,
+          String stockDirectory, boolean loadPrevious) {
     this.portfolioName = portfolioName;
     this.listInventories = new HashMap<>();
     this.reference = storageLocation + "/" + portfolioName + ".csv";
@@ -137,7 +138,7 @@ public class PortfolioWithImpl implements Portfolio {
     logActivity(ticker, shares, inputDate, "buy");
   }
 
-   @Override
+  @Override
   public void sellStock(String ticker, double shares, String date
   ) throws IllegalArgumentException {
     // assuming that the model / controller will check if it's a valid ticker
@@ -336,7 +337,8 @@ public class PortfolioWithImpl implements Portfolio {
     List<String> dateList = stock.getTimestamp();
     List<String> transactionDates = this.log.getColumn("timestamp");
     String latestTransactionDate =
-            !transactionDates.isEmpty() ? transactionDates.get(transactionDates.size() - 1)  : "0000-01-01";
+            !transactionDates.isEmpty() ?
+                    transactionDates.get(transactionDates.size() - 1)  : "0000-01-01";
     if (!checkDateChronology(latestTransactionDate, date, dateList)) {
       throw new IllegalArgumentException("Invalid date.");
     }

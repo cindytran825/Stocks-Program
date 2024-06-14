@@ -77,7 +77,7 @@ public class StocksModel implements Model {
       return "";
     }
     String[] lastLine = lines[lines.length - 1].split(",");
-    return lastLine[0];
+    return lastLine[lastLine.length - 1];
   }
 
   @Override
@@ -190,7 +190,8 @@ public class StocksModel implements Model {
   ) {
     Analyzable existingPortfolio = new PortfolioWithImpl(
             name, portfolioFolderPath, stockFolderPath, true);
-    BarChartWithImpl data = new BarChartWithImpl(name, firstDate, lastDate, existingPortfolio, stockFolderPath);
+    BarChartWithImpl data = new BarChartWithImpl(name,
+            firstDate, lastDate, existingPortfolio, stockFolderPath);
     return data.getBarChart(stockFolderPath, firstDate, lastDate, existingPortfolio);
   }
 

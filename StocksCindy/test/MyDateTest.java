@@ -229,6 +229,7 @@ public class MyDateTest {
     assertEquals(0, date3.getLastDate(date3));
 
   }
+
   /**
    * test the getLastDate method.
    * gets the difference of days to the end of year.

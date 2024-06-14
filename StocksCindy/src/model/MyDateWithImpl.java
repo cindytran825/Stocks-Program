@@ -196,6 +196,11 @@ public class MyDateWithImpl implements MyDate {
   }
 
   @Override
+  public int hashCode() {
+    return this.compareTo(new MyDateWithImpl("0000-01-01"));
+  }
+
+  @Override
   public int getLastDate(MyDate startDate) {
     int addAmount = 0;
     int year = startDate.getYear();

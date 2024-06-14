@@ -17,6 +17,7 @@ import java.util.Set;
 public class DataFrameWithImpl implements DataFrame {
   protected final Map<String, List<String>> map;
   protected final List<String> keyOrder;
+
   /**
    * constructor that reads the information from the csv file and registers it to a map.
    * with the keys being decided by the top row, and all the following elements are added into.
@@ -24,6 +25,7 @@ public class DataFrameWithImpl implements DataFrame {
    *
    * @param csv csv file reference path.
    */
+
   public DataFrameWithImpl(String csv) {
     this.map = new HashMap<>();
     this.keyOrder = new ArrayList<>();
@@ -91,7 +93,8 @@ public class DataFrameWithImpl implements DataFrame {
     StringBuilder string = new StringBuilder();
     List<List<String>> columns = new ArrayList<>();
     for (String key : keyOrder) {
-      string.append(key).append("\n");
+      string.append(key).append(",");
+      columns.add(map.get(key));
     }
     string.append("\n");
     for (int i = 0; i < getColumnSize(); i++) {

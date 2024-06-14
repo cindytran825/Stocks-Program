@@ -57,40 +57,35 @@ public class ViewMock implements View {
 
   @Override
   public void getName(String object) {
-
+    log.append("");
   }
 
   @Override
   public void getShares() {
-
+    log.append("");
   }
 
   @Override
   public void userInput() {
-
+    log.append("");
   }
 
   @Override
   public void getDay() {
-
+    log.append("");
   }
 
   @Override
   public void getMonth() {
-
+    log.append("");
   }
 
   @Override
   public void getYear() {
-
+    log.append("");
   }
-//
-//  @Override
-//  public void nameNew() throws IllegalStateException {
-//    log.append("");
-//  }
 
-//  @Override
+  //  @Override
   public void inputNumber() throws IllegalStateException {
     log.append("");
   }
@@ -157,12 +152,12 @@ public class ViewMock implements View {
 
   @Override
   public void balanceFormat() {
-
+    log.append("");
   }
 
   @Override
   public void balanceSuccess() {
-
+    log.append("");
   }
 
   @Override

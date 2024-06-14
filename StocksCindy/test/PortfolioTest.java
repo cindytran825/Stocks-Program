@@ -128,7 +128,7 @@ public class PortfolioTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testBuyDateNotExist() throws FileNotFoundException {
-// need to reset the file-writing since it'll write and save to it
+    // need to reset the file-writing since it'll write and save to it
     bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
     bart.buyStock("GOOG", 4.0, "2024-06-03");
 
@@ -462,7 +462,7 @@ public class PortfolioTest {
   }
 
   /**
-   *
+   * test distribution. 
    */
   @Test
   public void testGetDistribution() {

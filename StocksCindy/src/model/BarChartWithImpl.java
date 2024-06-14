@@ -49,7 +49,8 @@ public class BarChartWithImpl implements BarChart {
     List<String> listOfDates = new ArrayList<>();
     int result = secondDate.compareTo(firstDate);
 
-    BarChartWithImpl barChartWithImpl = new BarChartWithImpl(name, startDate, endDate, analyzable, stockDirectory);
+    BarChartWithImpl barChartWithImpl = new BarChartWithImpl(name,
+            startDate, endDate, analyzable, stockDirectory);
     String decide = barChartWithImpl.decideTimespan(result);
     List<Double> listOfValues = barChartWithImpl.timeValue(firstDate,
             secondDate, result, decide, listOfDates);
@@ -151,12 +152,14 @@ public class BarChartWithImpl implements BarChart {
   }
 
   @Override
-  public String getBarChart(MyDate firstDate, String decide, List<String> listOfDates, List<Double> listOfValues) {
+  public String getBarChart(MyDate firstDate, String decide,
+                            List<String> listOfDates, List<Double> listOfValues) {
     StringBuilder sb = new StringBuilder();
     scale = scaleList(listOfValues);
-    sb.append("Performance of Stock/Portfolio " + name + " from " + startDate + " to " + endDate + "\n");
+    sb.append("Performance of Stock/Portfolio " + name +
+            " from " + startDate + " to " + endDate + "\n");
 
-    if (listOfDates.size() < 5 && decide != "day") {
+    if (listOfDates.size() < 5 && !Objects.equals(decide, "day")) {
       for (int i = 0; i < 5 - listOfDates.size(); i++) {
         String currentDate = listOfDates.get(i);
         int month = Integer.parseInt(currentDate.substring(5, 7));
@@ -172,7 +175,7 @@ public class BarChartWithImpl implements BarChart {
       int month = Integer.parseInt(curr.substring(5, 7));
       int year = Integer.parseInt(curr.substring(0, 4));
       String monthStr = firstDate.getStringMonth(month);
-      if (decide != "day") {
+      if (!Objects.equals(decide, "day")) {
         sb.append(monthStr + " " + year + ": ");
       } else {
         int day = Integer.parseInt(curr.substring(8, 10));
@@ -197,7 +200,7 @@ public class BarChartWithImpl implements BarChart {
    * the original value.
    *
    * @return the scaled values in a list, this is used to display the.
-   * amount of asterisks for the bar chart.
+   *         amount of asterisks for the bar chart.
    */
   private String scaleList(List<Double> listOfValues) {
 

@@ -334,7 +334,7 @@ public class StocksController implements Controller{
     month = scan.next();
     view.getYear();
     year = scan.next();
-    String startDate = String.format("%4s-%2s-%2s", year, month, day);
+    String startDate = String.format("%s-%s-%s", year, month, day);
     return startDate;
   }
 
@@ -369,7 +369,7 @@ public class StocksController implements Controller{
     month = scan.next();
     view.getYear();
     year = scan.next();
-    date = String.format("%4s-%2s-%2s", year, month, day);
+    date = String.format("%s-%s-%s", year, month, day);
     if (checkDate(date)) {
       return true;
     } else if (!model.checkIfStockDataExist(ticker, date)) {

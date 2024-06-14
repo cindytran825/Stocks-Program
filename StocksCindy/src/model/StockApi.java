@@ -6,9 +6,10 @@ package model;
 public interface StockApi {
 
   /**
-   * adds a stock csv file this repository.
+   * adds a stock csv file this repository. The stock pulled from the api should have
+   * timestamp, open, low, high, close, volume information.
    *
-   * @param ticker ticker of STock that is to be added
+   * @param ticker ticker of Stock that is to be added
    */
   void addStock(String ticker);
 }

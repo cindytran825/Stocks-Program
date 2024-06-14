@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-
 /**
  * the StocksModel is where all the implementation is at. It holds all the methods that
  * are called in the controller.
@@ -191,16 +190,16 @@ public class StocksModel implements Model {
   ) {
     Analyzable existingPortfolio = new PortfolioWithImpl(
             name, portfolioFolderPath, stockFolderPath, true);
-    BarChart data = new BarChart(name, firstDate, lastDate, existingPortfolio, stockFolderPath);
-    return data.getChart(stockFolderPath, firstDate, lastDate, existingPortfolio);
+    BarChartWithImpl data = new BarChartWithImpl(name, firstDate, lastDate, existingPortfolio, stockFolderPath);
+    return data.getBarChart(stockFolderPath, firstDate, lastDate, existingPortfolio);
   }
 
   @Override
   public String barChartStockInitialized(
           String name, String firstDate, String lastDate, String ticker) {
     Analyzable stock = new Stock(ticker, stockFolderPath);
-    BarChart data = new BarChart(name, firstDate, lastDate, stock, stockFolderPath);
-    return data.getChart(stockFolderPath, firstDate, lastDate, stock);
+    BarChartWithImpl data = new BarChartWithImpl(name, firstDate, lastDate, stock, stockFolderPath);
+    return data.getBarChart(stockFolderPath, firstDate, lastDate, stock);
   }
 
   @Override

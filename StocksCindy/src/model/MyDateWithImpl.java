@@ -2,7 +2,9 @@ package model;
 
 
 /**
- * Class representation of valid dates, keeping track of only day, month, and year.
+ * Class representation of valid dates, keeping track of only day, month, and year. The limits
+ * include years only up to 4 digits and dates that are possible on a calendar (40 December is no
+ * possible).
  */
 public class MyDateWithImpl implements MyDate {
   private int day;
@@ -10,7 +12,7 @@ public class MyDateWithImpl implements MyDate {
   private int year;
 
   /**
-   * Constructor for MyDate that checks if the provided date is a valid date.
+   * Constructor for MyDate that checks if the provided integer values make up a valid date.
    *
    * @param day   the date.
    * @param month the month.
@@ -27,7 +29,7 @@ public class MyDateWithImpl implements MyDate {
   }
 
   /**
-   * Constructor for MyDate that checks if the provided date is a valid date.
+   * Constructor for MyDate that checks if the provided string is a valid date.
    *
    * @param date date in the format YYYY-MM-DD
    * @throws IllegalArgumentException if the date is invalid and not a real date.
@@ -87,15 +89,7 @@ public class MyDateWithImpl implements MyDate {
     }
   }
 
-  /**
-   * this gets the next month and makes sure that when it advances to.
-   * december, it goes to the next year.
-   * this is called in the timeValue method in DataChart.
-   *
-   * @param month is the current month that is getting advanced.
-   * @param year  is the year that its currently at.
-   * @return the amount of days till the next month.
-   */
+  @Override
   public int getNextMonth(int month, int year) {
     month = month + 1;
     if (month > 12) {

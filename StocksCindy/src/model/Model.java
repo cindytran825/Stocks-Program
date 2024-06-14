@@ -20,7 +20,7 @@ public interface Model {
   /**
    * checks if the date is valid.
    *
-   * @param date a date input.
+   * @param date a date input. (YYYY-MM-DD)
    * @return true if the date is of format YYYY-MM-DD and are numbers.
    */
   boolean checkIfDate(String date);
@@ -71,7 +71,7 @@ public interface Model {
    * it takes the date that they input and the portfolio location. (name)
    *
    * @param name the name that the user input for their portfolio.
-   * @param date the date that the user inputs.
+   * @param date the date that the user inputs. (YYYY-MM-DD)
    * @return a double representing the value.
    */
   String evaluatePortfolio(String name, String date);
@@ -81,8 +81,8 @@ public interface Model {
    * negative if there is loss and positive double for gain.
    *
    * @param ticker    the ticker that the user input.
-   * @param startDate the startDate.
-   * @param endDate   the end date.
+   * @param startDate the startDate. (YYYY-MM-DD)
+   * @param endDate   the end date. (YYYY-MM-DD)
    * @return a double representing the gain/loss.
    */
   String evaluateStock(String ticker, String startDate, String endDate);
@@ -92,7 +92,7 @@ public interface Model {
    * and calls the getMovingAverage method in the Stock class.
    *
    * @param ticker    is the ticker of the company user inputs.
-   * @param startDate the starting date user inputs.
+   * @param startDate the starting date user inputs. (YYYY-MM-DD)
    * @param lastX     integer user inputs.
    * @return a string that calls method.
    */
@@ -102,8 +102,8 @@ public interface Model {
    * This gets the x-day crossovers for a specified stock over a specified date range.
    *
    * @param ticker    the ticker user inputs.
-   * @param startDate start date the user inputs.
-   * @param lastX     the intger user inputs.
+   * @param startDate start date the user inputs. (YYYY-MM-DD)
+   * @param lastX     the integer user inputs.
    * @return the days as a string.
    */
   String getCrossoverDays(String ticker, String startDate, double lastX);
@@ -115,14 +115,6 @@ public interface Model {
    * @return a string of the names of the portfolios.
    */
   String getPortfolioNames();
-
-//  /**
-//   * gets the portfolio used in the controller.
-//   *
-//   * @param name the user inputs for the portfolio.
-//   * @return a string.
-//   */
-//  String getPortfolio(String name);
 
   /**
    * the names of the stocks.
@@ -138,7 +130,7 @@ public interface Model {
    * @param ticker stock ticker
    * @param share  quantity of shares being bought (whole number only)
    * @param date   the date the transaction is made (has to be chronological and on a day when the
-   *               market is open)
+   *               market is open) (YYYY-MM-DD)
    */
   void buyStock(String name, String ticker, String share, String date);
 
@@ -150,17 +142,44 @@ public interface Model {
    * @param share  quantity of shares being sold (must have enough in portfolio and
    *               whole number only)
    * @param date   the date the transaction is made (has to be chronological and on a day when the
-   *               market is open)
+   *               market is open) (YYYY-MM-DD)
    */
   void sellStock(String name, String ticker, String share, String date);
 
-
+  /**
+   * gets a map of all current (latest) portfolio composition.
+   *
+   * @param name name of portfolio
+   * @return a map of the latest portfolio composition
+   */
   Map<String, Double> getPortfolioStocks(String name);
 
+  /**
+   * balances the portfolio's stock values to match the specified percentages.
+   *
+   * @param date        date of balancing (date of transaction) (YYYY-MM-DD)
+   * @param name        name of portfolio
+   * @param percentages a map of percentages for each stock
+   */
   void balance(String date, String name, Map<String, Double> percentages);
 
+  /**
+   * gets the portfolio's stock composition at a specified date (stock : number of shares).
+   *
+   * @param name name of portfolio
+   * @param date date of evaluation (YYYY-MM-DD)
+   * @return the composition of the specified portfolio on the specified date
+   */
   String getPortfolioComposition(String name, String date);
 
+  /**
+   * gets the portfolio's stock distribution at a specific date
+   * (stock : value of stock in portfolio).
+   *
+   * @param name name of portfolio
+   * @param date date of evaluation (YYYY-MM-DD)
+   * @return the distribution of the specified portfolio on the specified date
+   */
   String getPortfolioDistribution(String name, String date);
 
   /**

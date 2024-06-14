@@ -21,6 +21,23 @@ fail because it can't read the file that hasn't finished writing yet. This time 
 something we can change because it comes directly from the API and we used the starter code.
 
 
+How to create a portfolio:
+   	- after starting the program, type the command "port-create". It will then ask you to name 	the new portfolio, and you can type in the name of your choosing. A success message should 	pop up and a new portfolio is created.
+
+How to purchase stocks of at least 3 different companies in that portfolio at different dates -
+	- after you've created the portfolio, in the main menu, use the command "port-manage". It	will then prompt you for which portfolios you would like to choose from. Enter in one of the
+	name that 
+
+
+
+
+and then query the value and cost basis of that portfolio on two specific dates
+
+
+
+
+
+
 How to create portfolio with three different stocks:
 You would write 'port-create' into the terminal.
 it would then ask for the name of the portfolio of your choosing.

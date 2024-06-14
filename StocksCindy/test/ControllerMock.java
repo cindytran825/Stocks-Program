@@ -18,7 +18,7 @@ public class ControllerMock implements Controller {
   private String name;
 
   /**
-   * constructor for testing.
+   * constructor for testing
    * takes in mockview and model.
    * @param mockModel .
    * @param mockView .

@@ -11,16 +11,12 @@ import view.View;
 import static org.junit.Assert.assertEquals;
 
 /**
- * test for the controller use mock of model and view.
+ * test for the controller use mock of model and view
  * this tests if the controller is able to read the information
- * that the user inputs and goes into the mock model
+ * that the user inputs and goes into the mock model.
  */
 public class ControllerTest {
 
-  /**
-   * tests if the controller is reading the inputs
-   * when a user makes a new portfolio.
-   */
   @Test
   public void testCreatePort() {
     StringBuilder log = new StringBuilder();
@@ -35,10 +31,6 @@ public class ControllerTest {
     assertEquals("Creating portfolio wow\n", log.toString());
   }
 
-  /**
-   * tests if the controller is reading the inputs
-   * when a user wants to fix something in exisitng portfolio.
-   */
   @Test
   public void testPortManage() {
     StringBuilder log = new StringBuilder();
@@ -54,10 +46,6 @@ public class ControllerTest {
             "Cannot find stock on file. ", log.toString());
   }
 
-  /**
-   * tests if the controller is reading the inputs
-   * when a user wants to fix something in exisitng portfolio.
-   */
   @Test
   public void testCorrectPortManage() {
     StringBuilder log = new StringBuilder();
@@ -73,10 +61,6 @@ public class ControllerTest {
             "Cannot find stock on file. ", log.toString());
   }
 
-  /**
-   * tests if the controller is reading the inputs
-   * when a user wants to see an existing portfolio.
-   */
   @Test
   public void testPortView() {
     StringBuilder log = new StringBuilder();

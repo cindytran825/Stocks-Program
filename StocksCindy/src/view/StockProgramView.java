@@ -2,9 +2,6 @@ package view;
 
 import java.io.IOException;
 
-import model.Analyzable;
-import model.BarChart;
-
 /**
  * View of the program, it should connect to the controller.
  * which calls the methods in the model.
@@ -96,10 +93,14 @@ public class StockProgramView implements View {
   }
 
   @Override
-  public void getName(String object) {writeMessage("Enter in the name of " + object + ": ");}
+  public void getName(String object) {
+    writeMessage("Enter in the name of " + object + ": ");
+  }
 
   @Override
-  public void getShares() {writeMessage("Enter in the number of shares: ");}
+  public void getShares() {
+    writeMessage("Enter in the number of shares: ");
+  }
 
   @Override
   public void tickerType() {
@@ -126,21 +127,6 @@ public class StockProgramView implements View {
     writeMessage("Successfully added a new portfolio." + "\n");
   }
 
-
-  @Override
-  public void returnBarChartPortfolio(BarChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio) {
-    writeMessage(chart.getChart(name, startDate, endDate, existingPortfolio));
-  }
-
-  @Override
-  public void returnBarChartStock(BarChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock) {
-    writeMessage(chart.getChart(name, startDate, endDate, stock));
-  }
-
-  @Override
-  public void printPortValue(String value) {
-    writeMessage("The value of this portfolio is: $" + value + "\n");
-  }
 
   @Override
   public void printNetGain(String value, String date1, String date2) {
@@ -256,7 +242,6 @@ public class StockProgramView implements View {
   }
 
 
-
   public void getWhichChart() {
     writeMessage("Would you like to get the chart for portfolio or stock? \nEnter Command:");
   }
@@ -295,7 +280,7 @@ public class StockProgramView implements View {
   public void printStockViewMenu() {
     writeMessage("Actions you can perform on this stock: \n");
     writeMessage("View the stock's value growth over a time period [value]\n");
-    writeMessage("View the stock moving average [move-avg]\n");
+    writeMessage("View the stock moving average [moving-avg]\n");
     writeMessage("View the stock crossover dates [crossover]\n");
     writeMessage("View a bar chart of the stock's value over time [bar-chart]\n");
     writeMessage("To finish view the stock [finish]\n");
@@ -307,11 +292,6 @@ public class StockProgramView implements View {
     printMenu();
   }
 
-  /**
-   * display invalid.
-   *
-   * @throws IllegalStateException .
-   */
   @Override
   public void invalidCommand() throws IllegalStateException {
     writeMessage("This is an invalid command!" + System.lineSeparator());

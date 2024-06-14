@@ -11,17 +11,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * This represents a stock portfolio. A user can create, edit, and view the portfolio
+ * This represents a stock portfolio. A user can create, view, evaluate, get the composition,
+ * get the distribution, buy stocks, sell stocks, and balance the portfolio.
  */
 public class PortfolioWithImpl implements Portfolio {
-
   private final String portfolioName;
   private final Map<String, Double> listInventories;
   private final String reference;
   private final String stockDirectory;
   private final MutableDataFrame log;
-
-  // TODO ADD CLOSE OR NOT? also change order to make it alphabetical
 
   /**
    * it also creates a new portfolio as a csv file when the user creates one.
@@ -80,12 +78,6 @@ public class PortfolioWithImpl implements Portfolio {
     this.log = new MutableDataFrameWithImpl(reference);
   }
 
-  /**
-   * turns the list of inventories to a string
-   * also reformatting it in the file.
-   *
-   * @return a string of the inventories.
-   */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -145,16 +137,12 @@ public class PortfolioWithImpl implements Portfolio {
     logActivity(ticker, shares, inputDate, "buy");
   }
 
-  // TODO MENTION IN DESIGN README THAT THE EDITPORTFOLIO FUNCTION WILL BE MADE PRIVATE
-  // TODO ALSO NEED TO CHANGE PORTFOLIO SO THAT IT IS TRACKING / UPDATING THE AMOUNT OF STOCKS CORRECTLY
-  @Override
+   @Override
   public void sellStock(String ticker, double shares, String date
   ) throws IllegalArgumentException {
     // assuming that the model / controller will check if it's a valid ticker
     // and a valid date (YYYY-MM-DD format, doesn't have to be a date in the data)
 
-    // TODO MAKE SURE TO CHECK IN CONTROLLER THATTHEY CAN'T BUY OR SELL FRACTIONAL SHARES
-    // TODO CHECK DATE VALIDITY REFACTOR
     // check that the date is valid (in chronological order)
     checkDateValidity(date, ticker);
     MyDate inputDate = new MyDateWithImpl(date);

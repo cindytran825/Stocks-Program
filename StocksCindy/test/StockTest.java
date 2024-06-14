@@ -3,9 +3,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import model.MyDateWithImpl;
 import model.Stock;
 
 import static org.junit.Assert.assertEquals;
@@ -18,9 +16,6 @@ public class StockTest {
   Stock goog;
   Stock testStock;
 
-  /**
-   * setup for testing.
-   */
   @Before
   public void setUp() {
 

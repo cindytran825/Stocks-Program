@@ -10,12 +10,12 @@ import view.View;
 
 /**
  * this class represents the controller of the application.
- * it is connected the view where the user is able to type inputs.
+ * it is connected the view where the user is able to type inputs
  * and instructions.
  * It uses Scanner and Readable to read inputs.
  * and transmit outputs.
  */
-public class StocksController implements Controller {
+public class StocksController implements Controller{
   private final View view;
   private final Model model;
   private final Scanner scan;
@@ -48,17 +48,10 @@ public class StocksController implements Controller {
     this.model = model;
     this.scan = new Scanner(readable);
     this.stockDirectory = "StocksCindy/CSVFiles";
-    this.portfolioDirectory = "StocksCindy/Portfolio";
+    this.portfolioDirectory = "StocksCindy/UserPortfolio";
   }
 
-  /**
-   * this is called in the view and is used to read.
-   * the inputs that the user puts.
-   * it also calls methods when there is a command from.
-   * the user to display later in the view.
-   *
-   * @throws IllegalStateException is called when method isn't at an appropriate state.
-   */
+  @Override
   public void goControl() throws IllegalStateException {
     mainMenu();
   }

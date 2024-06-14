@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Class representation of dates.
+ * A representation of dates.
  */
 public interface MyDate extends Comparable<MyDate> {
 
@@ -51,7 +51,7 @@ public interface MyDate extends Comparable<MyDate> {
   String getStringMonth(int num) throws IllegalArgumentException;
 
   /**
-   * this is used to call to advance to the end of the month.
+   * this is used to call to advance to the end of the month
    * used for the bar chart to get the value when there is a timespan.
    *
    * @param startDate is the startDate that the user input.
@@ -69,12 +69,13 @@ public interface MyDate extends Comparable<MyDate> {
   int getMonthLength(int month, int year);
 
   /**
-   * this calculates the amount of days in the next month.
-   * it also checks if its december and advances to the next year.
+   * this gets the next month and makes sure that when it advances to.
+   * december, it goes to the next year.
+   * this is called in the timeValue method in DataChart.
    *
-   * @param month is the current month that we are checking.
-   * @param year  is the year to that month.
-   * @return the amount of days in the next month.
+   * @param month is the current month that is getting advanced.
+   * @param year  is the year that its currently at.
+   * @return the amount of days till the next month.
    */
   int getNextMonth(int month, int year);
 

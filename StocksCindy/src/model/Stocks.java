@@ -45,16 +45,15 @@ public interface Stocks extends Analyzable {
    */
   List<String> getCrossOver(String startDate, double lastX);
 
-//  /**
-//   * This gets the value of a column given a valid, specific date and an existing column.
-//   *
-//   * @param date date in the format YYYY-MM-DD
-//   * @param column column name
-//   * @return the value in the specified column at the specified date
-//   * @throws IllegalArgumentException when the specified date or column doesn't exist as a data
-//   * point
-//   */
-//  double getColumnValue(String date, String column) throws IllegalArgumentException;
+  /**
+   * this gets the closest available date with data points.
+   *
+   * @param date         a date input.
+   * @param closestAfter true if look at the closest date after the input and false for the closest.
+   *                     before the input date.
+   * @return closest date index
+   */
+  int getClosestDateIndex(String date, boolean closestAfter);
 
   /**
    * returns the ticker.

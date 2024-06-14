@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represents a normal stock.
+ * This class represents a normal stock with timestamp, open, low, high, close, and volume data.
+ * It also offers abilities to analyze the stocks data such as its value, moving average,
+ * crossover days.
  */
 public class Stock implements Stocks {
 
   private final String ticker;
   private final DataFrameWithImpl data;
-  private Double result;
 
   /**
    * This constructor assigns a ticker to the stock and creates a data frame of all the available.
@@ -40,14 +41,7 @@ public class Stock implements Stocks {
     return newMyDate;
   }
 
-  /**
-   * this gets the closest available date with data points.
-   *
-   * @param date         a date input.
-   * @param closestAfter true if look at the closest date after the input and false for the closest.
-   *                     before the input date.
-   * @return closest date index
-   */
+  @Override
   public int getClosestDateIndex(String date, boolean closestAfter) {
     List<String> dateList = this.getTimestamp();
 
@@ -68,17 +62,6 @@ public class Stock implements Stocks {
     return -1;
   }
 
-  /**
-   * calculates the total net gain (or the difference) between a specified time period.
-   * When given start dates or end dates that do NOT have stock data (weekends or holidays),
-   * it will assume the closest dates in between the given time period.
-   *
-   * @param start the starting date for comparison
-   * @param end   the ending date for comparison
-   * @return the difference between the ending price and the starting price
-   * @throws IllegalArgumentException when there are no data points available for the associated
-   *                                  time period
-   */
   @Override
   public double calculateNetGain(String start, String end) throws IllegalArgumentException {
     int startIndex = getClosestDateIndex(start, true);
@@ -94,17 +77,6 @@ public class Stock implements Stocks {
     return endValue - startValue;
   }
 
-  /**
-   * returns the moving average of a stock given a specified starting date and the last x days.
-   * "X days" refer to days with data points available, and it begins counting from the.
-   * starting date (1 day is just starting date).
-   *
-   * @param startDate starting date to calculate moving average
-   * @param lastX     the last x days from starting date (moving average period)
-   * @return the moving average of a specified
-   * @throws IllegalArgumentException when there are not enough days with data points to
-   *                                  satisfy the given last x days
-   */
   @Override
   public double getMovingAverage(String startDate, double lastX) throws IllegalArgumentException {
     List<String> tempDataClose = data.getColumn("close");
@@ -126,16 +98,6 @@ public class Stock implements Stocks {
     return totalValue / lastX;
   }
 
-  /**
-   * returns a list of crossover days (when the closing price of that day is greater that the.
-   * x-day moving average) given a specified starting date and the last x days. "X days".
-   * refer to days with data points available, and it begins counting from the starting.
-   * date (1 day is just starting date).
-   *
-   * @param startDate starting date to calculate crossover days.
-   * @param lastX     the last x days from starting date (crossover period).
-   * @return a list of all the crossover days.
-   */
   @Override
   public List<String> getCrossOver(String startDate, double lastX) {
     List<String> crossDays = new ArrayList<>();
@@ -168,8 +130,8 @@ public class Stock implements Stocks {
 
   @Override
   public double getValue(String date, String stockDirectory) throws IllegalArgumentException {
-    Double result = this.result;
-    List<String> time = this.getTimestamp(); //|| !checkDateChronology(date, time)
+    double result;
+    List<String> time = this.getTimestamp();
 
     List<String> tempData = data.getColumn("close");
     if (!data.getColumnNames().contains("close")) {
@@ -184,24 +146,11 @@ public class Stock implements Stocks {
     return result;
   }
 
-
-  //
-
-  /**
-   * gets the list of ticker.
-   *
-   * @return String ticker.
-   */
   @Override
   public String getTicker() {
     return this.ticker;
   }
 
-  /**
-   * gets the list of timestamp.
-   *
-   * @return all timestamps
-   */
   @Override
   public List<String> getTimestamp() {
     return data.getColumn("timestamp");
@@ -215,55 +164,30 @@ public class Stock implements Stocks {
     return doubles;
   }
 
-  /**
-   * gets the list of open price.
-   *
-   * @return list.
-   */
   @Override
   public List<Double> getOpen() {
     List<String> temp = data.getColumn("open");
     return toDouble(temp);
   }
 
-  /**
-   * the list of high price.
-   *
-   * @return all high values
-   */
   @Override
   public List<Double> getHigh() {
     List<String> temp = data.getColumn("high");
     return toDouble(temp);
   }
 
-  /**
-   * list of low price.
-   *
-   * @return all low values
-   */
   @Override
   public List<Double> getLow() {
     List<String> temp = data.getColumn("low");
     return toDouble(temp);
   }
 
-  /**
-   * list of closing price.
-   *
-   * @return all closing values
-   */
   @Override
   public List<Double> getClose() {
     List<String> temp = data.getColumn("close");
     return toDouble(temp);
   }
 
-  /**
-   * list of volume.
-   *
-   * @return all volumes
-   */
   @Override
   public List<Double> getVolume() {
     List<String> temp = data.getColumn("volume");

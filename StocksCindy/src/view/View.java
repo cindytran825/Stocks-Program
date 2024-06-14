@@ -1,8 +1,5 @@
 package view;
 
-import model.Analyzable;
-import model.BarChart;
-
 /**
  * the view which does the display.
  * is called in the controller.
@@ -95,11 +92,6 @@ public interface View {
   void success();
 
   /**
-   * display value.
-   */
-  void printPortValue(String value);
-
-  /**
    * display net gain.
    */
   void printNetGain(String value, String date1, String date2);
@@ -145,7 +137,7 @@ public interface View {
   void balanceSuccess();
 
   /**
-   * display sucess.
+   * display success.
    */
   void printSuccessAddStock(String ticker);
 
@@ -205,14 +197,6 @@ public interface View {
   void newName();
 
   /**
-   * displays the given bar chart.
-   *
-   * @param chart bar chart
-   *              TODO NEED THE INTERFACE OF THE DATACHART
-   */
-//  void returnBarChart(DataChart chart);
-
-  /**
    * displays the types of action the user can perform on the portfolio that will edit
    * the portfolio (buy, sell, balance, etc.).
    */
@@ -257,11 +241,4 @@ public interface View {
    * the portfolio (value, composition, distribution, chart, etc.)
    */
   void printPortfolioViewMenu();
-
-
-  void getWhichChart();
-
-  void returnBarChartPortfolio(BarChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio);
-  void returnBarChartStock(BarChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock);
-
 }

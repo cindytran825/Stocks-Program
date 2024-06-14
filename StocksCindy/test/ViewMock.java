@@ -1,6 +1,4 @@
 
-import model.Analyzable;
-import model.BarChart;
 import view.View;
 
 /**
@@ -119,11 +117,6 @@ public class ViewMock implements View {
 
   @Override
   public void success() throws IllegalStateException {
-    log.append("");
-  }
-
-  @Override
-  public void printPortValue(String value) throws IllegalStateException {
     log.append("");
   }
 
@@ -262,31 +255,6 @@ public class ViewMock implements View {
     log.append("");
   }
 
-  @Override
-  public void getWhichChart() {
-    log.append("");
-  }
-
-  @Override
-  public void returnBarChartPortfolio(BarChart chart, String name, String startDate, String endDate, Analyzable existingPortfolio) {
-    log.append("");
-  }
-
-  @Override
-  public void returnBarChartStock(BarChart chart, String name, String startDate, String endDate, String ticker, Analyzable stock) {
-    log.append("");
-  }
-
-//  @Override
-//  public void returnBarChart(DataChart chart) {
-//    return new DataChart("", "", chart);
-//  }
-
-
-//  @Override
-  public void returnBarChart(String chart) {
-    log.append("");
-  }
 
   @Override
   public void invalidStock() {

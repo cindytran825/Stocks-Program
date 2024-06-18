@@ -3,7 +3,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import model.Model;
-import model.MyDateWithImpl;
 
 /**
  * Mock class of model.
@@ -52,18 +51,8 @@ public class ModelMock implements Model {
    */
   @Override
   public boolean checkIfDate(String date) {
-    try {
-      String[] dateInfo = date.split("-");
-      // just initializing, no need to store
-      new MyDateWithImpl(
-              Integer.parseInt(dateInfo[2]),
-              Integer.parseInt(dateInfo[1]),
-              Integer.parseInt(dateInfo[0]));
-      return true;
-    } catch (Exception e) {
-      log.append("Invalid date. ");
-      return false;
-    }
+    log.append("if date " + date + "\n");
+    return false;
   }
 
   /**
@@ -112,18 +101,6 @@ public class ModelMock implements Model {
   }
 
   /**
-   * manageportfolio mock.
-   *
-   * @param name   of the portfolio.
-   * @param ticker of the company.
-   * @param shares the user inputs.
-   */
-  @Override
-  public void managePortfolio(String name, String ticker, double shares) {
-    log.append(ticker + " " + shares);
-  }
-
-  /**
    * gets value for mock.
    *
    * @param name the name that the user input for their portfolio.
@@ -132,7 +109,7 @@ public class ModelMock implements Model {
    */
   @Override
   public String evaluatePortfolio(String name, String date) {
-    log.append("Evaluating portfolio " + date);
+    log.append("Evaluating portfolio " + name + " " + date + "\n");
     return "";
   }
 
@@ -146,7 +123,7 @@ public class ModelMock implements Model {
    */
   @Override
   public String evaluateStock(String ticker, String startDate, String endDate) {
-    log.append("Evaluating stock " + ticker + " " + startDate + " " + endDate);
+    log.append("Evaluating stock " + ticker + " " + startDate + " " + endDate + "\n");
     return "";
   }
 
@@ -160,7 +137,7 @@ public class ModelMock implements Model {
    */
   @Override
   public String movingAverage(String ticker, String startDate, double lastX) {
-    log.append("Moving average " + ticker + " " + startDate + " " + lastX);
+    log.append("Moving average " + ticker + " " + startDate + " " + lastX + "\n");
     return "";
 
   }
@@ -175,7 +152,7 @@ public class ModelMock implements Model {
    */
   @Override
   public String getCrossoverDays(String ticker, String startDate, double lastX) {
-    log.append("Stock crossover " + ticker);
+    log.append("Stock crossover " + ticker + " " + startDate + " " + lastX + "\n");
     return "";
   }
 
@@ -197,83 +174,90 @@ public class ModelMock implements Model {
    */
   @Override
   public String getStockNames() {
-    log.append("get stock");
+    log.append("get stock\n");
     return "";
   }
 
   @Override
   public void buyStock(String name, String ticker, String share, String date) {
-    log.append("buy stock " + ticker + " " + share);
+    log.append("buy stock " + ticker + " " + share + " " + name + " " + date + "\n");
   }
 
   @Override
   public void sellStock(String name, String ticker, String share, String date) {
-    log.append("sell stock " + ticker + " " + share);
+    log.append("sell stock " + name + " " + ticker + " " + share + " " + date + "\n");
   }
 
   @Override
   public Map<String, Double> getPortfolioStocks(String name) {
-    log.append("get portfolio " + name);
+    log.append("get portfolio " + name + "\n");
     return null;
   }
 
   @Override
   public void balance(String date, String name, Map<String, Double> percentages) {
-    log.append("balance " + date + " " + name);
+    log.append("balance " + date + " " + name + "\n");
   }
 
   @Override
   public String getPortfolioComposition(String name, String date) {
-    log.append("get composition " + date + " " + name);
+    log.append("get composition " + date + " " + name + "\n");
     return null;
   }
 
   @Override
   public String getPortfolioDistribution(String name, String date) {
-    log.append("get distribution " + date + " " + name);
+    log.append("get distribution " + date + " " + name + "\n");
     return null;
   }
 
   @Override
   public boolean checkIfChronologicalPortfolio(String name, String inputDate) {
-    log.append("check if chronological portfolio " + name + " " + inputDate);
+    log.append("check if chronological portfolio " + name + " " + inputDate + "\n");
     return false;
   }
 
   @Override
   public boolean checkIfStockDataExist(String ticker, String inputDate) {
-    log.append("check data exists");
+    log.append("data exists " + ticker + " " + inputDate + "\n");
     return false;
   }
 
   @Override
   public boolean checkIfPortfolioChronologicalAndDataExist(String portfolioName, String inputDate) {
+    log.append("port chronology and data " + portfolioName + " " + inputDate + "\n");
     return false;
   }
 
   @Override
   public boolean checkIfWholeNumber(String string) {
-    log.append("check whole number");
+    log.append("check whole number " + string + "\n");
     return false;
   }
 
   @Override
   public boolean checkSharesNotEnough(String portName,
                                       String ticker, double shares) {
-    log.append("check if shares not enough");
+    log.append("check if shares not enough " + portName + " " + ticker + " " + shares + "\n");
     return false;
   }
 
   @Override
   public String barChartStockInitialized(String name,
                                          String firstDate, String lastDate, String ticker) {
-    return null;
+    log.append(
+            "stock bar chart: " + name + "  " + firstDate + " " + lastDate + " " + ticker + "\n"
+    );
+    return "";
   }
 
   @Override
   public String barChartPortfolioInitialized(String name,
                                              String firstDate, String lastDate) {
-    return null;
+    log.append(
+            "port bar chart: " + name + " " + firstDate + " " + lastDate + "\n"
+    );
+    return "";
   }
 
 }

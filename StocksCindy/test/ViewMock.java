@@ -10,34 +10,34 @@ public class ViewMock implements View {
   StringBuilder log = new StringBuilder();
 
   /**
-   * constructor takes in nothing.
-   */
-  public ViewMock() {
-    this.appendable = System.out;
-  }
-
-  /**
-   * contructor takes in appendable.
+   * constructor takes in appendable.
    * @param appendable .
    */
   public ViewMock(Appendable appendable) {
     this.appendable = appendable;
   }
 
+  /**
+   * constructor takes in nothing.
+   */
+  public ViewMock() {
+    this.appendable = System.out;
+  }
+
 
   @Override
   public void printMenu() throws IllegalStateException {
-    log.append("");
+    log.append("print menu");
   }
 
   @Override
   public void getTicker() throws IllegalStateException {
-    log.append("");
+    log.append("get ticker");
   }
 
   @Override
   public void getNameOfFile(String name) throws IllegalStateException {
-    log.append("");
+    log.append("get name of file: " + name );
   }
 
   @Override
@@ -57,42 +57,37 @@ public class ViewMock implements View {
 
   @Override
   public void getName(String object) {
-    log.append("");
+    log.append("get name: " + object);
   }
 
   @Override
   public void getShares() {
-    log.append("");
+    log.append("get shares");
   }
 
   @Override
   public void userInput() {
-    log.append("");
+    log.append("user input");
   }
 
   @Override
   public void getDay() {
-    log.append("");
+    log.append("get day");
   }
 
   @Override
   public void getMonth() {
-    log.append("");
+    log.append("get month");
   }
 
   @Override
   public void getYear() {
-    log.append("");
-  }
-
-  //  @Override
-  public void inputNumber() throws IllegalStateException {
-    log.append("");
+    log.append("get year");
   }
 
   @Override
   public void getDateUser1() throws IllegalStateException {
-    log.append("");
+    log.append("get date user 1");
   }
 
   @Override

@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import model.Model;
+import view.GUIView;
 import view.View;
 
 /**
@@ -21,6 +22,7 @@ public class StocksController implements Controller {
   private final Scanner scan;
   private final String stockDirectory;
   private final String portfolioDirectory;
+  private final GUIView guiView;
 
   private String day;
   private String userInput;
@@ -42,10 +44,11 @@ public class StocksController implements Controller {
    * @param view     view interface.
    * @param readable reads the user inputs.
    */
-  public StocksController(Model model, View view, Readable readable) {
+  public StocksController(Model model, View view, Readable readable, GUIView guiView) {
     this.view = view;
     this.model = model;
     this.scan = new Scanner(readable);
+    this.guiView = guiView;
     this.stockDirectory = "StocksCindy/CSVFiles";
     this.portfolioDirectory = "StocksCindy/UserPortfolio";
   }
@@ -182,9 +185,10 @@ public class StocksController implements Controller {
     if (checkDate(endDate)) {
       return;
     }
-
-    view.tickerType();
-    ticker = scan.next();
+    if (!model.checkIfStockDataExist(ticker, date)) {
+      view.notChronologicalOrDataInvalid();
+      return;
+    }
     view.print(model.barChartStockInitialized(name, startDate, endDate, ticker));
     view.emptyLine();
   }
@@ -341,7 +345,11 @@ public class StocksController implements Controller {
     if (checkEvaluationDate()) {
       return;
     }
-    view.print(model.evaluatePortfolio(name, date));
+    try {
+      view.print("$" + model.evaluatePortfolio(name, date));
+    } catch (Exception e) {
+      view.print("Error");
+    }
     view.emptyLine();
   }
 
@@ -349,7 +357,11 @@ public class StocksController implements Controller {
     if (checkEvaluationDate()) {
       return;
     }
-    view.print(model.getPortfolioDistribution(name, date));
+    try {
+      view.print(model.getPortfolioDistribution(name, date));
+    } catch (Exception e) {
+      view.print("Error");
+    }
     view.emptyLine();
   }
 
@@ -357,7 +369,11 @@ public class StocksController implements Controller {
     if (checkEvaluationDate()) {
       return;
     }
-    view.print(model.getPortfolioComposition(name, date));
+    try {
+      view.print(model.getPortfolioComposition(name, date));
+    } catch (Exception e) {
+      view.print("Error.");
+    }
     view.emptyLine();
   }
 
@@ -369,12 +385,7 @@ public class StocksController implements Controller {
     view.getYear();
     year = scan.next();
     date = String.format("%s-%s-%s", year, month, day);
-    if (checkDate(date)) {
-      return true;
-    } else if (!model.checkIfStockDataExist(ticker, date)) {
-      return true;
-    }
-    return false;
+    return checkDate(date);
   }
 
   private boolean selectPortfolio() {

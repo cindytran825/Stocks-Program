@@ -88,9 +88,13 @@ public class StocksModel implements Model {
     if (latest.isEmpty()) {
       return true;
     }
-    MyDate input = new MyDateWithImpl(inputDate);
-    MyDate last = new MyDateWithImpl(latest);
-    return input.compareTo(last) >= 0;
+    try {
+      MyDate input = new MyDateWithImpl(inputDate);
+      MyDate last = new MyDateWithImpl(latest);
+      return input.compareTo(last) >= 0;
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
   }
 
   @Override
@@ -155,18 +159,10 @@ public class StocksModel implements Model {
   }
 
   @Override
-  public void managePortfolio(String name, String ticker, double shares) {
-    Portfolio existingPortfolio = new PortfolioWithImpl(
-            name, portfolioFolderPath, stockFolderPath, true);
-    // existingPortfolio.editPortfolio(ticker, shares);
-  }
-
-
-  @Override
   public String evaluatePortfolio(String name, String date) {
     Portfolio existingPortfolio = new PortfolioWithImpl(
             name, portfolioFolderPath, stockFolderPath, true);
-    return String.valueOf(existingPortfolio.getValue(date, portfolioFolderPath));
+    return String.valueOf(existingPortfolio.getValue(date, stockFolderPath));
   }
 
   @Override
@@ -192,7 +188,7 @@ public class StocksModel implements Model {
             name, portfolioFolderPath, stockFolderPath, true);
     BarChartWithImpl data = new BarChartWithImpl(name,
             firstDate, lastDate, existingPortfolio, stockFolderPath);
-    return data.getBarChart(stockFolderPath, firstDate, lastDate, existingPortfolio);
+    return data.getChart(stockFolderPath, firstDate, lastDate, existingPortfolio);
   }
 
   @Override
@@ -200,7 +196,7 @@ public class StocksModel implements Model {
           String name, String firstDate, String lastDate, String ticker) {
     Analyzable stock = new Stock(ticker, stockFolderPath);
     BarChartWithImpl data = new BarChartWithImpl(name, firstDate, lastDate, stock, stockFolderPath);
-    return data.getBarChart(stockFolderPath, firstDate, lastDate, stock);
+    return data.getChart(stockFolderPath, firstDate, lastDate, stock);
   }
 
   @Override

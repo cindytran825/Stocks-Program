@@ -25,31 +25,42 @@ How to create a portfolio:
    	- after starting the program, type the command "port-create". It will then ask you to name 	the new portfolio, and you can type in the name of your choosing. A success message should 	pop up and a new portfolio is created.
 
 How to purchase stocks of at least 3 different companies in that portfolio at different dates -
+
+	when entering any dates, please keep 0's in front of the units if it's less than 2
+	digits for days, 2 digits for month, or 4 digits for years (ex. 4 -> 04)
+
 	- after you've created the portfolio, in the main menu, use the command "port-manage". It	will then prompt you for which portfolios you would like to choose from. Enter in one of the
-	name that 
-
-
-
+	name that pops up. Then, type in 'buy' followed by the stock ticker for the transaction. Then a valid
+	day, month, and year. repeat this two more times with other stock tickers and other dates.
 
 and then query the value and cost basis of that portfolio on two specific dates
+    - once you're done making changes to the portfolio, type 'finish' in the port-manage menu
+    and you should be back in the main menu. Type 'port-view' for any analysis features. Select
+    the portfolio's name that pops up by typing it out. To
+    see the total value of the portfolio, type 'value'. Enter the day, month, year.
+    To see the distribution / composition, type 'distribution' or 'composition' and type in the
+    day month year. You can do this for any two valid dates
 
 
-
-
-
-
-How to create portfolio with three different stocks:
-You would write 'port-create' into the terminal.
-it would then ask for the name of the portfolio of your choosing.
-you would then add a ticker and the amount of shares. it would then ask you to
-add another ticker, you can add as much as you like.
-WHen you are done adding the stocks, hit 'j' and that should add the stocks
-into the portfolio.
-Creating another portfolio:
-You can just do 'port-create' again to make another portfolio (preferably with a different name)
-and add as many stocks as you like.
-'port-view' to see the list of portfolios you have created.
-
-List of Stocks:
-GOOG, AMZN, TSLA, APPL
+List of Stocks on file:
+GOOG 2014-04-15 to 2024-06-03
+    three valid dates are:
+        2023-05-31
+        2023-06-01
+        2023-06-02
+AMZN 2000-04-11 to 2024-06-03
+    three valid dates are:
+        2024-05-22
+        2024-05-23
+        2024-05-24
+TSLA 2011-01-05 to 2024-06-03
+    three valid dates are:
+        2022-12-12
+        2022-12-13
+        2022-12-14
+APPL 2000-05-17 to 2024-06-03
+    three valid dates are:
+        2023-07-17
+        2023-07-18
+        2023-07-19
 

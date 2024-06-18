@@ -34,7 +34,7 @@ public class BarChartWithImpl implements BarChart {
   }
 
   @Override
-  public String getBarChart(String name, String startDate,
+  public String getChart(String name, String startDate,
                             String endDate, Analyzable analyzable) {
     String[] dateInfo = startDate.split("-");
     MyDate firstDate = new MyDateWithImpl(
@@ -156,8 +156,8 @@ public class BarChartWithImpl implements BarChart {
                             List<String> listOfDates, List<Double> listOfValues) {
     StringBuilder sb = new StringBuilder();
     scale = scaleList(listOfValues);
-    sb.append("Performance of Stock/Portfolio " + name +
-            " from " + startDate + " to " + endDate + "\n");
+    sb.append("Performance of Stock/Portfolio " + name
+            + " from " + startDate + " to " + endDate + "\n");
 
     if (listOfDates.size() < 5 && !Objects.equals(decide, "day")) {
       for (int i = 0; i < 5 - listOfDates.size(); i++) {

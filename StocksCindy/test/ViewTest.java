@@ -11,6 +11,161 @@ import static org.junit.Assert.assertEquals;
  * test for the view using the controller mock class.
  */
 public class ViewTest {
+
+  Appendable ap = new StringBuilder();
+  Model mockModel = new ModelMock();
+  View view = new StockProgramView(ap);
+  String userInput = "";
+
+  @Test
+  public void testForBuy() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "buy";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "\nEnter the ticker: ";
+
+    String[] output = ap.toString().split("tion you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("Enter the ticker this file represents: ");
+    String result = wow[0];
+    String[] wow1 = result.split("Type the date ");
+    String result1 = wow1[0];
+    assertEquals(expectedMenu, result1);
+  }
+
+  @Test
+  public void testForSell() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "sell";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "\nEnter the ticker: ";
+
+    String[] output = ap.toString().split("tion you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("Enter the ticker this file represents: ");
+    String result = wow[0];
+    String[] wow1 = result.split("Type the date ");
+    String result1 = wow1[0];
+    assertEquals(expectedMenu, result1);
+  }
+
+  @Test
+  public void testForSell1() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "sell";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "Type the date to use for evaluation (YYYY-MM-DD): " +
+                    "Type the starting date (YYYY-MM-DD): ";
+
+    String[] output = ap.toString().split("tion you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("Enter the ticker this file represents: ");
+    String result = wow[0];
+    String[] wow1 = result.split("ticker: ");
+    String result1 = wow1[1];
+    String[] wow2 = result1.split("Thank you ");
+    String result2 = wow2[0];
+    assertEquals(expectedMenu, result2);
+  }
+
+  @Test
+  public void testForDis() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "distribution";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "\nType the date to use for evaluation (YYYY-MM-DD): ";
+
+    String[] output = ap.toString().split("tion you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("Enter the ticker this file represents: ");
+    String result = wow[0];
+    String[] wow1 = result.split("ticker: ");
+    String result1 = wow1[0];
+    String[] wow2 = result1.split("Thank you ");
+    String result2 = wow2[0];
+    assertEquals(expectedMenu, result2);
+  }
+
+
+  @Test
+  public void testForBuy1() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "buy";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "Type the date to use for evaluation (YYYY-MM-DD): " +
+                    "Type the starting date (YYYY-MM-DD): ";
+
+    String[] output = ap.toString().split("tion you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("Enter the ticker this file represents: ");
+    String result = wow[0];
+    String[] wow1 = result.split("ticker: ");
+    String result1 = wow1[1];
+    String[] wow2 = result1.split("Thank you ");
+    String result2 = wow2[0];
+    assertEquals(expectedMenu, result2);
+  }
+
+  @Test
+  public void testForComp() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "composition";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "\nType the date to use for evaluation (YYYY-MM-DD): ";
+
+    String[] output = ap.toString().split("tion you'd like to take!");
+    String getOutput = output[1];
+    String[] wow = getOutput.split("Enter the ticker this file represents: ");
+    String result = wow[0];
+    String[] wow1 = result.split("ticker: ");
+    String result1 = wow1[0];
+    String[] wow2 = result1.split("Thank you ");
+    String result2 = wow2[0];
+    assertEquals(expectedMenu, result2);
+  }
+
+  @Test
+  public void testForFinish() {
+    Appendable ap = new StringBuilder();
+    Model mockModel = new ModelMock();
+    View view = new StockProgramView(ap);
+    String userInput = "finish";
+    Controller controller = new ControllerMock(mockModel, view, userInput);
+    controller.goControl();
+    String expectedMenu =
+            "\nTerminating command...\n" +
+                    "Thank you for using our program!\n";
+
+    String[] output = ap.toString().split("tion you'd like to take!");
+    String getOutput = output[1];
+    assertEquals(expectedMenu, getOutput);
+  }
+
+
   @Test
   public void testForWelcome() {
     Appendable ap = new StringBuilder();
@@ -192,7 +347,7 @@ public class ViewTest {
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "\nType just the NAME of the portfolio: \n";
+            "\nType just the NAME of the portfolio: ";
 
     String[] output = ap.toString().split("Enter instruction to the"
             +
@@ -200,8 +355,11 @@ public class ViewTest {
     String getOutput = output[1];
     String[] output2 = getOutput.split("Thank you for using our program!");
     String now = output2[0];
-    assertEquals(expectedMenu, now);
+    String[] output3 = now.split("Actions");
+    String no1 = output3[0];
+    assertEquals(expectedMenu, no1);
   }
+
 
   /**
    * For the fourth case on the menu.
@@ -369,21 +527,30 @@ public class ViewTest {
    * tests for the upload case.
    */
   @Test
-  public void testForUpload() {
+  public void testForGetBarChart() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
     View view = new StockProgramView(ap);
-    String userInput = "stock-upload";
+    String userInput = "port-view";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
     String expectedMenu =
-            "\nEnter in the reference path to the CSV file: ";
+            "\nView the portfolio's stock composition [composition]\n" +
+                    "View the portfolio's stock value distribution [distribution]\n" +
+                    "View the portfolio's total value [value]\n" +
+                    "View a bar chart of the portfolio's value over time [bar-chart]\n" +
+                    "To finish viewing the portfolio [finish]\n\n";
 
-    String[] output = ap.toString().split("tion you'd like to take!");
+    String[] output = ap.toString().split("Enter instruction to the"
+            +
+            " action you'd like to take!");
     String getOutput = output[1];
-    String[] wow = getOutput.split("Enter the ticker this file represents: ");
-    String result = wow[0];
-    assertEquals(expectedMenu, result);
+    String[] output2 = getOutput.split("Thank you for using our program!");
+    String now = output2[0];
+    String[] output3 = now.split("Actions you can perform on this portfolio: ");
+    String no1 = output3[1];
+    assertEquals(expectedMenu, no1);
   }
+
 
 }

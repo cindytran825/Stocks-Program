@@ -58,15 +58,6 @@ public interface Model {
   void createPortfolio(String name);
 
   /**
-   * called when the user wants to anything to an existing portfolio.
-   *
-   * @param name   of the portfolio.
-   * @param ticker of the company.
-   * @param shares the user inputs.
-   */
-  void managePortfolio(String name, String ticker, double shares);
-
-  /**
    * called when the user asks for the value in their portfolio.
    * it takes the date that they input and the portfolio location. (name)
    *

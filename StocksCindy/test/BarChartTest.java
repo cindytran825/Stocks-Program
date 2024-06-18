@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import model.BarChart;
 import model.BarChartWithImpl;
 import model.MyDate;
 import model.MyDateWithImpl;
@@ -44,7 +46,7 @@ public class BarChartTest {
   public void testChartMonth() {
     cindy = new PortfolioWithImpl("cindy", testFolderPath, testFolderPath, false);
     cindy.buyStock("GOOG", 423.0, "2014-04-15");
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2024-02-03", "2024-06-28", cindy, testFolderPath);
 
     assertEquals("Performance of Stock/Portfolio " +
@@ -54,7 +56,7 @@ public class BarChartTest {
             "APR 2024: ********\n" +
             "MAY 2024: ********\n" +
             "JUN 2024: ********\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2024-02-03", "2024-06-28", cindy));
   }
 
@@ -63,7 +65,7 @@ public class BarChartTest {
    //   */
   @Test
   public void testChartDay() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2024-02-03", "2024-02-07", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio " +
             "cindy from 2024-02-03 to 2024-02-07\n" +
@@ -72,7 +74,7 @@ public class BarChartTest {
             "FEB 05 2024: *******\n" +
             "FEB 06 2024: *******\n" +
             "FEB 07 2024: *******\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2024-02-03", "2024-02-07", cindy));
   }
 
@@ -81,13 +83,13 @@ public class BarChartTest {
    */
   @Test
   public void testChartDay2() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2024-02-03", "2024-02-04", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy" +
             " from 2024-02-03 to 2024-02-04\n" +
             "FEB 03 2024: *******\n" +
             "FEB 04 2024: *******\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2024-02-03", "2024-02-04", cindy));
   }
 
@@ -97,7 +99,7 @@ public class BarChartTest {
    */
   @Test
   public void testChartDoubleDay() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2024-02-03", "2024-02-13", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio" +
             " cindy from 2024-02-03 to 2024-02-13\n" +
@@ -112,7 +114,7 @@ public class BarChartTest {
             "FEB 11 2024: *******\n" +
             "FEB 12 2024: *******\n" +
             "FEB 13 2024: *******\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2024-02-03", "2024-02-13", cindy));
   }
 
@@ -121,7 +123,7 @@ public class BarChartTest {
    */
   @Test
   public void testChartYear() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-04-15", "2020-01-11", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio " +
             "cindy from 2014-04-15 to 2020-01-11\n" +
@@ -131,7 +133,7 @@ public class BarChartTest {
             "DEC 2017: *****\n" +
             "DEC 2018: *****\n" +
             "JAN 2020: *******\n" +
-            "Scale: * = 100000", data.getBarChart("cindy",
+            "Scale: * = 100000", data.getChart("cindy",
             "2014-04-15", "2020-01-11", cindy));
   }
 
@@ -140,7 +142,7 @@ public class BarChartTest {
    */
   @Test
   public void testChartMonthThree() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-04-15",  "2016-01-11", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio" +
             " cindy from 2014-04-15 to 2016-01-11\n" +
@@ -152,7 +154,7 @@ public class BarChartTest {
             "JUL 2015: ***************************\n" +
             "OCT 2015: *******************************\n" +
             "JAN 2016: *******************************\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2014-04-15", "2016-01-11", cindy));
   }
 
@@ -161,7 +163,7 @@ public class BarChartTest {
    */
   @Test
   public void testChartMonthLess() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-04-15",  "2014-07-18", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio" +
             " cindy from 2014-04-15 to 2014-07-18\n" +
@@ -170,7 +172,7 @@ public class BarChartTest {
             "MAY 2014: ************************\n" +
             "JUN 2014: *************************\n" +
             "JUL 2014: *************************\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2014-04-15", "2014-07-18", cindy));
   }
 
@@ -179,7 +181,7 @@ public class BarChartTest {
    */
   @Test
   public void testChartMonthLess2() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-04-15",  "2014-06-18", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio " +
             "cindy from 2014-04-15 to 2014-06-18\n" +
@@ -188,7 +190,7 @@ public class BarChartTest {
             "APR 2014: ***********************\n" +
             "MAY 2014: ************************\n" +
             "JUN 2014: *************************\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2014-04-15", "2014-06-18", cindy));
   }
 
@@ -200,7 +202,7 @@ public class BarChartTest {
    */
   @Test(expected = NoSuchElementException.class)
   public void testWrongMonth() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-04-15",  "2014-03-11", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio" +
             " cindy from 2014-04-15 to 2014-07-18\n" +
@@ -209,7 +211,7 @@ public class BarChartTest {
             "MAY 2014: ************************\n" +
             "JUN 2014: *************************\n" +
             "JUL 2014: *************************\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2014-04-15", "2014-03-11", cindy));
   }
 
@@ -218,7 +220,7 @@ public class BarChartTest {
    */
   @Test(expected = NoSuchElementException.class)
   public void testWrongYear() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2024-09-15",  "2014-07-18", cindy, testFolderPath);
     assertEquals("Performance of Portfolio " +
             "cindy from 2014-04-15 to 2014-07-18\n" +
@@ -227,7 +229,7 @@ public class BarChartTest {
             "MAY 2014: ************************\n" +
             "JUN 2014: *************************\n" +
             "JUL 2014: *************************\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2024-09-15", "2014-07-18", cindy));
   }
 
@@ -236,7 +238,7 @@ public class BarChartTest {
    */
   @Test(expected = NoSuchElementException.class)
   public void testWrongDay() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-09-15",  "2014-09-14", cindy, testFolderPath);
     assertEquals("Performance of Stock/Portfolio " +
             "cindy from 2014-04-15 to 2014-07-18\n" +
@@ -245,7 +247,7 @@ public class BarChartTest {
             "MAY 2014: ************************\n" +
             "JUN 2014: *************************\n" +
             "JUL 2014: *************************\n" +
-            "Scale: * = 10000", data.getBarChart("cindy",
+            "Scale: * = 10000", data.getChart("cindy",
             "2014-09-15", "2014-09-14", cindy));
   }
 
@@ -258,7 +260,7 @@ public class BarChartTest {
             33000.0, 43000.0, 33000.0, 43000.0));
     List<String> listOfDates = new ArrayList<>(Arrays.asList("2014-04-30",
             "2014-05-31", "2014-06-30", "2014-07-30", "2014-08-15"));
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-09-15",  "2014-09-14", cindy, testFolderPath);
 
     MyDate firstDate = new MyDateWithImpl(15, 04, 2014);
@@ -285,7 +287,7 @@ public class BarChartTest {
     List<String> listOfDates = new ArrayList<>(Arrays.asList("2014-12-31",
             "2015-12-31", "2016-12-31",
             "2017-12-31", "2018-12-31", "2019-08-15"));
-    BarChartWithImpl barChartWithImpl = new BarChartWithImpl("cindy",
+    BarChart barChartWithImpl = new BarChartWithImpl("cindy",
             "2014-04-15", "2019-08-15",  cindy, testFolderPath);
     MyDate firstDate = new MyDateWithImpl(15, 04, 2014);
     //getBarChart(MyDate firstDate, String decide,
@@ -304,7 +306,7 @@ public class BarChartTest {
 
   @Test
   public void testGetBarStock() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-04-15", "2024-05-16",  goog, testFolderPath);
     assertEquals("Performance of Stock/Portfolio cindy " +
             "from 2014-04-15 to 2024-05-16\n" +
@@ -319,13 +321,13 @@ public class BarChartTest {
             "DEC 2022: *\n" +
             "DEC 2023: **\n" +
             "MAY 2024: **\n" +
-            "Scale: * = 100", data.getBarChart("cindy",
+            "Scale: * = 100", data.getChart("cindy",
             "2014-04-15", "2024-05-16", goog));
   }
 
   @Test
   public void testGetBarStockDay() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2024-05-16", "2024-05-20",  goog, testFolderPath);
     assertEquals("Performance of Stock/Portfolio " +
             "cindy from 2024-05-16 to 2024-05-20\n" +
@@ -334,7 +336,7 @@ public class BarChartTest {
             "MAY 18 2024: ******************\n" +
             "MAY 19 2024: ******************\n" +
             "MAY 20 2024: ******************\n" +
-            "Scale: * = 10", data.getBarChart("cindy",
+            "Scale: * = 10", data.getChart("cindy",
             "2024-05-16", "2024-05-20", goog));
   }
 
@@ -344,7 +346,7 @@ public class BarChartTest {
    */
   @Test
   public void testGetBarStockMonth3() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-05-16", "2016-05-20",  goog, testFolderPath);
     assertEquals("Performance of Stock/Portfolio " +
             "cindy from 2014-05-16 to 2016-05-20\n" +
@@ -357,7 +359,7 @@ public class BarChartTest {
             "NOV 2015: ********\n" +
             "FEB 2016: *******\n" +
             "MAY 2016: ********\n" +
-            "Scale: * = 100", data.getBarChart("cindy",
+            "Scale: * = 100", data.getChart("cindy",
             "2014-05-16", "2016-05-20", goog));
   }
 
@@ -366,7 +368,7 @@ public class BarChartTest {
    */
   @Test
   public void testGetBarStock2Months() {
-    BarChartWithImpl data = new BarChartWithImpl("cindy",
+    BarChart data = new BarChartWithImpl("cindy",
             "2014-05-16", "2014-07-20",
             goog, testFolderPath);
     assertEquals("Performance of Stock/Portfolio " +
@@ -376,8 +378,7 @@ public class BarChartTest {
             "MAY 2014: ******\n" +
             "JUL 2014: ******\n" +
             "AUG 2014: ******\n" +
-            "Scale: * = 100", data.getBarChart("cindy",
+            "Scale: * = 100", data.getChart("cindy",
             "2014-05-16", "2014-07-20", goog));
   }
-
 }

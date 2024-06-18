@@ -3,7 +3,9 @@ import java.io.InputStreamReader;
 import controller.StocksController;
 import model.Model;
 import model.StocksModel;
+import view.GUIView;
 import view.StockProgramView;
+import view.SwingFeaturesFrame;
 import view.View;
 
 /**
@@ -23,8 +25,9 @@ public class StockProgram {
     // view should be generated here
     Model model = new StocksModel();
     View view = new StockProgramView();
+    GUIView guiView = new SwingFeaturesFrame();
 
-    StocksController controller = new StocksController(model, view, rd);
+    StocksController controller = new StocksController(model, view, rd, guiView);
     controller.goControl();
   }
 }

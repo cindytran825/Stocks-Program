@@ -7,24 +7,32 @@ Out user interface is interactive -
    ticker and the amount of shares they want to add. They are able to add as many as
    they want and name the portfolio.
 
-   [port-manage] allows the user to see a list of existing portfolios that they have created.
-   They are to choose the name of the portfolio they want to change the shares to.
-          ex. if user has [{APPL,3},{AMZN,4}] in their portfolio,
-          they can add more shares to the same ticker.
-          user inputs -> {APPL,10}, then it'll replace {APPL,3} from [{APPL,3},{AMZN,4}] to
-          be [{APPL,10},{AMZN,4}].
-   They are also able to add other tickers. user inputs -> {RDDT,3} to the portfolio,
-   updated portfolio -> [{APPL,10},{AMZN,4},{RDDT,3]. Shares cannot be negative.
+   [port-manage] opens up the port-manage menu, displaying all the methods the user can do
+   that CHANGES the specified portfolio
+            [buy] buys a specified stock and logs the transaction down
+            [sell] sells a specified stock and logs the transaction
+            [balance] balances the portfolio with the given point decimals to each stock
+            [finish] return to the main menu
 
-   [port-view] user is able to view the existing portfolio(s) that they have created.
+   [port-view] opens up the port-view menu, displaying all the methods the user can do that
+   EVALUATES the specified portfolio.
+            [composition] gets the portfolio's stock composition on a valid date
+            [distribution] gets the portfolio's stock value distribution on a valid date
+            [value] gets the total value of the portfolio on a valid date
+            [bar-chart] gets the bar chart representation of the portfolio's value over time
+            [finish] return to the main menu
 
-   [port-eval] allows the user to get the value of the shares from the existing portfolio(s).
+   [port-list] user is able to view the existing portfolio(s) that they have created.
 
-   [stock-eval] gets the gain or loss from the company and dates that the user inputs.
+   [stock-list] allows the user to see which stocks are available on file
 
-   [stock-avg] gets the x-day moving average.
-
-   [stock-cross] determines which days are x-day crossover from the dates given by user.
+   [stock-view] opens the stock-view menu, displaying all the methods the user can do that
+   EVALUATES the specified stock.
+            [value] gets the stock value's net growth over a time period
+            [moving-avg] gets the stock's moving average
+            [crossover] gets the stock's crossover dates
+            [bar-chart] views the bar chart of the stock's value over time
+            [finish] return to the main menu
 
    [stock-upload] allows the user to upload a file.
 
@@ -37,8 +45,3 @@ Out user interface is interactive -
    [quit] quits.
 
    [menu] displays the menu.
-
-
-this program does do error input checking, so you shouldn't be able to crash it.
-Whenever you input in a date, it tries to retrieve the most recent data available. if it's a time
-period you're giving, it finds the closest time period that is WITHIN the provided time.

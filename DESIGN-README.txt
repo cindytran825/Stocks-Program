@@ -16,22 +16,36 @@ for the user. the StockProgramView implements that interface.
 
 The MyDate class is in charge of making sure that the date is valid.
 
-Everytime a user wants a create a portfolio or add to it,
-we made a new file to store the data that the user inputs. The Portfolio class
-does all the creating and editing the portfolio which is called in the model
-when a user needs to access it. If the user wishes to delete anything in it, we just assign the
-given stock a new current share value (if we had 50 stocks and wanted to subtract 10, we enter
-the same name and label the new share count to 40).
+The design of the command-line went through a bit of restructuring. If the user wants
+to make any changes to a portfolio, they will have to call port-manage in the main menu,
+and it will bring the user to a manage portfolio menu. In there, all the methods that can
+manage the portfolio will be in there (buy / sell / balance). We thought that if we had
+implemented where all the methods are separate in the main menu, it would be inconvenient
+when you are trying to make several changes at once or have to check it's values separately
+each time and have to type in the specified file over and over. We minimized that repetition
+by grouping all the file editing methods together and the file evaluation methods
+together.
+
+For the same reason above, port-view in the main menu contains all the methods that evaluates
+a portfolio (value, composition, distribution, bar-chart).
+
+For the same reason above, stock-view in the main menu cantains all the methods that evaluates
+a stock (value/net growth, moving avg, crossover, bar-chart)
 
 The Dataframe class is used to access the files. It reads the information from the CSV files.
-The Alphvantage class was given to us and we used to save the stock files.
+The Alphavantage class was given to us and we used to save the stock files.
 
-We had the portfolio class read from csv files because it doesn't make that much sense to us for
-the user having to recreate a new portfolio every time they run the program.
+[from previous assignment] We had the portfolio class read from csv files because it doesn't
+make that much sense to us for the user having to recreate a new portfolio every time they
+run the program. It eventually worked against us because the new assignment required us to do the
+same thing with a different string format.
 
-The DataChart class is used to create the bar chart when a user wants a representation of the value
-of their portfolio through a timespan. Its in charge of building the charting, scaling it and
-formatting  it correctly. It extends the StocksModel class because __________________
+The DataChart class is used to create the chart when a user wants a representation of the value
+of their portfolio through a timespan. It's in charge of building the charting, scaling it and
+formatting  it correctly. We have a BarChartWithImp class that implements the
+ BarChart interface that extends the DataChart interface.
+By implementing this design, we hope that it'll facilitate the incorporation of any other
+graphical charts in future implementations.
 
 ==================================================================================
 CHANGES:
@@ -51,18 +65,15 @@ introduction of a logging system. It originally used the current (latest) transa
 with the idea that all the portfolio was being evaluated at a single given date. With the new
 addition of a logging system and evaluation of different timestamps, the getValue will now call
 getComposition to receive the stock count at a certain time period instead.
-- added a method in MyDate to return a string representation of a month integer
 - as we did not implement a "buy" or a "sell" method buy combined them in the "editPortfolio",
 not that we have been given directions to implement the new methods, we've made the edit portfolio
 method private and broke it up into buy and sell. The controller and model had to accommodate this
 change. I do think that this change is justified as there were no directions saying that changing
 the portfolio had to incorporate a buying and selling method. It is possible to infer that
 it could've been refactored into one method based on the given directions in part I.
-- Made a new class called DataChart to make the barchart.
+
 - getMonthLength() in the MyDateWithImpl was a private method and I changed that to public because
 I needed to call that method in the portfolio class. I thought this decision was reasonable because
 I needed to get the length of the month to get the value or each month in the bar chart (needed to
 call the method multiple times) and it didn't make sense for me to have duplicate code when I could
 just call a method that was already made.
-- added getChart() method along with two private helpers in the portfolio class. These methods are
-called to get the chart and the new DataChart class has methods that would build the chart.

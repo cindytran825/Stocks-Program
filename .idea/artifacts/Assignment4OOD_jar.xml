@@ -2,7 +2,7 @@
   <artifact type="jar" build-on-make="true" name="Assignment4OOD:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Assignment4OOD_jar</output-path>
     <root id="archive" name="Assignment4OOD.jar">
-      <element id="module-output" name="Assignment4OOD" />
+      <element id="module-output" name="submission (2)" />
     </root>
   </artifact>
 </component>

@@ -54,6 +54,7 @@ public class ControllerMock implements Controller {
         break;
       case "port-view":
         mockView.namePort();
+        mockView.printPortfolioViewMenu();
         mockView.emptyLine();
         break;
       case "port-eval":
@@ -77,14 +78,33 @@ public class ControllerMock implements Controller {
       case "stock-view" :
         mockView.getTicker();
         break;
+      case "composition" :
+        mockView.getDateUser1();
+        break;
+      case "distribution" :
+        mockView.getDateUser1();
+        break;
+      case "buy" :
+        mockView.getTicker();
+        mockView.getDateUser1();
+        mockView.getDateUser2();
+        break;
+      case "sell" :
+        mockView.getTicker();
+        mockView.getDateUser1();
+        mockView.getDateUser2();
+        break;
+      case "balance":
+        mockView.invalidPercentage();
+        break;
       case "finish":
         mockView.terminating();
         break;
       case "bar-chart":
         mockView.startDate();
         mockView.endDate();
+        mockView.getTicker();
         break;
-
       case "stock-cross":
         mockView.getTicker();
         mockView.getDateUser2();
@@ -114,4 +134,5 @@ public class ControllerMock implements Controller {
     }
     mockView.goodbye();
   }
+
 }

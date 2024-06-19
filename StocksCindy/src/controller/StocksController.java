@@ -208,9 +208,7 @@ public class StocksController implements Controller {
     }
     view.printNetGain(
             model.evaluateStock(ticker, startDate, endDate),
-            startDate,
-            endDate
-    );
+            startDate, endDate);
     view.emptyLine();
   }
 

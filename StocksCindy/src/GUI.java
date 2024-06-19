@@ -2,19 +2,21 @@ import java.io.InputStreamReader;
 
 import javax.swing.*;
 
+import controller.Controller;
+import controller.GUIController;
 import controller.StocksController;
 import model.Model;
 import model.StocksModel;
 import view.GUIView;
 import view.StockProgramView;
-import view.SwingFeaturesFrame;
+import view.GUIViewImpl;
 import view.View;
 
 public class GUI {
 
-  public static void main(String[] args) {
-    SwingFeaturesFrame.setDefaultLookAndFeelDecorated(false);
-    SwingFeaturesFrame frame = new SwingFeaturesFrame();
+  public static void execute() {
+    GUIViewImpl.setDefaultLookAndFeelDecorated(false);
+    GUIViewImpl frame = new GUIViewImpl();
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
@@ -22,10 +24,11 @@ public class GUI {
     Readable rd = new InputStreamReader(System.in);
     Model model = new StocksModel();
     View view = new StockProgramView();
-    GUIView guiView = new SwingFeaturesFrame();
+    GUIViewImpl guiView = new GUIViewImpl();
 
-    StocksController controller = new StocksController(model, view, rd, guiView);
+    Controller controller = new GUIController(model, view, rd, guiView);
     controller.goControl();
+
 
     try {
       // Set cross-platform Java L&F (also called "Metal")

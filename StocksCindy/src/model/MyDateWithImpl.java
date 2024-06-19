@@ -39,13 +39,13 @@ public class MyDateWithImpl implements MyDate {
 
     // try catch block to catch invalid number input
     try {
-      if (dateSplit[0].length() == 4) {
+      if (!dateSplit[0].isEmpty() && dateSplit[0].length() <= 4) {
         this.year = Integer.parseInt(dateSplit[0]);
       }
-      if (dateSplit[1].length() == 2) {
+      if (!dateSplit[1].isEmpty() && dateSplit[1].length() <= 2) {
         this.month = Integer.parseInt(dateSplit[1]);
       }
-      if (dateSplit[2].length() == 2) {
+      if (!dateSplit[2].isEmpty() && dateSplit[2].length() <= 2) {
         this.day = Integer.parseInt(dateSplit[2]);
       } else {
         throw new IllegalArgumentException();

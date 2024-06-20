@@ -2,27 +2,33 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.*;
-
+import javax.swing.JComboBox;
 import model.Model;
 import view.GUIViewImpl;
+import view.IGUIViewMain;
 
+/**
+ * This is the main GUI controller for the portfolio manager. It is the acton listener that
+ * listens to all button actions and communicate with the model to send the output to the
+ * GUI view.
+ */
 public class GUIController implements ActionListener, Controller {
   private final Model model;
-  private final GUIViewImpl guiView; // TODO CHANGE TYPE
-  private final String stockDirectory;
-  private final String portfolioDirectory;
+  private final IGUIViewMain guiView;
   private String portName;
   private String ticker;
   private String share;
   private String date;
 
+  /**
+   * This constructs the model and the GUI view.
+   *
+   * @param model   model
+   * @param guiView GUI view
+   */
   public GUIController(Model model, GUIViewImpl guiView) {
     this.model = model;
     this.guiView = guiView;
-    this.stockDirectory = "StocksCindy/CSVFiles";
-    this.portfolioDirectory = "StocksCindy/UserPortfolio";
   }
 
   @Override
@@ -32,7 +38,6 @@ public class GUIController implements ActionListener, Controller {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-
     guiView.checkComponent();
     portName = guiView.getSelectedPortfolioName();
 
@@ -119,6 +124,7 @@ public class GUIController implements ActionListener, Controller {
         }
         buildCompVal();
         break;
+      default:
     }
   }
 
@@ -137,6 +143,4 @@ public class GUIController implements ActionListener, Controller {
       guiView.buildComponentBox(this);
     }
   }
-
-
 }

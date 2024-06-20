@@ -95,37 +95,12 @@ public class PortfolioWithImpl implements Portfolio {
     return deepCopy(this.listInventories);
   }
 
-
-  private boolean checkIfFileExist(String path) {
-    File file = new File(path);
-    return file.exists();
-  }
-
   private boolean checkIfDate(String date) {
     try {
       // just initializing, no need to store
       new MyDateWithImpl(date);
       return true;
     } catch (Exception e) {
-      return false;
-    }
-  }
-
-
-  private boolean checkIfNumber(String n) {
-    try {
-      Double.parseDouble(n);
-      return true;
-    } catch (NumberFormatException e) {
-      return false;
-    }
-  }
-
-  private boolean checkIfWholeNumber(String n) {
-    try {
-      double num = Double.parseDouble(n);
-      return num % 1 == 0;
-    } catch (NumberFormatException e) {
       return false;
     }
   }
@@ -167,25 +142,6 @@ public class PortfolioWithImpl implements Portfolio {
     }
   }
 
-  private boolean checkIfPortfolioChronologicalAndDataExist(
-          String portfolioName,
-          String inputDate
-  ) {
-    Portfolio existingPortfolio = new PortfolioWithImpl(
-            portfolioName, reference, stockDirectory, true);
-    if (!checkIfChronologicalPortfolio(portfolioName, inputDate)) {
-      return false;
-    }
-    Map<String, Double> inventory = existingPortfolio.getListInventories();
-    Set<String> stockTickers = inventory.keySet();
-    for (String ticker : stockTickers) {
-      if (!checkIfStockDataExist(ticker, inputDate)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
 
   @Override
   public double getValue(String date, String stockDirectory) throws IllegalArgumentException {
@@ -207,7 +163,6 @@ public class PortfolioWithImpl implements Portfolio {
     }
     return totalValue;
   }
-
 
 
   @Override
@@ -444,12 +399,9 @@ public class PortfolioWithImpl implements Portfolio {
     List<String> dateList = stock.getTimestamp();
     List<String> transactionDates = this.log.getColumn("timestamp");
     String latestTransactionDate =
-            !transactionDates.isEmpty() ?
-                    transactionDates.get(transactionDates.size() - 1)  : "0000-01-01";
-    if (!checkDateChronology(latestTransactionDate, date, dateList)) {
-      return false;
-    }
-    return true;
+            !transactionDates.isEmpty()
+                    ? transactionDates.getLast() : "0000-01-01";
+    return checkDateChronology(latestTransactionDate, date, dateList);
   }
 
   private Map<String, Double> deepCopy(Map<String, Double> original) {
@@ -459,6 +411,4 @@ public class PortfolioWithImpl implements Portfolio {
     }
     return copy;
   }
-
-
 }

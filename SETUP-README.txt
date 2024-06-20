@@ -1,9 +1,7 @@
 How to run from the jar file:
-copy the StocksCindy with the UserPortfolio and CSVFiles in the StocksCindy directory:
-1. go to terminal, change current directory to the folder with this assignment (on the same level
-as StocksCindy)
-2. copy the StocksCindy and its content to the home directory (cp -r StocksCindy ~/StocksCindy)
-3. run the jar file from anywhere
+move the jar file outside the res folder so that it's on the same level as the StocksCindy directory.
+Go to the directory of the assignment (the directory that is holding the StocksCindy directory).
+Then, run the jar file from there.
 
 there is also a weird bug (I've went to office hours for this and figured out that the problem
 was not in the code, but the software), where if you run it, sometimes you get an error saying that

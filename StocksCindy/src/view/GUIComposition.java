@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +10,8 @@ import javax.swing.*;
 public class GUIComposition extends JPanel implements GUIView {
   private JPanel mainPanel;
   private JPanel insidePanel;
-  private JButton createPortButton;
-  private JButton sellPortButton;
+  private JButton compButton;
+  private JButton valueButton;
   private JPanel submitPanel;
   private JLabel portLabel;
 
@@ -107,18 +106,23 @@ public class GUIComposition extends JPanel implements GUIView {
     submitPanel = new JPanel();
     portLabel = new JLabel("");
     submitPanel.add(portLabel);
-    createPortButton = new JButton("composition");
-    createPortButton.setActionCommand("composition");
+    compButton = new JButton("composition");
     submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.PAGE_AXIS));
-    submitPanel.add(createPortButton);
+    compButton.setActionCommand("comp button");
+    submitPanel.add(compButton);
 
 
-    sellPortButton = new JButton("value");
-    sellPortButton.setActionCommand("value");
+    valueButton = new JButton("value");
     submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.PAGE_AXIS));
-    submitPanel.add(sellPortButton);
+    submitPanel.add(valueButton);
+    valueButton.setActionCommand("value button");
     mainPanel.add(submitPanel);
   }
 
 
+  @Override
+  public void setListener(ActionListener listener) {
+    compButton.addActionListener(listener);
+    valueButton.addActionListener(listener);
+  }
 }

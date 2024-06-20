@@ -8,9 +8,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 import javax.swing.*;
 
-public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
+public class GUIViewImpl extends JFrame implements GUIView {
   private JPanel mainPanel;
-  private JScrollPane mainScrollPane;
   private JLabel radioDisplay;
   private JLabel comboboxDisplay;
   private GUIBuy buyPanel;
@@ -43,7 +42,6 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     mainPanel.add(comboboxPanel);
     comboboxDisplay = new JLabel("Choose from existing portfolios");
     comboboxPanel.add(comboboxDisplay);
-
 
     combobox = new JComboBox<String>();
     combobox.addItem("Select Portfolio");
@@ -118,12 +116,13 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     }
   }
 
-  public void buildBuyBox() {
+  public void buildBuyBox(ActionListener listener, String[] tickers) {
     /**
      * calls the GUIBuy panel that displays a new panel.
      */
     radioDisplay.setText("Buy/Sell was selected");
-    buyPanel = new GUIBuy();
+    buyPanel = new GUIBuy(tickers);
+    buyPanel.setListener(listener);
     buyPanel.setBounds(0, 200, 500, 100);
     mainPanel.add(buyPanel);
     this.add(mainPanel);
@@ -132,12 +131,13 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     updateMain();
   }
 
-  public void buildComponentBox() {
+  public void buildComponentBox(ActionListener listener) {
     /**
      * calls composition panel (class)
      */
     radioDisplay.setText("Composition/Value was selected");
     composition = new GUIComposition();
+    composition.setListener(listener);
     composition.setBounds(0, 200, 500, 100);
     mainPanel.add(composition);
     this.add(mainPanel);
@@ -145,9 +145,10 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     updateMain();
   }
 
-  public void buildCreatePortfolio() {
+  public void buildCreatePortfolio(ActionListener listener) {
     radioDisplay.setText("Create Portfolio was selected");
     create = new GUICreatePortfolio();
+    create.setListener(listener);
     create.setBounds(0, 200, 500, 100);
     mainPanel.add(create);
     this.pack();
@@ -168,11 +169,5 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     mainPanel.revalidate();
     mainPanel.repaint();
   }
-
-  @Override
-  public void actionPerformed(ActionEvent e){
-    System.out.println("hello");
-  }
-
 
 }

@@ -8,6 +8,6 @@ import javax.swing.*;
 public interface GUIView {
 
 
-//  void addActionListener(KeyListener actionListener);
+void setListener(ActionListener listener);
 
 }

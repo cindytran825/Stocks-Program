@@ -33,38 +33,49 @@ public class GUIController implements ActionListener, Controller {
 
     guiView.checkComponent();
 
-
-    switch (e.getActionCommand()) {
-      case "Buy/Sell":
+      switch (e.getActionCommand()) {
+        case "Buy/Sell":
           if (guiView.getCombobox().getSelectedIndex() == 0) {
             guiView.msgBox();
+          } else {
+            guiView.buildBuyBox(this, model.getStockNames().split("\\n"));
           }
-          else {
-            guiView.buildBuyBox();
+
+          break;
+        case "Composition/Value":
+          if (guiView.getCombobox().getSelectedIndex() == 0) {
+            guiView.msgBox();
+          } else {
+            guiView.buildComponentBox(this);
           }
+          //call class
+          break;
 
-        break;
-      case "Composition/Value":
-        if (guiView.getCombobox().getSelectedIndex() == 0) {
-          guiView.msgBox();
-        }
-        else {
-          guiView.buildComponentBox();
-        }
-        //call class
-        break;
+        case "Portfolio Selection":
+          if (e.getSource() instanceof JComboBox) {
+            JComboBox<String> box = (JComboBox<String>) e.getSource();
+            guiView.setComboboxDisplay((String) box.getSelectedItem());
+          }
+          break;
 
-      case "Portfolio Selection":
-        if (e.getSource() instanceof JComboBox) {
-          JComboBox<String> box = (JComboBox<String>) e.getSource();
-          guiView.setComboboxDisplay((String) box.getSelectedItem());
-        }
-        break;
+        case "Create portfolio":
+          System.out.println("Create portfolio");
+          guiView.buildCreatePortfolio(this);
+          break;
 
-      case "Create portfolio":
-        guiView.buildCreatePortfolio();
-        break;
+        case "Create":
+          System.out.println("Created");
+          break;
 
-    }
+        case "buy button":
+          System.out.println("buy stock");
+          break;
+
+        case "sell button":
+          System.out.println("sell stock");
+          break;
+      }
+
+
   }
 }

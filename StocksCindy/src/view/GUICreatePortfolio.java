@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class GUICreatePortfolio extends JPanel implements GUIView, ActionListener {
+public class GUICreatePortfolio extends JPanel implements GUIView {
   private JPanel mainPanel;
   private JButton pButton;
   private JLabel display;
@@ -29,20 +29,14 @@ public class GUICreatePortfolio extends JPanel implements GUIView, ActionListene
     pButton = new JButton("Create");
     display = new JLabel("");
     pPanel.add(display);
-    pButton.addActionListener(this);
     pButton.setActionCommand("Create");
     pPanel.add(pButton);
 
   }
 
+
   @Override
-  public void actionPerformed(ActionEvent e) {
-    switch (e.getActionCommand()) {
-      case "Create":
-        display.setText("You've created a new portfolio!");
-        /**
-         * CALL CONTROLLER CREATE MODEL
-         */
-    }
+  public void setListener(ActionListener listener) {
+    pButton.addActionListener(listener);
   }
 }

@@ -50,3 +50,28 @@ Out user interface is interactive -
 
 ------------------------------------------------------------------------------
 
+-------------------- GUI BASED WINDOW -----------------
+
+At the top, the user is able to select an existing portfolio that is registered in the
+UserPortfolio directory. When the user does not select any, however the other features of the
+GUI will be locked until a selection has been made. If the user does not have one, they are
+able to create a new portfolio in the create-portfolio tab.
+
+Once selected, the ability to buy/sell stocks from the portfolio is unlocked and the user can
+perform this action by entering the day, month, year, ticker, and shares for the transaction.
+Any changes made this way will be automatically saved to the selected portfolio.
+
+The ability to evaluate the portfolio's composition and value distribution (and total value)
+is also unlocked. The user is able to evaluate the selected portfolio when given a valid day,
+month, and year.
+
+For any invalid inputs, a window will pop up saying that it's an invalid input.
+
+Thus, the GUI is able to create, save, and load portfolios.
+
+tl;dr
+it has:
+- The ability to create a new portfolio
+- The ability to buy/sell stocks by specifying the stock, number of shares, and date
+- The ability to query the value and composition of a portfolio at a certain date
+- The ability to save and retrieve portfolios from files

@@ -49,31 +49,10 @@ graphical charts in future implementations.
 
 ==================================================================================
 CHANGES:
-- change the data type of anything that has to do with shares from int to double. Initially
-the directions said that we are not going to allow fractional shares yet, so to ensure that we
-worked with integer shares and enforce whole numbers. Now that we can work with fractional shares,
-(for balance) we changed all data type integers into data type double
-- made changes to the constructor to accommodate for a log. To check value of stocks at given
-times, the portfolio will need to implement a log to keep track of transactions, so we had to add
-a log to the constructor for initialization as well as a "load" function to read transaction logs
-from the file. In doing so, we also changed the format that the file is being read. To accommodate
-this new format change, we also had to change the editPortfolio method so that it writes the file
-in the proper format. I know this sounds like a lot of change, but it cannot be helped as the format
-had to change to accommodate the new directions.
-- since the format changed, the getValue method had to change just a little bit with the
-introduction of a logging system. It originally used the current (latest) transaction available
-with the idea that all the portfolio was being evaluated at a single given date. With the new
-addition of a logging system and evaluation of different timestamps, the getValue will now call
-getComposition to receive the stock count at a certain time period instead.
-- as we did not implement a "buy" or a "sell" method buy combined them in the "editPortfolio",
-not that we have been given directions to implement the new methods, we've made the edit portfolio
-method private and broke it up into buy and sell. The controller and model had to accommodate this
-change. I do think that this change is justified as there were no directions saying that changing
-the portfolio had to incorporate a buying and selling method. It is possible to infer that
-it could've been refactored into one method based on the given directions in part I.
-
-- getMonthLength() in the MyDateWithImpl was a private method and I changed that to public because
-I needed to call that method in the portfolio class. I thought this decision was reasonable because
-I needed to get the length of the month to get the value or each month in the bar chart (needed to
-call the method multiple times) and it didn't make sense for me to have duplicate code when I could
-just call a method that was already made.
+- changed methods in the PortfolioWithImpl class to all throw IllegalArgumentException upon
+receiving any invalid points. We received deductions from assignment 5 for not throwing the
+exceptions in the PortfolioWithImpl class when we did invalid-input-checking in the controller
+and main model.
+- We didn't change anything else except for the fact that we now have a main class and that
+we added a new view and a new controller that implements the controller class. Nothing fundamentally
+changed in our program :)

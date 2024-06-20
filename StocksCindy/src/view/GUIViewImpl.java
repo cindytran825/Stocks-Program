@@ -1,44 +1,60 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
-import javax.swing.*;
 
+/**
+ * This class is the GUI viewer that creates the main GUI window. It is the ultimate GUI window
+ * that holds and create other panels within it (the mother GUI).
+ */
 public class GUIViewImpl extends JFrame implements GUIView {
-  private JPanel mainPanel;
-  private JLabel radioDisplay;
-  private JLabel comboboxDisplay;
+  private final JPanel mainPanel;
+  private final JLabel radioDisplay;
+  private final JLabel radioOtherDisplay;
+  private final JPanel radioPanel;
+  private final JLabel comboboxDisplay;
+  private final JPanel comboboxPanel;
   private GUIBuy buyPanel;
   private GUIComposition composition;
   private GUICreatePortfolio create;
-  private JButton createPortButton;
-  private JRadioButton[] radioButtons;
-  private JComboBox<String> combobox;
+  private final JButton createPortButton;
+  private final JRadioButton[] radioButtons;
+  private final JComboBox<String> combobox;
 
 
   /**
-   * this is first called then the user runs the GUI.
+   * This constructor creates the main GUI menu option.
    */
   public GUIViewImpl(String[] names) {
     super();
     setTitle("Stocks Program");
     setSize(700, 500);
 
+    // making the main panel
     this.setLayout(new BorderLayout());
     mainPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
     mainPanel.setPreferredSize(new Dimension(700, 500));
     this.add(mainPanel);
-    /**
-     * this is the dropdown that asks for the list of existing portfolios
-     */
-    JPanel comboboxPanel = new JPanel();
+
+    //this is the dropdown that asks for the list of existing portfolios
+    comboboxPanel = new JPanel();
     comboboxPanel.setPreferredSize(new Dimension(500, 50));
     comboboxPanel.setBounds(0, 0, 500, 100);
-    mainPanel.add(comboboxPanel);
     comboboxDisplay = new JLabel("Choose from existing portfolios");
     comboboxPanel.add(comboboxDisplay);
-
     combobox = new JComboBox<String>();
     combobox.addItem("Select Portfolio");
     //the event listener when an option is selected
@@ -46,53 +62,48 @@ public class GUIViewImpl extends JFrame implements GUIView {
     for (int i = 0; i < names.length; i++) {
       combobox.addItem(names[i]);
     }
-
     comboboxPanel.add(combobox);
 
+    // create portfolio button
     createPortButton = new JButton("Create Portfolio");
     createPortButton.setActionCommand("Create portfolio");
     comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.PAGE_AXIS));
-    mainPanel.add(createPortButton);
 
-    /**
-     * this is the radio panel of the menu.
-     */
-    //text area
-    JPanel radioPanel = new JPanel();
-    radioPanel.setBounds(0, 200, 500, 100);
+    // this is the radio panel of the menu (buy/sell and composition/value action choices).
+    String[] buttons = {"Buy/Sell", "Composition/Value"};
+    ButtonGroup rGroup1 = new ButtonGroup();
     radioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    radioPanel.setBounds(0, 200, 500, 100);
     radioPanel.setBorder(BorderFactory.createTitledBorder("Portfolio Editor Menu"));
-
     radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.PAGE_AXIS));
-    JLabel radioOtherDisplay = new JLabel("Which actions would you like to perform on"
+    radioOtherDisplay = new JLabel("Which actions would you like to perform on"
             + " the portfolio?");
     radioPanel.add(radioOtherDisplay);
-
-    String[] buttons = {"Buy/Sell", "Composition/Value"};
     radioButtons = new JRadioButton[buttons.length];
-    ButtonGroup rGroup1 = new ButtonGroup();
-
     for (int i = 0; i < buttons.length; i++) {
       radioButtons[i] = new JRadioButton(buttons[i]);
       radioButtons[i].setActionCommand(buttons[i]);
       rGroup1.add(radioButtons[i]);
       radioPanel.add(radioButtons[i]);
     }
-
     radioDisplay = new JLabel("Which one did the user select?");
     radioPanel.add(radioDisplay);
+
+    // add all these panels to the main frame
+    mainPanel.add(comboboxPanel);
+    mainPanel.add(createPortButton);
     mainPanel.add(radioPanel);
     this.pack();
   }
 
-  // TODO @Override
+  @Override
   public void checkComponent() {
     if (mainPanel.getComponentCount() > 3) {
       mainPanel.remove(mainPanel.getComponentCount() - 1);
     }
   }
 
-
+  @Override
   public void msgBox() {
     JOptionPane.showMessageDialog(null, "Please select a portfolio!");
   }
@@ -142,7 +153,7 @@ public class GUIViewImpl extends JFrame implements GUIView {
 
   public void buildCreatePortfolio(ActionListener listener) {
     radioDisplay.setText("Create Portfolio was selected");
-    create = new GUICreatePortfolio();
+    create = new GUICreatePortfolio(mainPanel);
     create.setListener(listener);
     create.setBounds(0, 200, 500, 100);
     mainPanel.add(create);

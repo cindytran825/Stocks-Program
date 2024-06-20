@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-public class GUIBuy extends JPanel implements GUIView {
+public class GUIBuy extends JPanel implements IGUIBuy {
   private JLabel tickerBoxDisplay;
   private JPanel mainPanel;
   private JPanel insidePanel;
@@ -149,6 +149,7 @@ public class GUIBuy extends JPanel implements GUIView {
   public String getTicker() {
     return (String) tickerBox.getSelectedItem();
   }
+
 
   public void setListener(ActionListener listener) {
     createPortButton.addActionListener(listener);

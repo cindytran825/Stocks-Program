@@ -6,7 +6,7 @@ import model.StocksModel;
 import view.GUIView;
 import view.StockProgramTextView;
 import view.GUIViewImpl;
-import view.textView;
+import view.TextView;
 
 /**
  * the stock program that displays the program in the console.
@@ -19,7 +19,7 @@ public class StockProgram {
 
     // view should be generated here
     Model model = new StocksModel();
-    textView view = new StockProgramTextView();
+    TextView view = new StockProgramTextView();
     GUIView guiView = new GUIViewImpl(model.getPortfolioNames().split("\\n"));
 
     StocksController controller = new StocksController(model, view, rd, guiView);

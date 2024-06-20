@@ -28,7 +28,6 @@ public class GUIController implements ActionListener, Controller {
   @Override
   public void goControl() {
     guiView.setListener(this);
-
   }
 
   @Override
@@ -65,7 +64,6 @@ public class GUIController implements ActionListener, Controller {
           model.createPortfolio(newName);
           guiView.updatePortfolio(newName);
           guiView.createSuccess();
-          guiView.revalidate();
         }
         break;
 

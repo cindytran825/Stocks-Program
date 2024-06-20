@@ -4,7 +4,7 @@ package view;
  * the view which does the display.
  * is called in the controller.
  */
-public interface textView extends IView {
+public interface TextView extends IView {
 
   /**
    * this prints the menu, first thing user sees.

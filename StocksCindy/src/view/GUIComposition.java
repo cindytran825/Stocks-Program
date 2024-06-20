@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-public class GUIComposition extends JPanel implements GUIView {
+public class GUIComposition extends JPanel implements IGUIComposition {
   private JPanel mainPanel;
   private JPanel insidePanel;
   private final JButton compButton;

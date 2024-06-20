@@ -7,7 +7,7 @@ import java.util.Set;
 
 import model.Model;
 import view.GUIView;
-import view.textView;
+import view.TextView;
 
 /**
  * this class represents the controller of the application.
@@ -17,7 +17,7 @@ import view.textView;
  * and transmit outputs.
  */
 public class StocksController implements Controller {
-  private final textView view;
+  private final TextView view;
   private final Model model;
   private final Scanner scan;
   private final String stockDirectory;
@@ -44,7 +44,7 @@ public class StocksController implements Controller {
    * @param view     view interface.
    * @param readable reads the user inputs.
    */
-  public StocksController(Model model, textView view, Readable readable, GUIView guiView) {
+  public StocksController(Model model, TextView view, Readable readable, GUIView guiView) {
     this.view = view;
     this.model = model;
     this.scan = new Scanner(readable);

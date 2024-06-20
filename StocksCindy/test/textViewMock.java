@@ -1,10 +1,10 @@
 
-import view.textView;
+import view.TextView;
 
 /**
  * mock of the view for testing.
  */
-public class textViewMock implements textView {
+public class textViewMock implements TextView {
 
   private Appendable appendable;
   StringBuilder log = new StringBuilder();

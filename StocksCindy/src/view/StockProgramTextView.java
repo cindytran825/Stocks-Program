@@ -6,7 +6,7 @@ import java.io.IOException;
  * View of the program, it should connect to the controller.
  * which calls the methods in the model.
  */
-public class StockProgramTextView implements textView {
+public class StockProgramTextView implements TextView {
   private Appendable appendable;
 
   /**

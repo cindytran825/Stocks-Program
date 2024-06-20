@@ -78,9 +78,9 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
             + " the portfolio?");
     radioPanel.add(radioOtherDisplay);
 
-    radioButtons = new JRadioButton[4];
+    String[] buttons = {"Buy/Sell", "Composition/Value"};
+    radioButtons = new JRadioButton[buttons.length];
     ButtonGroup rGroup1 = new ButtonGroup();
-    String[] buttons = {"Buy", "Sell", "Composition", "Value"};
 
     for (int i = 0; i < buttons.length; i++) {
       radioButtons[i] = new JRadioButton(buttons[i]);
@@ -126,122 +126,11 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     }
   }
 
-
-  //  @Override
-//  public void actionPerformed(ActionEvent e) {
-//    if (mainPanel.getComponentCount() > 3) {
-//      mainPanel.remove(mainPanel.getComponentCount() - 1);
-//    }
-//
-//    // if no portfolio has been selected
-////    String portfolioName;
-////    if (e.getSource() instanceof JComboBox) {
-////      JComboBox<String> box = (JComboBox<String>) e.getSource();
-////      portfolioName = (String) box.getSelectedItem();
-////      if (portfolioName.equals("Select Portfolio")) {
-////        noPort = new GUINoPortfolio();
-////        noPort.setBounds(0, 200, 500, 100);
-////        mainPanel.add(noPort);
-////        this.add(mainPanel);
-////        this.pack();
-////        return;
-////      }
-////    }
-//
-//    switch (e.getActionCommand()) {
-//      case "Buy":
-//        /**
-//         * calls the GUIBuy panel that displays a new panel.
-//         */
-//        radioDisplay.setText("Buy was selected");
-//        buyPanel = new GUIBuy();
-//        buyPanel.setBounds(0, 200, 500, 100);
-//        mainPanel.add(buyPanel);
-//        this.add(mainPanel);
-//        this.pack();
-//        //call the portcreate class
-//        break;
-//      case "Sell":
-//        radioDisplay.setText("Sell was selected");
-//        buyPanel = new GUIBuy();
-//        buyPanel.setBounds(0, 200, 500, 100);
-//        mainPanel.add(buyPanel);
-//        this.add(mainPanel);
-//        this.pack();
-//        break;
-//      case "Composition":
-//        /**
-//         * calls composition panel (class)
-//         */
-//        radioDisplay.setText("Composition was selected");
-//        composition = new GUIComposition();
-//        composition.setBounds(0, 200, 500, 100);
-//        mainPanel.add(composition);
-//        this.add(mainPanel);
-//        this.pack();
-//        //call class
-//        break;
-//      case "Value":
-//        /**
-//         * calls class that asks what they want to evaluate.
-//         */
-//        radioDisplay.setText("Value was selected");
-//        getTypeValue = new GUIGetValue();
-//        getTypeValue.setBounds(0, 200, 500, 100);
-//        mainPanel.add(getTypeValue);
-//        this.pack();
-//        //call class
-//        break;
-//
-//      case "Portfolio Selection":
-//        if (e.getSource() instanceof JComboBox) {
-//          JComboBox<String> box = (JComboBox<String>) e.getSource();
-//          comboboxDisplay.setText("You selected: " + (String) box.getSelectedItem());
-//        }
-//        break;
-//
-//      case "Create portfolio":
-//        radioDisplay.setText("Create Portfolio was selected");
-//        create = new GUICreatePortfolio();
-//        create.setBounds(0, 200, 500, 100);
-//        mainPanel.add(create);
-//        this.pack();
-//        break;
-//
-////      case "Open file": {
-////        final JFileChooser fchooser = new JFileChooser(".");
-////        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-////                "JPG & GIF Images", "jpg", "gif");
-////        fchooser.setFileFilter(filter);
-////        int retvalue = fchooser.showOpenDialog(SwingFeaturesFrame.this);
-////        if (retvalue == JFileChooser.APPROVE_OPTION) {
-////          File f = fchooser.getSelectedFile();
-////          fileOpenDisplay.setText(f.getAbsolutePath());
-////        }
-////      }
-////      break;
-////      case "Save file": {
-////        final JFileChooser fchooser = new JFileChooser(".");
-////        int retvalue = fchooser.showSaveDialog(SwingFeaturesFrame.this);
-////        if (retvalue == JFileChooser.APPROVE_OPTION) {
-////          File f = fchooser.getSelectedFile();
-////          fileSaveDisplay.setText(f.getAbsolutePath());
-////        }
-////      }
-////      break;
-//    }
-//
-//    mainPanel.revalidate();
-//    mainPanel.repaint();
-//
-//  }
-
-
   public void buildBuyBox() {
     /**
      * calls the GUIBuy panel that displays a new panel.
      */
-    radioDisplay.setText("Buy was selected");
+    radioDisplay.setText("Buy/Sell was selected");
     buyPanel = new GUIBuy();
     buyPanel.setBounds(0, 200, 500, 100);
     mainPanel.add(buyPanel);
@@ -251,37 +140,15 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     updateMain();
   }
 
-  public void buildSellBox() {
-    radioDisplay.setText("Sell was selected");
-    buyPanel = new GUIBuy();
-    buyPanel.setBounds(0, 200, 500, 100);
-    mainPanel.add(buyPanel);
-    this.add(mainPanel);
-    this.pack();
-    updateMain();
-  }
-
   public void buildComponentBox() {
     /**
      * calls composition panel (class)
      */
-    radioDisplay.setText("Composition was selected");
+    radioDisplay.setText("Composition/Value was selected");
     composition = new GUIComposition();
     composition.setBounds(0, 200, 500, 100);
     mainPanel.add(composition);
     this.add(mainPanel);
-    this.pack();
-    updateMain();
-  }
-
-  public void buildValueBox() {
-    /**
-     * calls class that asks what they want to evaluate.
-     */
-    radioDisplay.setText("Value was selected");
-    getTypeValue = new GUIGetValue();
-    getTypeValue.setBounds(0, 200, 500, 100);
-    mainPanel.add(getTypeValue);
     this.pack();
     updateMain();
   }

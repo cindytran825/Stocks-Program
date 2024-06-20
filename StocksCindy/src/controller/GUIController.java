@@ -61,7 +61,6 @@ public class GUIController implements ActionListener, Controller {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    System.out.println("going through");
 
     guiView.checkComponent();
 
@@ -81,34 +80,11 @@ public class GUIController implements ActionListener, Controller {
 //    }
 
     switch (e.getActionCommand()) {
-      case "Buy":
-          guiView.buildBuyBox();
-
-//        guiView.createBuyBox();
-//        --> "submit"
-//                --> model.buy....
-
-
-//        /**
-//         * calls the GUIBuy panel that displays a new panel.
-//         */
-//        radioDisplay.setText("Buy was selected");
-//        buyPanel = new GUIBuy();
-//        buyPanel.setBounds(0, 200, 500, 100);
-//        mainPanel.add(buyPanel);
-//        guiView.add(mainPanel);
-//        guiView.pack();
-//        //call the portcreate class
+      case "Buy/Sell":
+        guiView.buildBuyBox();
         break;
-      case "Sell":
-        guiView.buildSellBox();
-        break;
-      case "Composition":
+      case "Composition/Value":
         guiView.buildComponentBox();
-        //call class
-        break;
-      case "Value":
-        guiView.buildValueBox();
         //call class
         break;
 

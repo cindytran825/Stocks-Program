@@ -1,27 +1,36 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
-import javax.swing.*;
-
-public class GUICreatePortfolio extends JPanel implements GUIView {
-  private JPanel createPanel;
-  private JButton pButton;
-  private JLabel display;
-  private JTextArea textArea;
-  private JPanel pPanel;
-  private JPanel mainPanel;
+/**
+ * This class is a GUI window for creating portfolios. It queries the user for a name
+ * of the new portfolio, and it'll create a new, formatted, CSV file in the
+ * portfolio directory automatically.
+ */
+public class GUICreatePortfolio extends JPanel implements IGUICreatePortfolio {
+  private final JPanel createPanel;
+  private final JButton pButton;
+  private final JLabel display;
+  private final JTextArea textArea;
+  private final JPanel pPanel;
+  private final JPanel mainPanel;
 
   /**
-   * called when the user wants to create a new portfolio.
+   * Creates the create-portfolio GUI. It creates a text box to enter the name of the new
+   * portfolio.
+   *
+   * @param mainPanel the main GUI from the main view
    */
   public GUICreatePortfolio(JPanel mainPanel) {
     super();
-
-    this.mainPanel = mainPanel;
-
-
+    this.mainPanel = mainPanel; // TODO, are we keeping the mainPanel import (this was experimental)
     createPanel = new JPanel();
     this.add(createPanel, BorderLayout.CENTER);
     pPanel = new JPanel();
@@ -38,6 +47,7 @@ public class GUICreatePortfolio extends JPanel implements GUIView {
     createPanel.add(pPanel);
   }
 
+  @Override
   public String getName() {
     String newName = this.textArea.getText();
     textArea.setText("");
@@ -46,6 +56,7 @@ public class GUICreatePortfolio extends JPanel implements GUIView {
     return newName;
   }
 
+  @Override
   public void displaySuccess() {
     display.setText("Successfully created a new portfolio!");
     mainPanel.repaint();
@@ -53,19 +64,8 @@ public class GUICreatePortfolio extends JPanel implements GUIView {
     // createPanel.repaint();
   }
 
-
-//  @Override
-  public void checkComponent() {
-
-  }
-
   @Override
   public void setListener(ActionListener listener) {
     pButton.addActionListener(listener);
-  }
-
-//  @Override
-  public void msgBox() {
-
   }
 }

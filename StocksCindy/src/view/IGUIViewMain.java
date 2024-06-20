@@ -1,8 +1,7 @@
 package view;
 
 import java.awt.event.ActionListener;
-
-import javax.swing.*;
+import javax.swing.JComboBox;
 
 /**
  * This interface is the representation of the main GUI view component of the MVC, and it
@@ -30,7 +29,7 @@ public interface IGUIViewMain extends GUIView {
    * Creates the buying/selling box in the main window.
    *
    * @param listener Action listeners who will read all button inputs from this class
-   * @param tickers stock tickers
+   * @param tickers  stock tickers
    */
   void buildBuyBox(ActionListener listener, String[] tickers);
 
@@ -63,17 +62,63 @@ public interface IGUIViewMain extends GUIView {
   void setComboboxDisplay(String portfolioName);
 
   /**
-   * gets the combobox button that is a slider with all portfolio names.
+   * gets the combobox button that is a drop-down box with all existing portfolio names.
    *
-   * @return
+   * @return the combobox
    */
   JComboBox<String> getCombobox();
+
+  /**
+   * updates the existing portfolio list upon the creation of a new one.
+   *
+   * @param newPortfolioName the new portfolio's name
+   */
   void updatePortfolio(String newPortfolioName);
+
+  /**
+   * gets the newly created portfolio's name.
+   *
+   * @return the new portfolio's name
+   */
   String getCreateName();
+
+  /**
+   * display a success message upon a successful portfolio creation.
+   */
   void createSuccess();
+
+  /**
+   * gets the current selected portfolio name in the combobox.
+   *
+   * @return selected portfolio name
+   */
   String getSelectedPortfolioName();
+
+  /**
+   * gets the chosen ticker from the buy/sell box.
+   *
+   * @return stock ticker
+   */
   String getPurchaseTicker();
+
+  /**
+   * gets the date of transaction from the buy/sell box.
+   *
+   * @return date (YYYY-MM-DD)
+   */
   String getPurchaseDate();
+
+  /**
+   * gets the shares for transaction from the buy/sell box.
+   *
+   * @return stock shares
+   */
   String getPurchaseShares();
+
+  /**
+   * gets the date for analysis from the composition/value box.
+   *
+   * @return analysis date
+   */
   String getAnalysisDate();
 }

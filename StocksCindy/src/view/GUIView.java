@@ -1,9 +1,6 @@
 package view;
 
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-
-import javax.swing.*;
 
 /**
  * This interface represents the GUI View interface that displays portfolio and its functions

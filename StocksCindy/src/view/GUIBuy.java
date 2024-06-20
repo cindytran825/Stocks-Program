@@ -7,14 +7,19 @@ import java.util.List;
 
 import javax.swing.*;
 
+/**
+ * This class displays the GUI of the buy/selling user interface. It prompts the user for
+ * a ticker, shares, year, month, and day to complete a transaction. It will also hold a
+ * "buy" and "sell" button separately.
+ */
 public class GUIBuy extends JPanel implements IGUIBuy {
-  private JLabel tickerBoxDisplay;
-  private JPanel mainPanel;
-  private JPanel insidePanel;
-  private JButton createPortButton;
-  private JButton sellPortButton;
-  private JPanel submitPanel;
-  private JLabel portLabel;
+  private final JLabel tickerBoxDisplay;
+  private final JPanel mainPanel;
+  private final JPanel insidePanel;
+  private final JButton createPortButton;
+  private final JButton sellPortButton;
+  private final JPanel submitPanel;
+  private final JLabel portLabel;
   private final JComboBox<String> dayBox;
   private final JComboBox<String> monthBox;
   private final JComboBox<String> yearBox;
@@ -22,24 +27,36 @@ public class GUIBuy extends JPanel implements IGUIBuy {
   private final JTextArea shareBox;
   private final JLabel warning;
   private final JPanel warningPanel;
+  private final JLabel shareBoxDisplay;
+  private final JPanel comboboxPanel;
+  private final JLabel selectYear;
+  private final JPanel selectionListPanel;
+  private final JLabel selectMonth;
+  private final JPanel monthListPanel;
+  private final JLabel selectDay;
+  private final JPanel dayListPanel;
 
 
   /**
-   * this is called whn we need to ask for the ticker,
-   * and date.
+   * This constructs the buy/sell GUI and assign it default values. It creates a
+   * drop-down for stock tickers, a textbox for shares, a drop-down menu for month, day, and year.
+   *
+   * @param tickers all the stock tickers (just the ticker names) that are available on file
    */
   public GUIBuy(String[] tickers) {
     super();
     mainPanel = new JPanel();
     this.add(mainPanel, BorderLayout.CENTER);
 
+    // create warning label
     warning = new JLabel("Please make sure to choose from an existing portfolio before submitting!");
     warningPanel = new JPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
     warningPanel.add(warning);
     this.add(mainPanel);
 
-    JPanel comboboxPanel = new JPanel();
+    // creating ticker prompt
+    comboboxPanel = new JPanel();
     comboboxPanel.setBounds(0, 200, 500, 100);
     tickerBoxDisplay = new JLabel("Ticker: ");
     comboboxPanel.add(tickerBoxDisplay);
@@ -50,16 +67,17 @@ public class GUIBuy extends JPanel implements IGUIBuy {
     }
     comboboxPanel.add(tickerBox);
 
+    // creating shares prompt
     shareBox = new JTextArea(0, 10);
-    JLabel shareBoxDisplay = new JLabel("Shares: ");
+    shareBoxDisplay = new JLabel("Shares: ");
     comboboxPanel.add(shareBoxDisplay);
     comboboxPanel.add(shareBox);
     comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.PAGE_AXIS));
 
-
+    // creating years prompt
     java.util.List<String> yearing = new ArrayList<>();
-    JLabel selectYear = new JLabel("Select Year");
-    for (int i = 2000;  i < 2025 ; i++) { // MAKE IT SO THAT ITS THE CURRENT YEAR
+    selectYear = new JLabel("Select Year");
+    for (int i = 2000; i < 2025; i++) { // MAKE IT SO THAT ITS THE CURRENT YEAR
       yearing.add(String.valueOf(i));
     }
     String[] years = new String[yearing.size()];
@@ -68,13 +86,14 @@ public class GUIBuy extends JPanel implements IGUIBuy {
     for (int i = 0; i < years.length; i++) {
       yearBox.addItem(years[i]);
     }
-    JPanel selectionListPanel = new JPanel();
+    selectionListPanel = new JPanel();
     selectionListPanel.add(selectYear);
     selectionListPanel.add(yearBox);
 
+    // creating month prompt
     java.util.List<String> monthList = new ArrayList<>();
-    JLabel selectMonth = new JLabel("Select Month");
-    for (int i = 1;  i < 13 ; i++) {
+    selectMonth = new JLabel("Select Month");
+    for (int i = 1; i < 13; i++) {
       monthList.add(String.valueOf(i));
     }
     String[] listOfMonths = new String[monthList.size()];
@@ -83,14 +102,14 @@ public class GUIBuy extends JPanel implements IGUIBuy {
     for (int i = 0; i < listOfMonths.length; i++) {
       monthBox.addItem(listOfMonths[i]);
     }
-    JPanel monthListPanel = new JPanel();
+    monthListPanel = new JPanel();
     monthListPanel.add(selectMonth);
     monthListPanel.add(monthBox);
 
-
+    // creating day prompt
     List<String> dayList = new ArrayList<>();
-    JLabel selectDay = new JLabel("Select Day");
-    for (int i = 1;  i < 32 ; i++) {
+    selectDay = new JLabel("Select Day");
+    for (int i = 1; i < 32; i++) {
       dayList.add(String.valueOf(i));
     }
     String[] listOfDays = new String[dayList.size()];
@@ -100,7 +119,7 @@ public class GUIBuy extends JPanel implements IGUIBuy {
       dayBox.addItem(listOfDays[i]);
     }
 
-    JPanel dayListPanel = new JPanel();
+    dayListPanel = new JPanel();
     dayListPanel.add(selectDay);
     dayListPanel.add(dayBox);
 
@@ -131,26 +150,31 @@ public class GUIBuy extends JPanel implements IGUIBuy {
   private String getDay() {
     return (String) dayBox.getSelectedItem();
   }
+
   private String getMonth() {
     return (String) monthBox.getSelectedItem();
   }
+
   private String getYear() {
     return (String) yearBox.getSelectedItem();
   }
 
+  @Override
   public String getDate() {
     return String.format("%s-%s-%s", this.getYear(), this.getMonth(), this.getDay());
   }
 
+  @Override
   public String getShares() {
     return shareBox.getText();
   }
 
+  @Override
   public String getTicker() {
     return (String) tickerBox.getSelectedItem();
   }
 
-
+  @Override
   public void setListener(ActionListener listener) {
     createPortButton.addActionListener(listener);
     sellPortButton.addActionListener(listener);

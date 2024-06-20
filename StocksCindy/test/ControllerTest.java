@@ -5,8 +5,6 @@ import java.io.StringReader;
 import controller.Controller;
 import controller.StocksController;
 import model.Model;
-import view.GUIView;
-import view.GUIViewImpl;
 import view.TextView;
 
 import static org.junit.Assert.assertEquals;
@@ -23,10 +21,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("port-create wow AMZN 32 f quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
     //just to show that the controller does go to the mock model
     assertEquals("Creating portfolio wow\n", log.toString());
@@ -37,10 +34,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("port-manage f quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
@@ -52,10 +48,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("port-manage bart TSLA 2 f quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
@@ -67,10 +62,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("port-view cindy finish quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
@@ -86,10 +80,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("port-eval stock-list quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
     assertEquals("get stock\n", log.toString());
@@ -105,10 +98,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("port-manage cindy buy GOOG 10 finish quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
     assertEquals("get portfolio names\n" +
@@ -126,10 +118,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("stock-view AMZN value 06 01 2020 10 01 2020 finish quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
     assertEquals("get stock\n" +
@@ -146,10 +137,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("stock-view GOOG moving-avg 01 01 2020 20 finish quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
     assertEquals("get stock\ncheck file StocksCindy/CSVFiles/GOOG.csv\n" +
@@ -166,10 +156,9 @@ public class ControllerTest {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("stock-view AMZN crossover 01 01 2020 10 finish quit");
 
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
 
     assertEquals("get stock\ncheck file StocksCindy/CSVFiles/AMZN.csv\n" +
@@ -183,10 +172,9 @@ public class ControllerTest {
   public void testInvalidTicker() {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("stock-view RDDT crossover 01 01 2020 10 finish quit");
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
     assertEquals("get stock\nCannot find stock on file. ", log.toString());
   }
@@ -199,10 +187,9 @@ public class ControllerTest {
   public void testInvalidDate() {
     StringBuilder log = new StringBuilder();
     Readable rd = new StringReader("stock-view AMZN crossover 01 0100 2020 10 finish quit");
-    TextView view = new textViewMock(log);
+    TextView view = new TextViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
-    Controller controller = new StocksController(mockModel, view, rd, guiView);
+    Controller controller = new StocksController(mockModel, view, rd);
     controller.goControl();
     assertEquals("get stock\ncheck file StocksCindy/CSVFiles/AMZN.csv\n" +
             "if date 2020-0100-01\n", log.toString());

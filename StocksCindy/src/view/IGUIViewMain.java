@@ -10,7 +10,7 @@ import javax.swing.JComboBox;
  */
 public interface IGUIViewMain extends GUIView {
   /**
-   * Displays a warning for the user to select a portfolio before selecting any actions
+   * Displays a warning for the user to select a portfolio before selecting any actions.
    */
   void msgBox();
 

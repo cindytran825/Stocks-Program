@@ -19,21 +19,16 @@ public class GUICreatePortfolio extends JPanel implements IGUICreatePortfolio {
   private final JButton pButton;
   private final JLabel display;
   private final JTextArea textArea;
-  private final JPanel pPanel;
-  private final JPanel mainPanel;
 
   /**
    * Creates the create-portfolio GUI. It creates a text box to enter the name of the new
    * portfolio.
-   *
-   * @param mainPanel the main GUI from the main view
    */
-  public GUICreatePortfolio(JPanel mainPanel) {
+  public GUICreatePortfolio() {
     super();
-    this.mainPanel = mainPanel; // TODO, are we keeping the mainPanel import (this was experimental)
     createPanel = new JPanel();
     this.add(createPanel, BorderLayout.CENTER);
-    pPanel = new JPanel();
+    JPanel pPanel = new JPanel();
     pPanel.setBorder(BorderFactory.createTitledBorder("Name new portfolio"));
 
     pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.PAGE_AXIS));
@@ -59,9 +54,8 @@ public class GUICreatePortfolio extends JPanel implements IGUICreatePortfolio {
   @Override
   public void displaySuccess() {
     display.setText("Successfully created a new portfolio!");
-    mainPanel.repaint();
-    //createPanel.revalidate();
-    // createPanel.repaint();
+    createPanel.revalidate();
+    createPanel.repaint();
   }
 
   @Override

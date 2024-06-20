@@ -1,12 +1,17 @@
-import javax.swing.*;
-
 import controller.GUIController;
+import javax.swing.JFrame;
 import model.Model;
 import model.StocksModel;
 import view.GUIViewImpl;
 
+/**
+ * GUI stock main class.
+ */
 public class GUI {
 
+  /**
+   * This method sets up and runs the GUI-based stock program that allows changes to the portfolio.
+   */
   public static void execute() {
     Model model = new StocksModel();
     GUIViewImpl.setDefaultLookAndFeelDecorated(false);
@@ -17,35 +22,5 @@ public class GUI {
 
     GUIController controller = new GUIController(model, guiView);
     controller.goControl();
-
-//
-//    try {
-//      // Set cross-platform Java L&F (also called "Metal")
-//      UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-//
-//      //UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
-//
-//      //   UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-//      //    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//      //    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
-//      //    {
-//      //       if ("Nimbus".equals(info.getName())) {
-//      //          UIManager.setLookAndFeel(info.getClassName());
-//      //         break;
-//      //    }
-//      // }
-//    } catch (UnsupportedLookAndFeelException e) {
-//      // handle exception
-//    } catch (ClassNotFoundException e) {
-//      // handle exception
-//    } catch (InstantiationException e) {
-//      // handle exception
-//    } catch (IllegalAccessException e) {
-//      // handle exception
-//    } catch (Exception e) {
-//    }
-//
-//  }
   }
-
 }

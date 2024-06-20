@@ -4,7 +4,7 @@ import view.TextView;
 /**
  * mock of the view for testing.
  */
-public class textViewMock implements TextView {
+public class TextViewMock implements TextView {
 
   private Appendable appendable;
   StringBuilder log = new StringBuilder();
@@ -13,14 +13,14 @@ public class textViewMock implements TextView {
    * constructor takes in appendable.
    * @param appendable .
    */
-  public textViewMock(Appendable appendable) {
+  public TextViewMock(Appendable appendable) {
     this.appendable = appendable;
   }
 
   /**
    * constructor takes in nothing.
    */
-  public textViewMock() {
+  public TextViewMock() {
     this.appendable = System.out;
   }
 

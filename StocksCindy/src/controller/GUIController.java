@@ -15,10 +15,6 @@ import view.IGUIViewMain;
 public class GUIController implements ActionListener, Controller {
   private final Model model;
   private final IGUIViewMain guiView;
-  private String portName;
-  private String ticker;
-  private String share;
-  private String date;
 
   /**
    * This constructs the model and the GUI view.
@@ -39,7 +35,7 @@ public class GUIController implements ActionListener, Controller {
   @Override
   public void actionPerformed(ActionEvent e) {
     guiView.checkComponent();
-    portName = guiView.getSelectedPortfolioName();
+    String portName = guiView.getSelectedPortfolioName();
 
     switch (e.getActionCommand()) {
       case "Buy/Sell":
@@ -74,9 +70,9 @@ public class GUIController implements ActionListener, Controller {
 
 
       case "buy button":
-        ticker = guiView.getPurchaseTicker();
-        share = guiView.getPurchaseShares();
-        date = guiView.getPurchaseDate();
+        String ticker = guiView.getPurchaseTicker();
+        String share = guiView.getPurchaseShares();
+        String date = guiView.getPurchaseDate();
         try {
           model.buyStock(portName, ticker, share, date);
         } catch (Exception exception) {

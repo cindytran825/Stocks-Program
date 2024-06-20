@@ -3,26 +3,25 @@ import java.io.InputStreamReader;
 import controller.StocksController;
 import model.Model;
 import model.StocksModel;
-import view.GUIView;
 import view.StockProgramTextView;
-import view.GUIViewImpl;
 import view.TextView;
 
 /**
- * the stock program that displays the program in the console.
+ * the stock program that displays text-view of the program in the console.
  */
 public class StockProgram {
 
+  /**
+   * This method sets up and runs the text-based stock program.
+   */
   public static void execute() {
     Readable rd = new InputStreamReader(System.in);
-    Appendable ap = System.out;
 
     // view should be generated here
     Model model = new StocksModel();
     TextView view = new StockProgramTextView();
-    GUIView guiView = new GUIViewImpl(model.getPortfolioNames().split("\\n"));
 
-    StocksController controller = new StocksController(model, view, rd, guiView);
+    StocksController controller = new StocksController(model, view, rd);
     controller.goControl();
   }
 }

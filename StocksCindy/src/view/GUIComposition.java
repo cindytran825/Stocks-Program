@@ -18,25 +18,12 @@ import javax.swing.JTextArea;
  * for a valid day, month, and year.
  */
 public class GUIComposition extends JPanel implements IGUIComposition {
-  private final JPanel mainPanel;
-  private final JPanel insidePanel;
   private final JButton compButton;
   private final JButton valueButton;
-  private final JPanel submitPanel;
-  private final JLabel portLabel;
   private final JComboBox<String> yearBox;
   private final JComboBox<String> monthBox;
   private final JComboBox<String> dayBox;
   private final JTextArea sTextArea;
-  private final JScrollPane scrollPane;
-  private final JLabel warning;
-  private final JPanel warningPanel;
-  private final JLabel selectYear;
-  private final JPanel selectionListPanel;
-  private final JLabel selectMonth;
-  private final JPanel monthListPanel;
-  private final JLabel selectDay;
-  private final JPanel dayListPanel;
 
   /**
    * The constructor creates the GUI drop-down button for day, month, and year, and sets
@@ -44,19 +31,20 @@ public class GUIComposition extends JPanel implements IGUIComposition {
    */
   public GUIComposition() {
     super();
-    mainPanel = new JPanel();
+    JPanel mainPanel = new JPanel();
     this.add(mainPanel, BorderLayout.CENTER);
 
     // warning
-    warning = new JLabel("Please make sure to choose from an existing portfolio before submitting!");
-    warningPanel = new JPanel();
+    JLabel warning = new JLabel("Please make sure to choose from an existing "
+            + "portfolio before submitting!");
+    JPanel warningPanel = new JPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
     warningPanel.add(warning);
     this.add(mainPanel);
 
     // drop down for year list
     List<String> year = new ArrayList<>();
-    selectYear = new JLabel("Select Year");
+    JLabel selectYear = new JLabel("Select Year");
 
     for (int i = 2000; i < 2025; i++) {
       year.add(String.valueOf(i));
@@ -67,13 +55,13 @@ public class GUIComposition extends JPanel implements IGUIComposition {
     for (String s : years) {
       yearBox.addItem(s);
     }
-    selectionListPanel = new JPanel();
+    JPanel selectionListPanel = new JPanel();
     selectionListPanel.add(selectYear);
     selectionListPanel.add(yearBox);
 
     // drop down for month list
     List<String> monthList = new ArrayList<>();
-    selectMonth = new JLabel("Select Month");
+    JLabel selectMonth = new JLabel("Select Month");
     for (int i = 1; i < 13; i++) {
       monthList.add(String.valueOf(i));
     }
@@ -83,13 +71,13 @@ public class GUIComposition extends JPanel implements IGUIComposition {
     for (String listOfMonth : listOfMonths) {
       monthBox.addItem(listOfMonth);
     }
-    monthListPanel = new JPanel();
+    JPanel monthListPanel = new JPanel();
     monthListPanel.add(selectMonth);
     monthListPanel.add(monthBox);
 
     // drop down for day list
     List<String> dayList = new ArrayList<>();
-    selectDay = new JLabel("Select Day");
+    JLabel selectDay = new JLabel("Select Day");
     for (int i = 1; i < 32; i++) {
       dayList.add(String.valueOf(i));
     }
@@ -100,16 +88,16 @@ public class GUIComposition extends JPanel implements IGUIComposition {
       dayBox.addItem(listOfDay);
     }
 
-    dayListPanel = new JPanel();
+    JPanel dayListPanel = new JPanel();
     dayListPanel.add(selectDay);
     dayListPanel.add(dayBox);
 
     sTextArea = new JTextArea(10, 20);
-    scrollPane = new JScrollPane(sTextArea);
+    JScrollPane scrollPane = new JScrollPane(sTextArea);
     sTextArea.setLineWrap(true);
     scrollPane.setBorder(BorderFactory.createTitledBorder("Scrollable Result"));
 
-    insidePanel = new JPanel();
+    JPanel insidePanel = new JPanel();
     mainPanel.add(warningPanel);
     insidePanel.add(selectionListPanel);
     insidePanel.add(monthListPanel);
@@ -120,8 +108,8 @@ public class GUIComposition extends JPanel implements IGUIComposition {
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
     mainPanel.add(insidePanel);
 
-    submitPanel = new JPanel();
-    portLabel = new JLabel("");
+    JPanel submitPanel = new JPanel();
+    JLabel portLabel = new JLabel("");
     submitPanel.add(portLabel);
     compButton = new JButton("composition");
     submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.PAGE_AXIS));

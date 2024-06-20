@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * This represents a stock portfolio. A user can create, view, evaluate, get the composition,

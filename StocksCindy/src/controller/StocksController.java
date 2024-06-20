@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-
 import model.Model;
-import view.GUIView;
 import view.TextView;
 
 /**
@@ -22,8 +20,6 @@ public class StocksController implements Controller {
   private final Scanner scan;
   private final String stockDirectory;
   private final String portfolioDirectory;
-  private final GUIView guiView;
-
   private String day;
   private String userInput;
   private String date;
@@ -44,11 +40,10 @@ public class StocksController implements Controller {
    * @param view     view interface.
    * @param readable reads the user inputs.
    */
-  public StocksController(Model model, TextView view, Readable readable, GUIView guiView) {
+  public StocksController(Model model, TextView view, Readable readable) {
     this.view = view;
     this.model = model;
     this.scan = new Scanner(readable);
-    this.guiView = guiView;
     this.stockDirectory = "StocksCindy/CSVFiles";
     this.portfolioDirectory = "StocksCindy/UserPortfolio";
   }

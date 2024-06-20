@@ -23,10 +23,7 @@ import javax.swing.JRadioButton;
 public class GUIViewImpl extends JFrame implements IGUIViewMain {
   private final JPanel mainPanel;
   private final JLabel radioDisplay;
-  private final JLabel radioOtherDisplay;
-  private final JPanel radioPanel;
   private final JLabel comboboxDisplay;
-  private final JPanel comboboxPanel;
   private GUIBuy buyPanel;
   private GUIComposition composition;
   private GUICreatePortfolio create;
@@ -50,7 +47,7 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
     this.add(mainPanel);
 
     //this is the dropdown that asks for the list of existing portfolios
-    comboboxPanel = new JPanel();
+    JPanel comboboxPanel = new JPanel();
     comboboxPanel.setPreferredSize(new Dimension(500, 50));
     comboboxPanel.setBounds(0, 0, 500, 100);
     comboboxDisplay = new JLabel("Choose from existing portfolios");
@@ -72,11 +69,11 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
     // this is the radio panel of the menu (buy/sell and composition/value action choices).
     String[] buttons = {"Buy/Sell", "Composition/Value"};
     ButtonGroup rGroup1 = new ButtonGroup();
-    radioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel radioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     radioPanel.setBounds(0, 200, 500, 100);
     radioPanel.setBorder(BorderFactory.createTitledBorder("Portfolio Editor Menu"));
     radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.PAGE_AXIS));
-    radioOtherDisplay = new JLabel("Which actions would you like to perform on"
+    JLabel radioOtherDisplay = new JLabel("Which actions would you like to perform on"
             + " the portfolio?");
     radioPanel.add(radioOtherDisplay);
     radioButtons = new JRadioButton[buttons.length];
@@ -152,7 +149,7 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
   @Override
   public void buildCreatePortfolio(ActionListener listener) {
     radioDisplay.setText("Create Portfolio was selected");
-    create = new GUICreatePortfolio(mainPanel);
+    create = new GUICreatePortfolio();
     create.setListener(listener);
     create.setBounds(0, 200, 500, 100);
     mainPanel.add(create);
@@ -166,7 +163,7 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
     mainPanel.revalidate();
   }
 
-@Override
+  @Override
   public void setComboboxDisplay(String portfolioName) {
     comboboxDisplay.setText("You selected: " + portfolioName);
     updateMain();
@@ -191,6 +188,7 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
   @Override
   public void createSuccess() {
     create.displaySuccess();
+    updateMain();
   }
 
   private void updateMain() {

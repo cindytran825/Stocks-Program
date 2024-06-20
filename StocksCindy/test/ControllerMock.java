@@ -1,6 +1,3 @@
-
-import java.util.Scanner;
-
 import controller.Controller;
 import model.Model;
 import view.TextView;
@@ -13,15 +10,12 @@ public class ControllerMock implements Controller {
   TextView mockView;
   String userInput;
 
-
-  private Scanner scan;
-  private String name;
-
   /**
    * constructor for testing
    * takes in mockview and model.
+   *
    * @param mockModel .
-   * @param mockView .
+   * @param mockView  .
    * @param userInput .
    */
   ControllerMock(Model mockModel, TextView mockView, String userInput) {
@@ -75,21 +69,21 @@ public class ControllerMock implements Controller {
         mockView.getDateUser2();
         mockView.getDays();
         break;
-      case "stock-view" :
+      case "stock-view":
         mockView.getTicker();
         break;
-      case "composition" :
+      case "composition":
         mockView.getDateUser1();
         break;
-      case "distribution" :
+      case "distribution":
         mockView.getDateUser1();
         break;
-      case "buy" :
+      case "buy":
         mockView.getTicker();
         mockView.getDateUser1();
         mockView.getDateUser2();
         break;
-      case "sell" :
+      case "sell":
         mockView.getTicker();
         mockView.getDateUser1();
         mockView.getDateUser2();

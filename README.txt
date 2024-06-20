@@ -1,4 +1,6 @@
 Features of the program that works:
+
+--------- TEXT BASED WINDOW (TERMINAL) -------------
 Out user interface is interactive -
 
    Menu displays the commands that the user can input
@@ -45,3 +47,6 @@ Out user interface is interactive -
    [quit] quits.
 
    [menu] displays the menu.
+
+------------------------------------------------------------------------------
+

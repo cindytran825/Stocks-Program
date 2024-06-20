@@ -2,8 +2,8 @@ import org.junit.Test;
 
 import controller.Controller;
 import model.Model;
-import view.StockProgramView;
-import view.View;
+import view.StockProgramTextView;
+import view.textView;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,14 +14,14 @@ public class ViewTest {
 
   Appendable ap = new StringBuilder();
   Model mockModel = new ModelMock();
-  View view = new StockProgramView(ap);
+  textView view = new StockProgramTextView(ap);
   String userInput = "";
 
   @Test
   public void testForBuy() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "buy";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -41,7 +41,7 @@ public class ViewTest {
   public void testForSell() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "sell";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -61,7 +61,7 @@ public class ViewTest {
   public void testForSell1() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "sell";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -84,7 +84,7 @@ public class ViewTest {
   public void testForDis() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "distribution";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -107,7 +107,7 @@ public class ViewTest {
   public void testForBuy1() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "buy";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -130,7 +130,7 @@ public class ViewTest {
   public void testForComp() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "composition";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -152,7 +152,7 @@ public class ViewTest {
   public void testForFinish() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "finish";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -170,7 +170,7 @@ public class ViewTest {
   public void testForWelcome() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "";
 
     Controller controller = new ControllerMock(mockModel, view, userInput);
@@ -201,7 +201,7 @@ public class ViewTest {
   public void testQuit() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "quit";
 
     Controller controller = new ControllerMock(mockModel, view, userInput);
@@ -237,7 +237,7 @@ public class ViewTest {
   public void testForMenu() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "menu";
 
     Controller controller = new ControllerMock(mockModel, view, userInput);
@@ -273,7 +273,7 @@ public class ViewTest {
   public void testForInvalidPortfolio() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "port";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -295,7 +295,7 @@ public class ViewTest {
   public void testForManagePortfolio() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "port-manage";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -318,7 +318,7 @@ public class ViewTest {
   public void testForManagePortfolio2() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "port-manage";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -342,7 +342,7 @@ public class ViewTest {
   public void testForViewExistingPortfolio() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "port-view";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -369,7 +369,7 @@ public class ViewTest {
   public void testForEvaluatePortfolio() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "port-eval";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -393,7 +393,7 @@ public class ViewTest {
   public void testForGainLoss() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "stock-eval";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -424,7 +424,7 @@ public class ViewTest {
   public void testForAverage() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "stock-avg";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -454,7 +454,7 @@ public class ViewTest {
   public void testForCrossover() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "stock-cross";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -484,7 +484,7 @@ public class ViewTest {
   public void testForStockList() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "stock-list";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -506,7 +506,7 @@ public class ViewTest {
   public void testForDownload() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "stock-download";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();
@@ -530,7 +530,7 @@ public class ViewTest {
   public void testForGetBarChart() {
     Appendable ap = new StringBuilder();
     Model mockModel = new ModelMock();
-    View view = new StockProgramView(ap);
+    textView view = new StockProgramTextView(ap);
     String userInput = "port-view";
     Controller controller = new ControllerMock(mockModel, view, userInput);
     controller.goControl();

@@ -6,13 +6,13 @@ import java.io.IOException;
  * View of the program, it should connect to the controller.
  * which calls the methods in the model.
  */
-public class StockProgramView implements View {
+public class StockProgramTextView implements textView {
   private Appendable appendable;
 
   /**
    * empty constructor for the view. Automatically assigns it to System.out when given no argument.
    */
-  public StockProgramView() {
+  public StockProgramTextView() {
     this.appendable = System.out;
   }
 
@@ -21,7 +21,7 @@ public class StockProgramView implements View {
    *
    * @param appendable any appendable that view can add strings to
    */
-  public StockProgramView(Appendable appendable) {
+  public StockProgramTextView(Appendable appendable) {
     this.appendable = appendable;
   }
 

@@ -3,14 +3,14 @@ import java.util.Scanner;
 
 import controller.Controller;
 import model.Model;
-import view.View;
+import view.textView;
 
 /**
  * Controller mock for testing.
  */
 public class ControllerMock implements Controller {
   Model mockModel;
-  View mockView;
+  textView mockView;
   String userInput;
 
 
@@ -24,7 +24,7 @@ public class ControllerMock implements Controller {
    * @param mockView .
    * @param userInput .
    */
-  ControllerMock(Model mockModel, View mockView, String userInput) {
+  ControllerMock(Model mockModel, textView mockView, String userInput) {
     this.mockModel = mockModel;
     this.mockView = mockView;
     this.userInput = userInput;

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * This represents a stock portfolio. A user can create, view, evaluate, get the composition,
@@ -95,8 +96,102 @@ public class PortfolioWithImpl implements Portfolio {
   }
 
 
+  private boolean checkIfFileExist(String path) {
+    File file = new File(path);
+    return file.exists();
+  }
+
+  private boolean checkIfDate(String date) {
+    try {
+      // just initializing, no need to store
+      new MyDateWithImpl(date);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+
+  private boolean checkIfNumber(String n) {
+    try {
+      Double.parseDouble(n);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  private boolean checkIfWholeNumber(String n) {
+    try {
+      double num = Double.parseDouble(n);
+      return num % 1 == 0;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  private String getLatestPortfolioTransactionDate(Portfolio portfolio) {
+    String log = portfolio.getLog();
+    String[] lines = log.split("\n");
+    if (lines.length <= 1) {
+      return "";
+    }
+    String[] lastLine = lines[lines.length - 1].split(",");
+    return lastLine[lastLine.length - 1];
+  }
+
+  private boolean checkIfChronologicalPortfolio(String name, String inputDate) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            name, reference, stockDirectory, true);
+    String latest = this.getLatestPortfolioTransactionDate(existingPortfolio);
+    if (latest.isEmpty()) {
+      return true;
+    }
+    try {
+      MyDate input = new MyDateWithImpl(inputDate);
+      MyDate last = new MyDateWithImpl(latest);
+      return input.compareTo(last) >= 0;
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
+  }
+
+  private boolean checkIfStockDataExist(String ticker, String inputDate) {
+    try {
+      Stock stock = new Stock(ticker, stockDirectory);
+      List<String> timestamps = stock.getTimestamp();
+      MyDate newDate = new MyDateWithImpl(inputDate);
+      return timestamps.contains(newDate.toString());
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  private boolean checkIfPortfolioChronologicalAndDataExist(
+          String portfolioName,
+          String inputDate
+  ) {
+    Portfolio existingPortfolio = new PortfolioWithImpl(
+            portfolioName, reference, stockDirectory, true);
+    if (!checkIfChronologicalPortfolio(portfolioName, inputDate)) {
+      return false;
+    }
+    Map<String, Double> inventory = existingPortfolio.getListInventories();
+    Set<String> stockTickers = inventory.keySet();
+    for (String ticker : stockTickers) {
+      if (!checkIfStockDataExist(ticker, inputDate)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
   @Override
-  public double getValue(String date, String stockDirectory) {
+  public double getValue(String date, String stockDirectory) throws IllegalArgumentException {
+    if (!checkIfDate(date)) {
+      throw new IllegalArgumentException();
+    }
     double totalValue = 0.0;
     Stock stock;
     List<Double> closePrices;
@@ -123,11 +218,11 @@ public class PortfolioWithImpl implements Portfolio {
   @Override
   public void buyStock(String ticker, double shares, String date
   ) throws IllegalArgumentException {
-    // assuming that the model / controller will check if it's a valid ticker
-    // and a valid date (YYYY-MM-DD, doesn't have to be a date in the data)
-
-    // check that the date is valid (in chronological order)
-    checkDateValidity(date, ticker);
+    if (shares <= 0) {
+      throw new IllegalArgumentException();
+    } else if (!checkDateValidity(date, ticker)) {
+      throw new IllegalArgumentException();
+    }
     MyDate inputDate = new MyDateWithImpl(date);
 
     double originalPrice = listInventories.containsKey(ticker) ? listInventories.get(ticker) : 0;
@@ -141,11 +236,11 @@ public class PortfolioWithImpl implements Portfolio {
   @Override
   public void sellStock(String ticker, double shares, String date
   ) throws IllegalArgumentException {
-    // assuming that the model / controller will check if it's a valid ticker
-    // and a valid date (YYYY-MM-DD format, doesn't have to be a date in the data)
-
-    // check that the date is valid (in chronological order)
-    checkDateValidity(date, ticker);
+    if (shares <= 0) {
+      throw new IllegalArgumentException();
+    } else if (!checkDateValidity(date, ticker)) {
+      throw new IllegalArgumentException();
+    }
     MyDate inputDate = new MyDateWithImpl(date);
 
     // can sell
@@ -171,7 +266,9 @@ public class PortfolioWithImpl implements Portfolio {
     // checks if the date has information available AND it's chronological
     double totalPercentage = 0.0;
     for (String ticker : listInventories.keySet()) {
-      checkDateValidity(date, ticker);
+      if (!checkDateValidity(date, ticker)) {
+        throw new IllegalArgumentException();
+      }
       totalPercentage += percentages.get(ticker);
     }
     if (totalPercentage != 1.0) {
@@ -209,10 +306,13 @@ public class PortfolioWithImpl implements Portfolio {
   }
 
   @Override
-  public Map<String, Double> getDistribution(String date) {
+  public Map<String, Double> getDistribution(String date) throws IllegalArgumentException {
     Map<String, Double> comp = getComposition(date);
     Map<String, Double> distribution = new HashMap<>();
     for (String key : comp.keySet()) {
+      if (!checkIfStockDataExist(key, date)) {
+        throw new IllegalArgumentException();
+      }
       Stock stock = new Stock(key, stockDirectory);
       Double stockValue = comp.get(key) * stock.getMovingAverage(date, 1);
       distribution.put(
@@ -224,13 +324,20 @@ public class PortfolioWithImpl implements Portfolio {
 
 
   @Override
-  public Map<String, Double> getComposition(String date) throws IllegalStateException {
+  public Map<String, Double> getComposition(
+          String date
+  ) throws IllegalStateException, IllegalArgumentException {
     List<String> actionLog = log.getColumn("action");
     List<String> shareLog = log.getColumn("share");
     List<String> stockLog = log.getColumn("stock");
     List<String> dateLog = log.getColumn("timestamp");
 
     Map<String, Double> inventory = new HashMap<>();
+
+    if (!checkIfDate(date)) {
+      throw new IllegalArgumentException();
+    }
+
     MyDate inputDate = new MyDateWithImpl(date);
     MyDate logDate;
 
@@ -332,7 +439,7 @@ public class PortfolioWithImpl implements Portfolio {
             && inputDate.compareTo(latestDate) >= 0;
   }
 
-  private void checkDateValidity(String date, String ticker) throws IllegalArgumentException {
+  private boolean checkDateValidity(String date, String ticker) throws IllegalArgumentException {
     Stock stock = new Stock(ticker, stockDirectory);
     List<String> dateList = stock.getTimestamp();
     List<String> transactionDates = this.log.getColumn("timestamp");
@@ -340,8 +447,9 @@ public class PortfolioWithImpl implements Portfolio {
             !transactionDates.isEmpty() ?
                     transactionDates.get(transactionDates.size() - 1)  : "0000-01-01";
     if (!checkDateChronology(latestTransactionDate, date, dateList)) {
-      throw new IllegalArgumentException("Invalid date.");
+      return false;
     }
+    return true;
   }
 
   private Map<String, Double> deepCopy(Map<String, Double> original) {

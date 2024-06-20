@@ -10,10 +10,18 @@ import javax.swing.*;
 public class GUIComposition extends JPanel implements GUIView {
   private JPanel mainPanel;
   private JPanel insidePanel;
-  private JButton compButton;
-  private JButton valueButton;
+  private final JButton compButton;
+  private final JButton valueButton;
   private JPanel submitPanel;
   private JLabel portLabel;
+
+  private final JComboBox<String> yearBox;
+
+  private final JComboBox<String> monthBox;
+
+  private final JComboBox<String> dayBox;
+  private  JTextArea sTextArea;
+  private final JScrollPane scrollPane;
 
 
   /**
@@ -33,23 +41,23 @@ public class GUIComposition extends JPanel implements GUIView {
     /**
      * drop down for year list
      */
-    List<String> yearing = new ArrayList<>();
+    List<String> year = new ArrayList<>();
     JLabel selectYear = new JLabel("Select Year");
 
     // TODO WHY LIMIT YEAR? SHOULD NOT SET IT TO 2025, but set it to the latest year
 
     for (int i = 2000;  i < 2025 ; i++) {
-      yearing.add(String.valueOf(i));
+      year.add(String.valueOf(i));
     }
-    String[] years = new String[yearing.size()];
-    years = yearing.toArray(years);
-    JComboBox<String> combobox = new JComboBox<String>();
+    String[] years = new String[year.size()];
+    years = year.toArray(years);
+    yearBox = new JComboBox<String>();
     for (int i = 0; i < years.length; i++) {
-      combobox.addItem(years[i]);
+      yearBox.addItem(years[i]);
     }
     JPanel selectionListPanel = new JPanel();
     selectionListPanel.add(selectYear);
-    selectionListPanel.add(combobox);
+    selectionListPanel.add(yearBox);
 
     /**
      * drop down for month list
@@ -61,7 +69,7 @@ public class GUIComposition extends JPanel implements GUIView {
     }
     String[] listOfMonths = new String[monthList.size()];
     listOfMonths = monthList.toArray(listOfMonths);
-    JComboBox<String> monthBox = new JComboBox<String>();
+    monthBox = new JComboBox<String>();
     for (int i = 0; i < listOfMonths.length; i++) {
       monthBox.addItem(listOfMonths[i]);
     }
@@ -79,7 +87,7 @@ public class GUIComposition extends JPanel implements GUIView {
     }
     String[] listOfDays = new String[dayList.size()];
     listOfDays = dayList.toArray(listOfDays);
-    JComboBox<String> dayBox = new JComboBox<String>();
+    dayBox = new JComboBox<String>();
     for (int i = 0; i < listOfDays.length; i++) {
       dayBox.addItem(listOfDays[i]);
     }
@@ -89,6 +97,12 @@ public class GUIComposition extends JPanel implements GUIView {
     dayListPanel.add(dayBox);
 
 
+    sTextArea = new JTextArea(10, 20);
+    scrollPane = new JScrollPane(sTextArea);
+    sTextArea.setLineWrap(true);
+    scrollPane.setBorder(BorderFactory.createTitledBorder("Scrollable Result"));
+
+
     insidePanel = new JPanel();
     mainPanel.add(warningPanel);
     insidePanel.add(selectionListPanel);
@@ -96,6 +110,7 @@ public class GUIComposition extends JPanel implements GUIView {
     insidePanel.add(dayListPanel);
 
     mainPanel.add(insidePanel);
+    mainPanel.add(scrollPane);
 
     /**
      * call the button class
@@ -111,7 +126,6 @@ public class GUIComposition extends JPanel implements GUIView {
     compButton.setActionCommand("comp button");
     submitPanel.add(compButton);
 
-
     valueButton = new JButton("value");
     submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.PAGE_AXIS));
     submitPanel.add(valueButton);
@@ -119,10 +133,27 @@ public class GUIComposition extends JPanel implements GUIView {
     mainPanel.add(submitPanel);
   }
 
-
   @Override
   public void setListener(ActionListener listener) {
     compButton.addActionListener(listener);
     valueButton.addActionListener(listener);
+  }
+
+  public void setResultText(String result) {
+    sTextArea.setText(result);
+  }
+
+  private String getDay() {
+    return (String) dayBox.getSelectedItem();
+  }
+  private String getMonth() {
+    return (String) monthBox.getSelectedItem();
+  }
+  private String getYear() {
+    return (String) yearBox.getSelectedItem();
+  }
+
+  public String getDate() {
+    return String.format("%s-%s-%s", this.getYear(), this.getMonth(), this.getDay());
   }
 }

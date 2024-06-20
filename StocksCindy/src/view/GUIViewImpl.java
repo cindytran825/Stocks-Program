@@ -1,10 +1,7 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static javax.swing.JOptionPane.showMessageDialog;
-
 
 import javax.swing.*;
 
@@ -27,7 +24,6 @@ public class GUIViewImpl extends JFrame implements GUIView {
     super();
     setTitle("Stocks Program");
     setSize(700, 500);
-//    this.setResizable(false);
 
     this.setLayout(new BorderLayout());
     mainPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -86,10 +82,6 @@ public class GUIViewImpl extends JFrame implements GUIView {
     radioDisplay = new JLabel("Which one did the user select?");
     radioPanel.add(radioDisplay);
     mainPanel.add(radioPanel);
-
-
-
-
     this.pack();
   }
 
@@ -105,6 +97,9 @@ public class GUIViewImpl extends JFrame implements GUIView {
     JOptionPane.showMessageDialog(null, "Please select a portfolio!");
   }
 
+  public void invalidInput() {
+    JOptionPane.showMessageDialog(null, "Invalid Input!");
+  }
 
   // TODO @Override
   public void setListener(ActionListener listener) {
@@ -153,7 +148,12 @@ public class GUIViewImpl extends JFrame implements GUIView {
     mainPanel.add(create);
     this.pack();
     updateMain();
+  }
 
+
+  public void setCompositionText(String result) {
+    composition.setResultText(result);
+    mainPanel.revalidate();
   }
 
   public void setComboboxDisplay(String portfolioName) {
@@ -165,9 +165,41 @@ public class GUIViewImpl extends JFrame implements GUIView {
     return combobox;
   }
 
+  public void updatePortfolio(String newPortfolioName) {
+    combobox.addItem(newPortfolioName);
+    mainPanel.revalidate();
+  }
+
+  public String getCreateName() {
+    return create.getName();
+  }
+
+  public void createSuccess() {
+    create.displaySuccess();
+  }
+
   private void updateMain() {
     mainPanel.revalidate();
     mainPanel.repaint();
   }
 
+  public String getSelectedPortfolioName() {
+    return (String) combobox.getSelectedItem();
+  }
+
+  public String getPurchaseTicker() {
+    return buyPanel.getTicker();
+  }
+
+  public String getPurchaseDate() {
+    return buyPanel.getDate();
+  }
+
+  public String getPurchaseShares() {
+    return buyPanel.getShares();
+  }
+
+  public String getAnalysisDate() {
+    return composition.getDate();
+  }
 }

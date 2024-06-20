@@ -4,3 +4,4 @@ Office hours Question:
 - is there a way to read inputs specifically from the controller (without having to return the button).
 in our buy/sell and composition/value cases in the actionPerformed method, it reads the combobox by
 calling the view to get the combobox, and reading the input. Is there an alternative way to this approach
+- how to fix frozen panel classes?

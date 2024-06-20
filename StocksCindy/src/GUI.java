@@ -1,16 +1,9 @@
-import java.io.InputStreamReader;
-
 import javax.swing.*;
 
-import controller.Controller;
 import controller.GUIController;
-import controller.StocksController;
 import model.Model;
 import model.StocksModel;
-import view.GUIView;
-import view.StockProgramView;
 import view.GUIViewImpl;
-import view.View;
 
 public class GUI {
 

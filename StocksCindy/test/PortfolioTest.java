@@ -104,6 +104,12 @@ public class PortfolioTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void testBuyBadShares() {
+    bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
+    bart.buyStock("GOOG", -5, "2024-06-03");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void testBuyNotChronological() throws FileNotFoundException {
     // need to reset the file-writing since it'll write and save to it
     bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
@@ -222,6 +228,12 @@ public class PortfolioTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void testSellBadShares() {
+    bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
+    bart.buyStock("GOOG", -4321, "2024-06-03");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void testSellNotChronological() throws FileNotFoundException {
     bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
     bart.buyStock("GOOG", 4.0, "2024-06-03");
@@ -316,6 +328,12 @@ public class PortfolioTest {
     assertEquals(expected, bob.getComposition("2024-06-03"));
 
     assertEquals(new HashMap<>(), bob.getComposition("2000-01-01"));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testGetCompositionBadDate() {
+    bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
+    bart.buyStock("GOOG", 4.0, "fnjdskafbldsjaf");
   }
 
   @Test
@@ -452,6 +470,12 @@ public class PortfolioTest {
     );
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void getValueBadDate() {
+    bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
+    bart.buyStock("GOOG", 4.0, "2dalkfngeang3");
+  }
+
   /**
    * tests the toString method.
    */
@@ -489,6 +513,18 @@ public class PortfolioTest {
     }
     assertEquals(893553.66, valueOfPortfolio, 0.01);
     assertEquals(valueOfPortfolio, totalValue, 0.01);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void getDistributionBadDate() {
+    bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
+    bart.buyStock("GOOG", 4.0, "2000-06-03");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void getDistributionBadDateFormat() {
+    bart = new PortfolioWithImpl("bart", testFolderPath, testFolderPath, false);
+    bart.buyStock("GOOG", 4.0, "2dsjkafblhfkjgv");
   }
 
 }

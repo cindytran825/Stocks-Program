@@ -23,8 +23,8 @@ public class MyDateTest {
 
   @Test
   public void testValidMyDate() {
-    MyDate jan122001 = new MyDateWithImpl("2001-1-12");
-    assertEquals("2001-01-12", jan122001.toString());
+    MyDate jan122001 = new MyDateWithImpl("2001-1-1");
+    assertEquals("2001-01-01", jan122001.toString());
 
     // Jan 12 2001
     jan122001 = new MyDateWithImpl(12, 1, 2001);

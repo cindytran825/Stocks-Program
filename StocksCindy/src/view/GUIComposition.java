@@ -8,12 +8,13 @@ import java.util.List;
 
 import javax.swing.*;
 
-public class GUIComposition extends JPanel implements GUIView, ActionListener {
-  private JLabel comboboxDisplay;
+public class GUIComposition extends JPanel implements GUIView {
   private JPanel mainPanel;
   private JPanel insidePanel;
-  private JLabel getYear;
-  private GUIGetResult result;
+  private JButton createPortButton;
+  private JButton sellPortButton;
+  private JPanel submitPanel;
+  private JLabel portLabel;
 
 
   /**
@@ -100,25 +101,24 @@ public class GUIComposition extends JPanel implements GUIView, ActionListener {
     /**
      * call the button class
      */
-    JPanel buttonPanel = new JPanel();
-    result = new GUIGetResult();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-    buttonPanel.add(result);
     mainPanel.add(insidePanel);
-    mainPanel.add(buttonPanel);
+
+    submitPanel = new JPanel();
+    portLabel = new JLabel("");
+    submitPanel.add(portLabel);
+    createPortButton = new JButton("composition");
+    createPortButton.setActionCommand("composition");
+    submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.PAGE_AXIS));
+    submitPanel.add(createPortButton);
 
 
+    sellPortButton = new JButton("value");
+    sellPortButton.setActionCommand("value");
+    submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.PAGE_AXIS));
+    submitPanel.add(sellPortButton);
+    mainPanel.add(submitPanel);
   }
 
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    switch (e.getActionCommand()) {
-      case "Ticker":
-        comboboxDisplay.setText("");
-        //save the input
-
-        break;
-    }
-  }
 }

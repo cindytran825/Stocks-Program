@@ -12,7 +12,10 @@ public class GUIBuy extends JPanel implements GUIView, ActionListener {
   private JLabel comboboxDisplay;
   private JPanel mainPanel;
   private JPanel insidePanel;
-  private GUIGetResult result;
+  private JButton createPortButton;
+  private JButton sellPortButton;
+  private JPanel submitPanel;
+  private JLabel portLabel;
 
 
   /**
@@ -24,11 +27,11 @@ public class GUIBuy extends JPanel implements GUIView, ActionListener {
     mainPanel = new JPanel();
     this.add(mainPanel, BorderLayout.CENTER);
 
-//    JLabel warning = new JLabel("Please make sure to choose from an existing portfolio before submitting!");
-//    JPanel warningPanel = new JPanel();
-//    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-//    warningPanel.add(warning);
-//    this.add(mainPanel);
+    JLabel warning = new JLabel("Please make sure to choose from an existing portfolio before submitting!");
+    JPanel warningPanel = new JPanel();
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+    warningPanel.add(warning);
+    this.add(mainPanel);
 
     JPanel comboboxPanel = new JPanel();
 //    comboboxPanel.setBorder(BorderFactory.createTitledBorder("Buy Menu"));
@@ -95,18 +98,30 @@ public class GUIBuy extends JPanel implements GUIView, ActionListener {
 
 
     insidePanel = new JPanel();
-//    mainPanel.add(warningPanel);
+    mainPanel.add(warningPanel);
     insidePanel.add(comboboxPanel);
     insidePanel.add(selectionListPanel);
     insidePanel.add(monthListPanel);
     insidePanel.add(dayListPanel);
 
-    JPanel buttonPanel = new JPanel();
-    result = new GUIGetResult();
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-    buttonPanel.add(result);
+
     mainPanel.add(insidePanel);
-    mainPanel.add(buttonPanel);
+    submitPanel = new JPanel();
+    portLabel = new JLabel("");
+    submitPanel.add(portLabel);
+    createPortButton = new JButton("buy");
+    createPortButton.setActionCommand("buy button");
+    createPortButton.addActionListener(this);
+    submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.PAGE_AXIS));
+    submitPanel.add(createPortButton);
+
+
+    sellPortButton = new JButton("sell");
+    sellPortButton.setActionCommand("sell button");
+    sellPortButton.addActionListener(this);
+    submitPanel.setLayout(new BoxLayout(submitPanel, BoxLayout.PAGE_AXIS));
+    submitPanel.add(sellPortButton);
+    mainPanel.add(submitPanel);
 
 
 

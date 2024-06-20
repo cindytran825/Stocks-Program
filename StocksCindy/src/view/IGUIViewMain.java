@@ -26,28 +26,6 @@ public interface IGUIViewMain extends GUIView {
   void invalidInput();
 
   /**
-   * Creates the buying/selling box in the main window.
-   *
-   * @param listener Action listeners who will read all button inputs from this class
-   * @param tickers  stock tickers
-   */
-  void buildBuyBox(ActionListener listener, String[] tickers);
-
-  /**
-   * Creates the component/value box in the main window.
-   *
-   * @param listener Action listeners that will read all button inputs from this class
-   */
-  void buildComponentBox(ActionListener listener);
-
-  /**
-   * Creates the create-portfolio box in the main window.
-   *
-   * @param listener Action listeners that will read all button inputs from this class
-   */
-  void buildCreatePortfolio(ActionListener listener);
-
-  /**
    * sets the text display of the composition box to the portfolio's composition reading.
    *
    * @param result the portfolio composition breakdown from the model
@@ -93,6 +71,26 @@ public interface IGUIViewMain extends GUIView {
    * @return selected portfolio name
    */
   String getSelectedPortfolioName();
+
+  /**
+   * returns to the user when they have bought a share on a portfolio.
+   */
+  void buySuccess();
+
+  /**
+   * returns to the user when they have sold a share on a portfolio.
+   */
+  void sellSuccess();
+
+  /**
+   * returns to the user when they picked composition button.
+   */
+  void compSuccess();
+
+  /**
+   * returns to the user when they picked value button.
+   */
+  void valueSuccess();
 
   /**
    * gets the chosen ticker from the buy/sell box.

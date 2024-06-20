@@ -15,7 +15,7 @@ public class GUI {
   public static void execute() {
     Model model = new StocksModel();
     GUIViewImpl.setDefaultLookAndFeelDecorated(false);
-    GUIViewImpl guiView = new GUIViewImpl(model.getPortfolioNames().split("\\n"));
+    GUIViewImpl guiView = new GUIViewImpl(model.getPortfolioNames().split("\\n"), model.getStockNames().split("\\n"));
 
     guiView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     guiView.setVisible(true);

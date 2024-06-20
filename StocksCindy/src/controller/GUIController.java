@@ -38,24 +38,12 @@ public class GUIController implements ActionListener, Controller {
     String portName = guiView.getSelectedPortfolioName();
 
     switch (e.getActionCommand()) {
-      case "Buy/Sell":
-        buildBuySell();
-        break;
-      case "Composition/Value":
-        buildCompVal();
-        //call class
-        break;
 
       case "Portfolio Selection":
         if (e.getSource() instanceof JComboBox) {
           JComboBox<String> box = (JComboBox<String>) e.getSource();
           guiView.setComboboxDisplay((String) box.getSelectedItem());
         }
-        break;
-
-      case "Create portfolio":
-        System.out.println("Create portfolio");
-        guiView.buildCreatePortfolio(this);
         break;
 
       case "Create":
@@ -78,6 +66,7 @@ public class GUIController implements ActionListener, Controller {
         } catch (Exception exception) {
           guiView.invalidInput();
         }
+        guiView.buySuccess();
         buildBuySell();
         break;
 
@@ -90,6 +79,7 @@ public class GUIController implements ActionListener, Controller {
         } catch (Exception exception) {
           guiView.invalidInput();
         }
+        guiView.sellSuccess();
         buildBuySell();
         break;
 
@@ -105,6 +95,7 @@ public class GUIController implements ActionListener, Controller {
         } catch (Exception exception) {
           guiView.invalidInput();
         }
+        guiView.compSuccess();
         buildCompVal();
         break;
 
@@ -118,6 +109,7 @@ public class GUIController implements ActionListener, Controller {
         } catch (Exception exception) {
           guiView.invalidInput();
         }
+        guiView.valueSuccess();
         buildCompVal();
         break;
       default:
@@ -127,16 +119,12 @@ public class GUIController implements ActionListener, Controller {
   private void buildBuySell() {
     if (guiView.getCombobox().getSelectedIndex() == 0) {
       guiView.msgBox();
-    } else {
-      guiView.buildBuyBox(this, model.getStockNames().split("\\n"));
     }
   }
 
   private void buildCompVal() {
     if (guiView.getCombobox().getSelectedIndex() == 0) {
       guiView.msgBox();
-    } else {
-      guiView.buildComponentBox(this);
     }
   }
 }

@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 
 import javax.swing.*;
 
@@ -13,9 +15,7 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
   private JLabel comboboxDisplay;
   private GUIBuy buyPanel;
   private GUIComposition composition;
-  private GUIGetValue getTypeValue;
   private GUICreatePortfolio create;
-  private GUINoPortfolio noPort;
   private JButton createPortButton;
   private JRadioButton[] radioButtons;
   private JComboBox<String> combobox;
@@ -57,6 +57,7 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
 
     comboboxPanel.add(combobox);
 
+
     createPortButton = new JButton("Create Portfolio");
     createPortButton.setActionCommand("Create portfolio");
     comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.PAGE_AXIS));
@@ -93,18 +94,9 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     radioPanel.add(radioDisplay);
     mainPanel.add(radioPanel);
 
-//    buyPanel = new GUIBuy();
-//    buyPanel.setBounds(0, 200, 500, 100);
-////    buyPanel.add(new JLabel("Buy panel content goes here."));
-//    mainPanel.add(buyPanel);
-//    this.add(mainPanel);
 
 
-    //dialog boxes
-//    JPanel dialogBoxesPanel = new JPanel();
-//    dialogBoxesPanel.setBorder(BorderFactory.createTitledBorder("Dialog boxes"));
-//    dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
-//    mainPanel.add(dialogBoxesPanel);
+
     this.pack();
   }
 
@@ -113,6 +105,11 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     if (mainPanel.getComponentCount() > 3) {
       mainPanel.remove(mainPanel.getComponentCount() - 1);
     }
+  }
+
+
+  public void msgBox() {
+    JOptionPane.showMessageDialog(null, "Please select a portfolio!");
   }
 
 
@@ -166,6 +163,10 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
   public void setComboboxDisplay(String portfolioName) {
     comboboxDisplay.setText("You selected: " + portfolioName);
     updateMain();
+  }
+
+  public JComboBox<String> getCombobox() {
+    return combobox;
   }
 
   private void updateMain() {

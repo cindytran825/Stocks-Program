@@ -20,7 +20,7 @@ public class StockProgram {
     // view should be generated here
     Model model = new StocksModel();
     View view = new StockProgramView();
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(model.getPortfolioNames().split("\\n"));
 
     StocksController controller = new StocksController(model, view, rd, guiView);
     controller.goControl();

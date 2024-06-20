@@ -15,13 +15,12 @@ import view.View;
 public class GUI {
 
   public static void execute() {
+    Model model = new StocksModel();
     GUIViewImpl.setDefaultLookAndFeelDecorated(false);
-    GUIViewImpl guiView = new GUIViewImpl();
+    GUIViewImpl guiView = new GUIViewImpl(model.getPortfolioNames().split("\\n"));
 
     guiView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     guiView.setVisible(true);
-
-    Model model = new StocksModel();
 
     GUIController controller = new GUIController(model, guiView);
     controller.goControl();

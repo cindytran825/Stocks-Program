@@ -24,17 +24,16 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
   /**
    * this is first called then the user runs the GUI.
    */
-  public GUIViewImpl() {
+  public GUIViewImpl(String[] names) {
     super();
     setTitle("Stocks Program");
-    setSize(600, 500);
+    setSize(700, 500);
 //    this.setResizable(false);
 
     this.setLayout(new BorderLayout());
     mainPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
     mainPanel.setPreferredSize(new Dimension(700, 500));
     this.add(mainPanel);
-
     /**
      * this is the dropdown that asks for the list of existing portfolios
      */
@@ -46,24 +45,20 @@ public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
     comboboxPanel.add(comboboxDisplay);
 
 
-    String[] options = {"Select Portfolio", "ADD LIST OF PORTFOLIOS"};
     combobox = new JComboBox<String>();
-
+    combobox.addItem("Select Portfolio");
     //the event listener when an option is selected
     combobox.setActionCommand("Portfolio Selection");
-    for (int i = 0; i < options.length; i++) {
-      combobox.addItem(options[i]);
+    for (int i = 0; i < names.length; i++) {
+      combobox.addItem(names[i]);
     }
 
     comboboxPanel.add(combobox);
 
-
     createPortButton = new JButton("Create Portfolio");
     createPortButton.setActionCommand("Create portfolio");
     comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.PAGE_AXIS));
-//    comboboxPanel.add(createPortButton);
     mainPanel.add(createPortButton);
-
 
     /**
      * this is the radio panel of the menu.

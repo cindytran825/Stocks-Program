@@ -25,7 +25,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
     //just to show that the controller does go to the mock model
@@ -39,7 +39,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
 
@@ -54,7 +54,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
 
@@ -69,7 +69,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
 
@@ -88,7 +88,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
 
@@ -107,7 +107,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
 
@@ -128,7 +128,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
 
@@ -148,7 +148,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
 
@@ -168,7 +168,7 @@ public class ControllerTest {
 
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
 
@@ -185,7 +185,7 @@ public class ControllerTest {
     Readable rd = new StringReader("stock-view RDDT crossover 01 01 2020 10 finish quit");
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
     assertEquals("get stock\nCannot find stock on file. ", log.toString());
@@ -201,7 +201,7 @@ public class ControllerTest {
     Readable rd = new StringReader("stock-view AMZN crossover 01 0100 2020 10 finish quit");
     View view = new ViewMock(log);
     Model mockModel = new ModelMock(log);
-    GUIView guiView = new GUIViewImpl();
+    GUIView guiView = new GUIViewImpl(mockModel.getPortfolioNames().split("\\n"));
     Controller controller = new StocksController(mockModel, view, rd, guiView);
     controller.goControl();
     assertEquals("get stock\ncheck file StocksCindy/CSVFiles/AMZN.csv\n" +

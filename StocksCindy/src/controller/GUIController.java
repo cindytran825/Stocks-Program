@@ -25,12 +25,14 @@ public class GUIController implements ActionListener, Controller {
   public void goControl() {
     System.out.println(guiView);
     guiView.setListener(this);
+
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
 
     guiView.checkComponent();
+
 
     switch (e.getActionCommand()) {
       case "Buy/Sell":
@@ -41,7 +43,6 @@ public class GUIController implements ActionListener, Controller {
             guiView.buildBuyBox();
           }
 
-
         break;
       case "Composition/Value":
         if (guiView.getCombobox().getSelectedIndex() == 0) {
@@ -50,7 +51,6 @@ public class GUIController implements ActionListener, Controller {
         else {
           guiView.buildComponentBox();
         }
-
         //call class
         break;
 

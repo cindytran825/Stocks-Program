@@ -54,7 +54,7 @@ public class GUICreatePortfolio extends JPanel implements GUIView {
   }
 
 
-  @Override
+//  @Override
   public void checkComponent() {
 
   }
@@ -64,7 +64,7 @@ public class GUICreatePortfolio extends JPanel implements GUIView {
     pButton.addActionListener(listener);
   }
 
-  @Override
+//  @Override
   public void msgBox() {
 
   }

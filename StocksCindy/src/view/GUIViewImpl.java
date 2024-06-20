@@ -117,6 +117,8 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
   public void setListener(ActionListener listener) {
     combobox.addActionListener(listener);
     createPortButton.addActionListener(listener);
+
+
     for (JRadioButton radioButton : radioButtons) {
       radioButton.addActionListener(listener);
     }
@@ -124,9 +126,6 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
 
   @Override
   public void buildBuyBox(ActionListener listener, String[] tickers) {
-    /**
-     * calls the GUIBuy panel that displays a new panel.
-     */
     radioDisplay.setText("Buy/Sell was selected");
     buyPanel = new GUIBuy(tickers);
     buyPanel.setListener(listener);
@@ -140,9 +139,6 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
 
   @Override
   public void buildComponentBox(ActionListener listener) {
-    /**
-     * calls composition panel (class)
-     */
     radioDisplay.setText("Composition/Value was selected");
     composition = new GUIComposition();
     composition.setListener(listener);
@@ -192,6 +188,7 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
     return create.getName();
   }
 
+  @Override
   public void createSuccess() {
     create.displaySuccess();
   }
@@ -201,22 +198,27 @@ public class GUIViewImpl extends JFrame implements IGUIViewMain {
     mainPanel.repaint();
   }
 
+  @Override
   public String getSelectedPortfolioName() {
     return (String) combobox.getSelectedItem();
   }
 
+  @Override
   public String getPurchaseTicker() {
     return buyPanel.getTicker();
   }
 
+  @Override
   public String getPurchaseDate() {
     return buyPanel.getDate();
   }
 
+  @Override
   public String getPurchaseShares() {
     return buyPanel.getShares();
   }
 
+  @Override
   public String getAnalysisDate() {
     return composition.getDate();
   }

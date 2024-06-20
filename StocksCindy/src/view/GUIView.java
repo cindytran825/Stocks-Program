@@ -9,7 +9,7 @@ import javax.swing.*;
  * This interface represents the GUI View interface that displays portfolio and its functions
  * (buy/sell and composition/value query).
  */
-public interface GUIView extends IView {
+public interface GUIView {
 
   /**
    * assigns Java Swing buttons/text/action event to an event listener.

@@ -50,11 +50,12 @@ public class GUIBuy extends JPanel implements IGUIBuy {
     }
     comboboxPanel.add(tickerBox);
 
-    JPanel sharePanel = new JPanel();
     shareBox = new JTextArea(0, 10);
     JLabel shareBoxDisplay = new JLabel("Shares: ");
-    sharePanel.add(shareBoxDisplay);
-    sharePanel.add(shareBox);
+    comboboxPanel.add(shareBoxDisplay);
+    comboboxPanel.add(shareBox);
+    comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.PAGE_AXIS));
+
 
     java.util.List<String> yearing = new ArrayList<>();
     JLabel selectYear = new JLabel("Select Year");
@@ -106,7 +107,6 @@ public class GUIBuy extends JPanel implements IGUIBuy {
     insidePanel = new JPanel();
     mainPanel.add(warningPanel);
     insidePanel.add(comboboxPanel);
-    insidePanel.add(sharePanel);
     insidePanel.add(selectionListPanel);
     insidePanel.add(monthListPanel);
     insidePanel.add(dayListPanel);

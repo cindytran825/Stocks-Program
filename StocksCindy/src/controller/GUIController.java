@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.JComboBox;
 import model.Model;
 import view.GUIViewImpl;
@@ -49,25 +51,30 @@ public class GUIController implements ActionListener, Controller {
       case "Create":
         System.out.println("Created");
         String newName = guiView.getCreateName();
-        if (!newName.isEmpty()) {
+        List<String> pastNames = List.of(model.getPortfolioNames().split("\\n"));
+        if (!newName.isEmpty()
+                && !newName.equals("Select Portfolio")
+                && !pastNames.contains(newName)
+        ) {
           model.createPortfolio(newName);
           guiView.updatePortfolio(newName);
           guiView.createSuccess();
+        } else {
+          guiView.invalidInput();;
         }
         break;
-
 
       case "buy button":
         String ticker = guiView.getPurchaseTicker();
         String share = guiView.getPurchaseShares();
         String date = guiView.getPurchaseDate();
         try {
+          this.checkIfPortfolioSelected();
           model.buyStock(portName, ticker, share, date);
+          guiView.buySuccess();
         } catch (Exception exception) {
           guiView.invalidInput();
         }
-        guiView.buySuccess();
-        buildBuySell();
         break;
 
       case "sell button":
@@ -75,54 +82,44 @@ public class GUIController implements ActionListener, Controller {
         share = guiView.getPurchaseShares();
         date = guiView.getPurchaseDate();
         try {
+          this.checkIfPortfolioSelected();
           model.sellStock(portName, ticker, share, date);
+          guiView.sellSuccess();
         } catch (Exception exception) {
           guiView.invalidInput();
         }
-        guiView.sellSuccess();
-        buildBuySell();
         break;
 
       case "comp button":
-        System.out.println("composition");
         date = guiView.getAnalysisDate();
         try {
-          System.out.println(portName);
-          System.out.println(date);
+          this.checkIfPortfolioSelected();
           String valueText = model.getPortfolioComposition(portName, date);
-          System.out.println(valueText);
           guiView.setCompositionText(valueText);
+          guiView.compSuccess();
         } catch (Exception exception) {
           guiView.invalidInput();
         }
-        guiView.compSuccess();
-        buildCompVal();
         break;
 
       case "value button":
         date = guiView.getAnalysisDate();
         try {
+          this.checkIfPortfolioSelected();
           String valueText = model.getPortfolioDistribution(portName, date)
                   + "\n\nTotal Value: "
                   + model.evaluatePortfolio(portName, date);
           guiView.setCompositionText(valueText);
+          guiView.valueSuccess();
         } catch (Exception exception) {
           guiView.invalidInput();
         }
-        guiView.valueSuccess();
-        buildCompVal();
         break;
       default:
     }
   }
 
-  private void buildBuySell() {
-    if (guiView.getCombobox().getSelectedIndex() == 0) {
-      guiView.msgBox();
-    }
-  }
-
-  private void buildCompVal() {
+  private void checkIfPortfolioSelected() {
     if (guiView.getCombobox().getSelectedIndex() == 0) {
       guiView.msgBox();
     }

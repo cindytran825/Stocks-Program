@@ -8,10 +8,12 @@ import controller.StocksController;
 import model.Model;
 import view.GUIViewImpl;
 import view.IGUIViewMain;
-import view.TextView;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * GUI controller points
+ */
 public class GUIControllerTest {
 
 //  @Test

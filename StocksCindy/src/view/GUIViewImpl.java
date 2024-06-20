@@ -20,7 +20,7 @@ import javax.swing.JRadioButton;
  * This class is the GUI viewer that creates the main GUI window. It is the ultimate GUI window
  * that holds and create other panels within it (the mother GUI).
  */
-public class GUIViewImpl extends JFrame implements GUIView {
+public class GUIViewImpl extends JFrame implements IGUIViewMain {
   private final JPanel mainPanel;
   private final JLabel radioDisplay;
   private final JLabel radioOtherDisplay;
@@ -108,20 +108,21 @@ public class GUIViewImpl extends JFrame implements GUIView {
     JOptionPane.showMessageDialog(null, "Please select a portfolio!");
   }
 
+  @Override
   public void invalidInput() {
     JOptionPane.showMessageDialog(null, "Invalid Input!");
   }
 
-  // TODO @Override
+  @Override
   public void setListener(ActionListener listener) {
     combobox.addActionListener(listener);
     createPortButton.addActionListener(listener);
-    for (int i = 0; i < radioButtons.length; i++) {
-      System.out.println(radioButtons[i]);
-      radioButtons[i].addActionListener(listener);
+    for (JRadioButton radioButton : radioButtons) {
+      radioButton.addActionListener(listener);
     }
   }
 
+  @Override
   public void buildBuyBox(ActionListener listener, String[] tickers) {
     /**
      * calls the GUIBuy panel that displays a new panel.
@@ -137,6 +138,7 @@ public class GUIViewImpl extends JFrame implements GUIView {
     updateMain();
   }
 
+  @Override
   public void buildComponentBox(ActionListener listener) {
     /**
      * calls composition panel (class)
@@ -151,6 +153,7 @@ public class GUIViewImpl extends JFrame implements GUIView {
     updateMain();
   }
 
+  @Override
   public void buildCreatePortfolio(ActionListener listener) {
     radioDisplay.setText("Create Portfolio was selected");
     create = new GUICreatePortfolio(mainPanel);
@@ -161,26 +164,30 @@ public class GUIViewImpl extends JFrame implements GUIView {
     updateMain();
   }
 
-
+  @Override
   public void setCompositionText(String result) {
     composition.setResultText(result);
     mainPanel.revalidate();
   }
 
+@Override
   public void setComboboxDisplay(String portfolioName) {
     comboboxDisplay.setText("You selected: " + portfolioName);
     updateMain();
   }
 
+  @Override
   public JComboBox<String> getCombobox() {
     return combobox;
   }
 
+  @Override
   public void updatePortfolio(String newPortfolioName) {
     combobox.addItem(newPortfolioName);
     mainPanel.revalidate();
   }
 
+  @Override
   public String getCreateName() {
     return create.getName();
   }

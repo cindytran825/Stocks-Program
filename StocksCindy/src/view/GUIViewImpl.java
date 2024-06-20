@@ -6,21 +6,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class GUIViewImpl extends JFrame implements GUIView {
-  private  JPanel mainPanel;
+public class GUIViewImpl extends JFrame implements ActionListener, GUIView {
+  private JPanel mainPanel;
   private JScrollPane mainScrollPane;
-  private  JLabel radioDisplay;
-  private  JLabel comboboxDisplay;
+  private JLabel radioDisplay;
+  private JLabel comboboxDisplay;
   private GUIBuy buyPanel;
   private GUIComposition composition;
   private GUIGetValue getTypeValue;
   private GUICreatePortfolio create;
   private GUINoPortfolio noPort;
-
-  private  JButton createPortButton;
-  private  JRadioButton[] radioButtons;
-  private  JComboBox<String> combobox;
-
+  private JButton createPortButton;
+  private JRadioButton[] radioButtons;
+  private JComboBox<String> combobox;
 
 
   /**
@@ -48,7 +46,6 @@ public class GUIViewImpl extends JFrame implements GUIView {
     comboboxPanel.add(comboboxDisplay);
 
 
-
     String[] options = {"Select Portfolio", "ADD LIST OF PORTFOLIOS"};
     combobox = new JComboBox<String>();
 
@@ -65,8 +62,6 @@ public class GUIViewImpl extends JFrame implements GUIView {
     comboboxPanel.setLayout(new BoxLayout(comboboxPanel, BoxLayout.PAGE_AXIS));
 //    comboboxPanel.add(createPortButton);
     mainPanel.add(createPortButton);
-
-
 
 
     /**
@@ -111,21 +106,28 @@ public class GUIViewImpl extends JFrame implements GUIView {
 //    dialogBoxesPanel.setLayout(new BoxLayout(dialogBoxesPanel, BoxLayout.PAGE_AXIS));
 //    mainPanel.add(dialogBoxesPanel);
     this.pack();
-
   }
+
+  // TODO @Override
+  public void checkComponent() {
+    if (mainPanel.getComponentCount() > 3) {
+      mainPanel.remove(mainPanel.getComponentCount() - 1);
+    }
+  }
+
 
   // TODO @Override
   public void setListener(ActionListener listener) {
     combobox.addActionListener(listener);
     createPortButton.addActionListener(listener);
-
     for (int i = 0; i < radioButtons.length; i++) {
+      System.out.println(radioButtons[i]);
       radioButtons[i].addActionListener(listener);
     }
   }
 
 
-//  @Override
+  //  @Override
 //  public void actionPerformed(ActionEvent e) {
 //    if (mainPanel.getComponentCount() > 3) {
 //      mainPanel.remove(mainPanel.getComponentCount() - 1);
@@ -233,6 +235,8 @@ public class GUIViewImpl extends JFrame implements GUIView {
 //    mainPanel.repaint();
 //
 //  }
+
+
   public void buildBuyBox() {
     /**
      * calls the GUIBuy panel that displays a new panel.
@@ -244,8 +248,68 @@ public class GUIViewImpl extends JFrame implements GUIView {
     this.add(mainPanel);
     this.pack();
     //call the portcreate class
+    updateMain();
+  }
+
+  public void buildSellBox() {
+    radioDisplay.setText("Sell was selected");
+    buyPanel = new GUIBuy();
+    buyPanel.setBounds(0, 200, 500, 100);
+    mainPanel.add(buyPanel);
+    this.add(mainPanel);
+    this.pack();
+    updateMain();
+  }
+
+  public void buildComponentBox() {
+    /**
+     * calls composition panel (class)
+     */
+    radioDisplay.setText("Composition was selected");
+    composition = new GUIComposition();
+    composition.setBounds(0, 200, 500, 100);
+    mainPanel.add(composition);
+    this.add(mainPanel);
+    this.pack();
+    updateMain();
+  }
+
+  public void buildValueBox() {
+    /**
+     * calls class that asks what they want to evaluate.
+     */
+    radioDisplay.setText("Value was selected");
+    getTypeValue = new GUIGetValue();
+    getTypeValue.setBounds(0, 200, 500, 100);
+    mainPanel.add(getTypeValue);
+    this.pack();
+    updateMain();
+  }
+
+  public void buildCreatePortfolio() {
+    radioDisplay.setText("Create Portfolio was selected");
+    create = new GUICreatePortfolio();
+    create.setBounds(0, 200, 500, 100);
+    mainPanel.add(create);
+    this.pack();
+    updateMain();
+
+  }
+
+  public void setComboboxDisplay(String portfolioName) {
+    comboboxDisplay.setText("You selected: " + portfolioName);
+    updateMain();
+  }
+
+  private void updateMain() {
     mainPanel.revalidate();
     mainPanel.repaint();
   }
+
+  @Override
+  public void actionPerformed(ActionEvent e){
+    System.out.println("hello");
+  }
+
 
 }

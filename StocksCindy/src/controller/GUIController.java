@@ -17,38 +17,23 @@ import view.GUIView;
 import view.GUIViewImpl;
 import view.View;
 
-public class GUIController implements Controller, ActionListener {
-  private Model model;
-  private View view;
-  private JPanel mainPanel;
-  private JScrollPane mainScrollPane;
-  private JLabel radioDisplay;
-  private JLabel comboboxDisplay;
-  private GUIBuy buyPanel;
-  private GUIComposition composition;
-  private GUIGetValue getTypeValue;
-  private GUICreatePortfolio create;
-  private GUINoPortfolio noPort;
-  private final Scanner scan;
-  private final GUIViewImpl guiView;
+public class GUIController implements ActionListener, Controller {
+  private final Model model;
+  private final GUIViewImpl guiView; // TODO CHANGE TYPE
   private final String stockDirectory;
   private final String portfolioDirectory;
 
-  public GUIController(Model model, View view, Readable readable, GUIViewImpl guiView) {
-      this.view = view;
+  public GUIController(Model model, GUIViewImpl guiView) {
       this.model = model;
-      this.scan = new Scanner(readable);
       this.guiView = guiView;
       this.stockDirectory = "StocksCindy/CSVFiles";
       this.portfolioDirectory = "StocksCindy/UserPortfolio";
-      guiView.setListener(this);
   }
-
 
   @Override
   public void goControl() {
-//    this.view.addActionListener(this);
-//    this.view.makeVisible();
+    System.out.println(guiView);
+    guiView.setListener(this);
   }
 
   public void processCommand(String command) {
@@ -72,11 +57,13 @@ public class GUIController implements Controller, ActionListener {
   }
 
 
+
+
   @Override
   public void actionPerformed(ActionEvent e) {
-    if (mainPanel.getComponentCount() > 3) {
-      mainPanel.remove(mainPanel.getComponentCount() - 1);
-    }
+    System.out.println("going through");
+
+    guiView.checkComponent();
 
     // if no portfolio has been selected
 //    String portfolioName;
@@ -102,10 +89,6 @@ public class GUIController implements Controller, ActionListener {
 //                --> model.buy....
 
 
-
-
-
-
 //        /**
 //         * calls the GUIBuy panel that displays a new panel.
 //         */
@@ -118,50 +101,26 @@ public class GUIController implements Controller, ActionListener {
 //        //call the portcreate class
         break;
       case "Sell":
-        radioDisplay.setText("Sell was selected");
-        buyPanel = new GUIBuy();
-        buyPanel.setBounds(0, 200, 500, 100);
-        mainPanel.add(buyPanel);
-        guiView.add(mainPanel);
-        guiView.pack();
+        guiView.buildSellBox();
         break;
       case "Composition":
-        /**
-         * calls composition panel (class)
-         */
-        radioDisplay.setText("Composition was selected");
-        composition = new GUIComposition();
-        composition.setBounds(0, 200, 500, 100);
-        mainPanel.add(composition);
-        guiView.add(mainPanel);
-        guiView.pack();
+        guiView.buildComponentBox();
         //call class
         break;
       case "Value":
-        /**
-         * calls class that asks what they want to evaluate.
-         */
-        radioDisplay.setText("Value was selected");
-        getTypeValue = new GUIGetValue();
-        getTypeValue.setBounds(0, 200, 500, 100);
-        mainPanel.add(getTypeValue);
-        guiView.pack();
+        guiView.buildValueBox();
         //call class
         break;
 
       case "Portfolio Selection":
         if (e.getSource() instanceof JComboBox) {
           JComboBox<String> box = (JComboBox<String>) e.getSource();
-          comboboxDisplay.setText("You selected: " + (String) box.getSelectedItem());
+          guiView.setComboboxDisplay((String) box.getSelectedItem());
         }
         break;
 
       case "Create portfolio":
-        radioDisplay.setText("Create Portfolio was selected");
-        create = new GUICreatePortfolio();
-        create.setBounds(0, 200, 500, 100);
-        mainPanel.add(create);
-        guiView.pack();
+        guiView.buildCreatePortfolio();
         break;
 
 //      case "Open file": {
@@ -186,9 +145,5 @@ public class GUIController implements Controller, ActionListener {
 //      }
 //      break;
     }
-
-    mainPanel.revalidate();
-    mainPanel.repaint();
-
   }
 }
